@@ -169,6 +169,13 @@ void RB_ShadowTessEnd( void ) {
 
 	VectorCopy( backEnd.currentEntity->lightDir, lightDir );
 
+	//Fluffy (StencilNoSelfShadows): Failed attempt at removing self-shadowing by offseting character model we project shadow volumes from. But maybe this has potential if done differently.
+	/*for ( i = 0 ; i < tess.numVertexes ; i++ ) {
+		tess.xyz[i][0] -= lightDir[0];
+		tess.xyz[i][1] -= lightDir[1];
+		tess.xyz[i][2] -= lightDir[2];
+	}*/
+
 	// project vertexes away from light direction
 	for ( i = 0 ; i < tess.numVertexes ; i++ ) {
 		VectorMA( tess.xyz[i], -512, lightDir, tess.xyz[i+tess.numVertexes] );
@@ -279,7 +286,11 @@ void RB_ShadowFinish( void ) {
     qglLoadIdentity ();
 
 	qglColor3f( 0.6f, 0.6f, 0.6f );
+#ifdef FLUFFY_VOLUMETRICSHADOW_RENDERORDER
+	GL_State( GLS_SRCBLEND_DST_COLOR | GLS_DSTBLEND_ZERO ); //Fluffy (StencilNoSelfShadows): Make sure stencil shadows don't draw to depth buffer (otherwise characters won't be able to draw over them afterwards)
+#else
 	GL_State( GLS_DEPTHMASK_TRUE | GLS_SRCBLEND_DST_COLOR | GLS_DSTBLEND_ZERO );
+#endif
 	//Following line makes a kind of flashlight instead of shadows, should multiply though
 	//GL_State( GLS_DEPTHMASK_TRUE | GLS_SRCBLEND_DST_COLOR  | GLS_DSTBLEND_ONE );
 

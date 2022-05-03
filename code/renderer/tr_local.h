@@ -19,6 +19,15 @@ This file is part of Jedi Knight 2.
 #ifndef TR_LOCAL_H
 #define TR_LOCAL_H
 
+/*
+* Fluffy (StencilNoSelfShadows)
+* This improves some of the jank with volumetric shadows by removing self-shadowing.
+* I did this by finding out what projects shadow volumes, and flagging shared surfaces.
+* One problem is that my method for checking for shared surfaces is a bit funky. I noticed it would sometimes flag parts of the ground as shared, but that doesn't make sense. TODO: This needs to be fixed.
+* After flagging shared surfaces, I'm able to change render order to this: most stuff -> stencil shadows -> surfaces projecting stencil shadows.
+* My code probably introduces some overhead, but I'm not sure if it's noticeable.
+*/
+#define FLUFFY_VOLUMETRICSHADOW_RENDERORDER
 
 #include "../game/q_shared.h"
 #include "../qcommon/qfiles.h"
