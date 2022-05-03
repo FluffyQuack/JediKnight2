@@ -132,6 +132,7 @@ cvar_t	*g_knockback;
 cvar_t	*g_dismemberment;
 cvar_t	*g_dismemberProbabilities;
 cvar_t	*g_synchSplitAnims;
+cvar_t	*g_corpseRemovalTime; //Fluffy (CorpseRemovalTime): From JA code
 
 cvar_t	*g_inactivity;
 cvar_t	*g_debugMove;
@@ -554,6 +555,10 @@ void G_InitCvars( void ) {
 	g_dismemberment = gi.cvar ( "g_dismemberment", "3", CVAR_ARCHIVE );//0 = none, 1 = arms and hands, 2 = legs, 3 = waist and head, 4 = mega dismemberment
 	g_dismemberProbabilities = gi.cvar ( "g_dismemberProbabilities", "1", CVAR_ARCHIVE );//0 = ignore probabilities, 1 = use probabilities
 	g_synchSplitAnims = gi.cvar ( "g_synchSplitAnims", "1", 0 );
+
+	//Fluffy (CorpseRemovalTime): From JA code
+	// for now I'm making default 10 seconds
+	g_corpseRemovalTime = gi.cvar ( "g_corpseRemovalTime", "10", CVAR_ARCHIVE );//number of seconds bodies stick around for, at least... 0 = never go away
 
 	g_inactivity = gi.cvar ("g_inactivity", "0", 0);
 	g_debugMove = gi.cvar ("g_debugMove", "0", CVAR_CHEAT );
