@@ -338,7 +338,13 @@ vidmode_t r_vidModes[] =
     { "Mode  8: 1280x1024",		1280,	1024,	1 },
     { "Mode  9: 1600x1200",		1600,	1200,	1 },
     { "Mode 10: 2048x1536",		2048,	1536,	1 },
-    { "Mode 11: 856x480 (wide)",856,	480,	1 }
+    { "Mode 11: 856x480 (wide)",856,	480,	1 },
+	
+	//Fluffy (MoreResolutions): Support for more resolutions
+	{ "Mode 12: 1280x720 (16:9)",1280,	720,	1 },
+	{ "Mode 13: 1920x1080 (16:9)",1280,	1080,	1 },
+	{ "Mode 14: 2560x1440 (16:9)",2560,	1440,	1 },
+	{ "Mode 15: 3840x2160 (16:9)",3840,	2160,	1 }
 };
 static int	s_numVidModes = ( sizeof( r_vidModes ) / sizeof( r_vidModes[0] ) );
 
