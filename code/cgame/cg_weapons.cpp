@@ -975,11 +975,11 @@ void CG_AddViewWeapon( playerState_t *ps )
 		actualFOV = (cg.overrides.active&CG_OVERRIDE_FOV) ? cg.overrides.fov : cg_fov.value;
 	}
 
-	if ( actualFOV > 80 ) 
+	if ( cg_autoChangeGunFOV.value == 1 && actualFOV > 80 ) //Fluffy (DontAutoChangeGunFOV): Don't change fov offset unless cg_autoChangeGunFOV is true
 	{
 		fovOffset = -0.1 * ( actualFOV - 80 );
 	} 
-	else 
+	else
 	{
 		fovOffset = 0;
 	}
