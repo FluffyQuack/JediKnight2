@@ -23,9 +23,9 @@ This file is part of Jedi Knight 2.
 * Fluffy (StencilNoSelfShadows)
 * This improves some of the jank with volumetric shadows by removing self-shadowing.
 * I did this by finding out what projects shadow volumes, and flagging shared surfaces.
-* One problem is that my method for checking for shared surfaces is a bit funky. I noticed it would sometimes flag parts of the ground as shared, but that doesn't make sense. TODO: This needs to be fixed.
 * After flagging shared surfaces, I'm able to change render order to this: most stuff -> stencil shadows -> surfaces projecting stencil shadows.
 * My code probably introduces some overhead, but I'm not sure if it's noticeable.
+* This could be optimized by creating a second array of drawSurfs which only contains meshes that project shadows. That way we don't have to search through the main drawSurfs array to find those meshes.
 */
 #define FLUFFY_VOLUMETRICSHADOW_RENDERORDER
 

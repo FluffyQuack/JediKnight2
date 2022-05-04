@@ -996,7 +996,7 @@ const void	*RB_DrawSurfs( const void *data ) {
 	backEnd.viewParms = cmd->viewParms;
 
 #ifdef FLUFFY_VOLUMETRICSHADOW_RENDERORDER
-	//Fluffy (StencilNoSelfShadows): Flag surfaces that project shadow volumes (TODO: This has a bug where it sometimes flags meshes that don't project shadow volumes (for instance, the ground). We should try to fix this. We can troubleshoot this by removing the second call to RB_RenderDrawSurfList() to see what the code thinks is shared
+	//Fluffy (StencilNoSelfShadows): Flag surfaces that project shadow volumes
 	if(cmd->numDrawSurfs && r_shadows->integer == 2)
 	{
 		stencilShadowSource = new qboolean[cmd->numDrawSurfs];
@@ -1006,14 +1006,14 @@ const void	*RB_DrawSurfs( const void *data ) {
 		int				fogNum;
 		int				entityNum;
 		int				dlighted;
-		for(int i = 0; i < cmd->numDrawSurfs; i++) //Iterate through all surfaces prepared for rendering
+		for(int i = 0; i < cmd->numDrawSurfs; i++, drawSurf++) //Iterate through all surfaces prepared for rendering
 		{
 			R_DecomposeSort( drawSurf->sort, &entityNum, &shader, &fogNum, &dlighted );
 			if(shader == tr.shadowShader)
 			{
 				drawSurf_t *drawSurf_b = cmd->drawSurfs;
 				shader_t		*shader_b;
-				for(int j = 0; j < cmd->numDrawSurfs; j++)
+				for(int j = 0; j < cmd->numDrawSurfs; j++, drawSurf_b++)
 				{
 					if(j == i || stencilShadowSource[j] == 1)
 						continue;
@@ -1021,15 +1021,14 @@ const void	*RB_DrawSurfs( const void *data ) {
 					R_DecomposeSort( drawSurf_b->sort, &entityNum, &shader_b, &fogNum, &dlighted );
 					if(shader_b == tr.shadowShader)
 						continue;
-					if( ((mdxmSurface_t *) drawSurf_b->surface)->ident == ((mdxmSurface_t *) drawSurf->surface)->ident)
+
+					if( ((CRenderableSurface *) drawSurf->surface)->surfaceData == ((CRenderableSurface *) drawSurf_b->surface)->surfaceData)
 					{
 						stencilShadowSource[j] = 1; //Mark as shared surface
 						break;
 					}
-					drawSurf_b++;
 				}
 			}
-			drawSurf++;
 		}
 	}
 	else
