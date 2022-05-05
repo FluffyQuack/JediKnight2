@@ -471,7 +471,7 @@ void Cvar_SetCheatState( void ) {
 
 	// set all default vars to the safe value
 	for ( var = cvar_vars ; var ; var = var->next ) {
-		if ( var->flags & CVAR_CHEAT) {
+		if ( var->flags & CVAR_CHEAT && !(var->flags & CVAR_DONTRESET)) { //Fluffy (DontResetAllCheatCvarsToDefault)
 			Cvar_Set( var->name, var->resetString );
 		}
 	}
