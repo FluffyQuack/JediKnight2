@@ -151,10 +151,10 @@ char *Cvar_CompleteVariable( const char *partial ) {
 	// check partial match
 	for ( cvar=cvar_vars ; cvar ; cvar=cvar->next ) {
 		if ( !Q_stricmpn (partial,cvar->name, len) ) {
-			if ( (cvar->flags & CVAR_CHEAT) && !cvar_cheats->integer ) {
+			/*if ( (cvar->flags & CVAR_CHEAT) && !cvar_cheats->integer ) { //Fluffy (AllowAutoCompleteCheatCVars): Commented this away so it's allowed to auto-complete cvars that count as cheating
 				continue;
 			}
-			else {
+			else*/ {
 				return cvar->name;
 			}
 		}
@@ -205,10 +205,10 @@ char *Cvar_CompleteVariableNext (char *partial, char *last)
 	for (cvar=base ; cvar ; cvar=cvar->next)
 	{
 		if (!Q_stricmpn (partial,cvar->name, len)) {
-			if ( (cvar->flags & CVAR_CHEAT) && !cvar_cheats->integer ) {
+			/*if ( (cvar->flags & CVAR_CHEAT) && !cvar_cheats->integer ) { //Fluffy (AllowAutoCompleteCheatCVars): Commented this away so it's allowed to auto-complete cvars that count as cheating
 				continue;
 			}
-			else {
+			else*/ {
 				return cvar->name;
 			}
 		}
@@ -730,11 +730,11 @@ void Cvar_List_f( void ) {
 			Com_Printf(" ");
 		}
 		if (var->flags & CVAR_CHEAT) {
-			if (!cvar_cheats->integer)
+			/*if (!cvar_cheats->integer) //Fluffy (AllowAutoCompleteCheatCVars): Commented this away so it's allowed to list cheat cvars
 			{
 				i--;
 				continue;
-			}
+			}*/
 			Com_Printf("C");
 		} else {
 			Com_Printf(" ");
