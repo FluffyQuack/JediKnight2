@@ -1197,6 +1197,8 @@ extern	cvar_t	*r_debugStyle;
 
 extern	cvar_t	*r_printShaders;
 
+extern cvar_t *r_noSelfShadow; //Fluffy (StencilNoSelfShadows)
+
 /*
 Ghoul2 Insert Start
 */

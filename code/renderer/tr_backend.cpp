@@ -515,20 +515,14 @@ void RB_BeginDrawingView (void) {
 
 #define	MAC_EVENT_PUMP_MSEC		5
 
-#ifdef FLUFFY_VOLUMETRICSHADOW_RENDERORDER
-qboolean *stencilShadowSource; //Fluffy (StencilNoSelfShadows): Array for flagging surfaces that project shadow volumes
-#endif
+qboolean *stencilShadowSource = 0; //Fluffy (StencilNoSelfShadows): Array for flagging surfaces that project shadow volumes
 	
 /*
 ==================
 RB_RenderDrawSurfList
 ==================
 */
-#ifdef FLUFFY_VOLUMETRICSHADOW_RENDERORDER
 void RB_RenderDrawSurfList( drawSurf_t *drawSurfs, int numDrawSurfs, bool drawStencilSources = 0 ) { //Fluffy (StencilNoSelfShadows)
-#else
-void RB_RenderDrawSurfList( drawSurf_t *drawSurfs, int numDrawSurfs) {
-#endif
 	shader_t		*shader, *oldShader;
 	int				fogNum, oldFogNum;
 	int				entityNum, oldEntityNum;
@@ -552,9 +546,7 @@ void RB_RenderDrawSurfList( drawSurf_t *drawSurfs, int numDrawSurfs) {
 	originalTime = backEnd.refdef.floatTime;
 
 	// clear the z buffer, set the modelview, etc
-#ifdef FLUFFY_VOLUMETRICSHADOW_RENDERORDER
 	if(drawStencilSources == 0) //Fluffy (StencilNoSelfShadows): Only reset z-buffer on first pass
-#endif
 		RB_BeginDrawingView ();
 
 	// draw everything
@@ -570,7 +562,6 @@ void RB_RenderDrawSurfList( drawSurf_t *drawSurfs, int numDrawSurfs) {
 	backEnd.pc.c_surfaces += numDrawSurfs;
 
 	for (i = 0, drawSurf = drawSurfs ; i < numDrawSurfs ; i++, drawSurf++) {
-#ifdef FLUFFY_VOLUMETRICSHADOW_RENDERORDER
 		//Fluffy (StencilNoSelfShadows): We render this in two passes. First pass we render everything that doesn't project shadow volumes and we render the shadow volumes and stencil shadows. Second pass we only render models that project stencil shadows
 		if(stencilShadowSource)
 		{
@@ -579,7 +570,6 @@ void RB_RenderDrawSurfList( drawSurf_t *drawSurfs, int numDrawSurfs) {
 			else if(!drawStencilSources && stencilShadowSource[i] == 1)
 				continue;
 		}
-#endif
 		if ( drawSurf->sort == oldSort ) {
 			// fast path, same as previous sort
 			rb_surfaceTable[ *drawSurf->surface ]( drawSurf->surface );
@@ -684,9 +674,8 @@ void RB_RenderDrawSurfList( drawSurf_t *drawSurfs, int numDrawSurfs) {
 	RB_DrawSun();
 #endif
 	// darken down any stencil shadows
-#ifdef FLUFFY_VOLUMETRICSHADOW_RENDERORDER
+
 	if(drawStencilSources == 0) //Fluffy (StencilNoSelfShadows): Only render stencil shadows in first pass
-#endif
 		RB_ShadowFinish();		
 
 	// add light flares on lights that aren't obscured
@@ -995,9 +984,8 @@ const void	*RB_DrawSurfs( const void *data ) {
 	backEnd.refdef = cmd->refdef;
 	backEnd.viewParms = cmd->viewParms;
 
-#ifdef FLUFFY_VOLUMETRICSHADOW_RENDERORDER
 	//Fluffy (StencilNoSelfShadows): Flag surfaces that project shadow volumes
-	if(cmd->numDrawSurfs && r_shadows->integer == 2)
+	if(r_noSelfShadow->integer == 1 && cmd->numDrawSurfs && r_shadows->integer == 2)
 	{
 		stencilShadowSource = new qboolean[cmd->numDrawSurfs];
 		memset(stencilShadowSource, 0, sizeof(qboolean) * cmd->numDrawSurfs);
@@ -1033,17 +1021,18 @@ const void	*RB_DrawSurfs( const void *data ) {
 	}
 	else
 		stencilShadowSource = 0;
-#endif
 
 	RB_RenderDrawSurfList( cmd->drawSurfs, cmd->numDrawSurfs );
-#ifdef FLUFFY_VOLUMETRICSHADOW_RENDERORDER
-	if(r_shadows->integer == 2)
+
+	if(r_noSelfShadow->integer == 1 && r_shadows->integer == 2)
 		RB_RenderDrawSurfList( cmd->drawSurfs, cmd->numDrawSurfs, 1 ); //Fluffy (StencilNoSelfShadows): Second pass
 
 	//Delete the list of marked surfaces
 	if(stencilShadowSource)
-		delete[]stencilShadowSource; 
-#endif
+	{
+		delete[]stencilShadowSource;
+		stencilShadowSource = 0;
+	}
 
 	return (const void *)(cmd + 1);
 }
