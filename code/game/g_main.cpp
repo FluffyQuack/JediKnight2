@@ -152,6 +152,26 @@ cvar_t	*g_saberMoveSpeed;
 cvar_t	*g_saberAnimSpeed;
 cvar_t	*g_saberAutoAim;
 
+//Fluffy (ProjectileCVars): New cvars for controlling speed and damage of projectiles
+cvar_t *g_projectileBlasterSpeedMultiplier; //Affects blaster rifle and bryar pistol
+cvar_t *g_projectileBlasterDamageMultiplier; //Affects blaster rifle and bryar pistol
+cvar_t *g_projectileDisruptorDamageMultiplier;
+cvar_t *g_projectileBowcasterSpeedMultiplier;
+cvar_t *g_projectileBowcasterDamageMultiplier;
+cvar_t *g_projectileRepeaterSpeedMultiplier;
+cvar_t *g_projectileRepeaterDamageMultiplier;
+cvar_t *g_projectileDempSpeedMultiplier;
+cvar_t *g_projectileDempDamageMultiplier;
+cvar_t *g_projectileFlechetteSpeedMultiplier;
+cvar_t *g_projectileFlechetteDamageMultiplier;
+cvar_t *g_projectileRocketSpeedMultiplier;
+cvar_t *g_projectileRocketDamageMultiplier;
+cvar_t *g_projectileATSTDamageMultiplier;
+cvar_t *g_projectileMineDamageMultiplier;
+cvar_t *g_projectileDetonatorDamageMultiplier;
+cvar_t *g_projectileSaberDamageMultiplier;
+cvar_t *g_projectileFlyingSaberDamageMultiplier;
+
 qboolean	stop_icarus = qfalse;
 
 extern char *G_GetLocationForEnt( gentity_t *ent );
@@ -581,6 +601,26 @@ void G_InitCvars( void ) {
 	gi.cvar( "newTotalSecrets", "0", CVAR_ROM );
 	gi.cvar_set("newTotalSecrets", "0");//used to carry over the count from SP_target_secret to ClientBegin
 	g_iscensored = gi.cvar( "ui_iscensored", "0", CVAR_ARCHIVE|CVAR_ROM|CVAR_INIT|CVAR_CHEAT|CVAR_NORESTART );
+
+	//Fluffy (ProjectileCVars): New cvars for controlling speed and damage of projectiles
+	g_projectileBlasterSpeedMultiplier = gi.cvar ( "g_blasterVelocity", "1", CVAR_ARCHIVE|CVAR_CHEAT );
+	g_projectileBlasterDamageMultiplier = gi.cvar ( "g_blasterDamage", "1", CVAR_ARCHIVE|CVAR_CHEAT );
+	g_projectileDisruptorDamageMultiplier = gi.cvar ( "g_disruptorDamage", "1", CVAR_ARCHIVE|CVAR_CHEAT );
+	g_projectileBowcasterSpeedMultiplier = gi.cvar ( "g_bowcasterVelocity", "1", CVAR_ARCHIVE|CVAR_CHEAT );
+	g_projectileBowcasterDamageMultiplier = gi.cvar ( "g_bowcasterDamage", "1", CVAR_ARCHIVE|CVAR_CHEAT );
+	g_projectileRepeaterSpeedMultiplier = gi.cvar ( "g_repeaterVelocity", "1", CVAR_ARCHIVE|CVAR_CHEAT );
+	g_projectileRepeaterDamageMultiplier = gi.cvar ( "g_repeaterDamage", "1", CVAR_ARCHIVE|CVAR_CHEAT );
+	g_projectileDempSpeedMultiplier = gi.cvar ( "g_dempVelocity", "1", CVAR_ARCHIVE|CVAR_CHEAT );
+	g_projectileDempDamageMultiplier = gi.cvar ( "g_dempDamage", "1", CVAR_ARCHIVE|CVAR_CHEAT );
+	g_projectileFlechetteSpeedMultiplier = gi.cvar ( "g_flechetteVelocity", "1", CVAR_ARCHIVE|CVAR_CHEAT );
+	g_projectileFlechetteDamageMultiplier = gi.cvar ( "g_flechetteDamage", "1", CVAR_ARCHIVE|CVAR_CHEAT );
+	g_projectileRocketSpeedMultiplier = gi.cvar ( "g_rocketLauncherVelocity", "1", CVAR_ARCHIVE|CVAR_CHEAT );
+	g_projectileRocketDamageMultiplier = gi.cvar ( "g_rocketLauncherDamage", "1", CVAR_ARCHIVE|CVAR_CHEAT );
+	g_projectileATSTDamageMultiplier = gi.cvar ( "g_ATSTDamage", "1", CVAR_ARCHIVE|CVAR_CHEAT );
+	g_projectileMineDamageMultiplier = gi.cvar ( "g_mineDamage", "1", CVAR_ARCHIVE|CVAR_CHEAT );
+	g_projectileDetonatorDamageMultiplier = gi.cvar ( "g_detonatorDamage", "1", CVAR_ARCHIVE|CVAR_CHEAT );
+	g_projectileSaberDamageMultiplier = gi.cvar ( "g_saberDamage", "1", CVAR_ARCHIVE|CVAR_CHEAT );
+	g_projectileFlyingSaberDamageMultiplier = gi.cvar ( "g_flyingSaberDamage", "1", CVAR_ARCHIVE|CVAR_CHEAT );
 }
 
 /*

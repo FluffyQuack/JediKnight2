@@ -226,6 +226,26 @@ extern	cvar_t	*g_removeDoors;
 
 extern	cvar_t	*g_ICARUSDebug;
 
+//Fluffy (ProjectileCVars): New cvars for controlling speed and damage of projectiles
+extern	cvar_t *g_projectileBlasterSpeedMultiplier; //Affects blaster rifle and bryar pistol
+extern	cvar_t *g_projectileBlasterDamageMultiplier; //Affects blaster rifle and bryar pistol
+extern	cvar_t *g_projectileDisruptorDamageMultiplier;
+extern	cvar_t *g_projectileBowcasterSpeedMultiplier;
+extern	cvar_t *g_projectileBowcasterDamageMultiplier;
+extern	cvar_t *g_projectileRepeaterSpeedMultiplier;
+extern	cvar_t *g_projectileRepeaterDamageMultiplier;
+extern	cvar_t *g_projectileDempSpeedMultiplier;
+extern	cvar_t *g_projectileDempDamageMultiplier;
+extern	cvar_t *g_projectileFlechetteSpeedMultiplier;
+extern	cvar_t *g_projectileFlechetteDamageMultiplier;
+extern	cvar_t *g_projectileRocketSpeedMultiplier;
+extern	cvar_t *g_projectileRocketDamageMultiplier;
+extern cvar_t *g_projectileATSTDamageMultiplier;
+extern	cvar_t *g_projectileMineDamageMultiplier;
+extern	cvar_t *g_projectileDetonatorDamageMultiplier;
+extern	cvar_t *g_projectileSaberDamageMultiplier;
+extern cvar_t *g_projectileFlyingSaberDamageMultiplier;
+
 extern gentity_t *player;
 //
 // g_spawn.c

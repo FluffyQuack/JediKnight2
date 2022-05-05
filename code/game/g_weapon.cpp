@@ -495,7 +495,7 @@ static void WP_FireBryarPistol( gentity_t *ent, qboolean alt_fire )
 //---------------------------------------------------------
 {
 	vec3_t	start;
-	int		damage = BRYAR_PISTOL_DAMAGE;
+	int		damage = BRYAR_PISTOL_DAMAGE * g_projectileBlasterDamageMultiplier->value; //Fluffy (ProjectileCVars)
 
 	VectorCopy( wpMuzzle, start );
 	WP_TraceSetStart( ent, start, vec3_origin, vec3_origin );//make sure our start point isn't on the other side of a wall
@@ -520,7 +520,7 @@ static void WP_FireBryarPistol( gentity_t *ent, qboolean alt_fire )
 		AngleVectors( angs, wpForward, NULL, NULL );
 	}
 
-	gentity_t	*missile = CreateMissile( start, wpForward, BRYAR_PISTOL_VEL, 10000, ent, alt_fire );
+	gentity_t	*missile = CreateMissile( start, wpForward, BRYAR_PISTOL_VEL * g_projectileBlasterSpeedMultiplier->value, 10000, ent, alt_fire ); //Fluffy (ProjectileCVars)
 
 	missile->classname = "bryar_proj";
 	missile->s.weapon = WP_BRYAR_PISTOL;
@@ -576,7 +576,7 @@ static void WP_FireBryarPistol( gentity_t *ent, qboolean alt_fire )
 static void WP_FireBlasterMissile( gentity_t *ent, vec3_t start, vec3_t dir, qboolean altFire )
 //---------------------------------------------------------
 {
-	int velocity	= BLASTER_VELOCITY;
+	int velocity	= BLASTER_VELOCITY * g_projectileBlasterSpeedMultiplier->value; //Fluffy (ProjectileCVars);
 	int	damage		= BLASTER_DAMAGE;
 
 	// If an enemy is shooting at us, lower the velocity so you have a chance to evade
@@ -615,6 +615,8 @@ static void WP_FireBlasterMissile( gentity_t *ent, vec3_t start, vec3_t dir, qbo
 			damage = BLASTER_NPC_DAMAGE_HARD;
 		}
 	}
+
+	damage *= g_projectileBlasterDamageMultiplier->value; //Fluffy (ProjectileCVars);
 
 //	if ( ent->client )
 //	{
@@ -734,6 +736,8 @@ static void WP_DisruptorMainFire( gentity_t *ent )
 			break;
 		}
 	}
+
+	damage *= g_projectileDisruptorDamageMultiplier->value; //Fluffy (ProjectileCVars);
 
 	VectorCopy( wpMuzzle, start );
 	WP_TraceSetStart( ent, start, vec3_origin, vec3_origin );
@@ -883,6 +887,8 @@ void WP_DisruptorAltFire( gentity_t *ent )
 
 		damage = damage * count + DISRUPTOR_MAIN_DAMAGE * 0.5f; // give a boost to low charge shots
 	}
+
+	damage *= g_projectileDisruptorDamageMultiplier->value; //Fluffy (ProjectileCVars);
 
 	skip = ent->s.number;
 
@@ -1049,6 +1055,8 @@ static void WP_BowcasterMainFire( gentity_t *ent )
 		}
 	}
 
+	damage *= g_projectileBowcasterDamageMultiplier->value; //Fluffy (ProjectileCVars)
+
 	count = ( level.time - ent->client->ps.weaponChargeTime ) / BOWCASTER_CHARGE_UNIT;
 
 	if ( count < 1 )
@@ -1076,6 +1084,8 @@ static void WP_BowcasterMainFire( gentity_t *ent )
 	{
 		// create a range of different velocities
 		vel = BOWCASTER_VELOCITY * ( crandom() * BOWCASTER_VEL_RANGE + 1.0f );
+
+		vel *= g_projectileBowcasterSpeedMultiplier->value; //Fluffy (ProjectileCVars)
 
 		vectoangles( wpForward, angs );
 
@@ -1107,7 +1117,7 @@ static void WP_BowcasterMainFire( gentity_t *ent )
 		missile->dflags = DAMAGE_DEATH_KNOCKBACK;
 		missile->methodOfDeath = MOD_BOWCASTER;
 		missile->clipmask = MASK_SHOT | CONTENTS_LIGHTSABER;
-		missile->splashDamage = BOWCASTER_SPLASH_DAMAGE;
+		missile->splashDamage = BOWCASTER_SPLASH_DAMAGE * g_projectileBowcasterDamageMultiplier->value; //Fluffy (ProjectileCVars)
 		missile->splashRadius = BOWCASTER_SPLASH_RADIUS;
 
 		// we don't want it to bounce
@@ -1126,7 +1136,7 @@ static void WP_BowcasterAltFire( gentity_t *ent )
 	VectorCopy( wpMuzzle, start );
 	WP_TraceSetStart( ent, start, vec3_origin, vec3_origin );//make sure our start point isn't on the other side of a wall
 
-	gentity_t *missile = CreateMissile( start, wpForward, BOWCASTER_VELOCITY, 10000, ent, qtrue );
+	gentity_t *missile = CreateMissile( start, wpForward, BOWCASTER_VELOCITY * g_projectileBowcasterSpeedMultiplier->value, 10000, ent, qtrue ); //Fluffy (ProjectileCVars)
 
 	missile->classname = "bowcaster_alt_proj";
 	missile->s.weapon = WP_BOWCASTER;
@@ -1148,6 +1158,8 @@ static void WP_BowcasterAltFire( gentity_t *ent )
 		}
 	}
 
+	damage *= g_projectileBowcasterDamageMultiplier->value; //Fluffy (ProjectileCVars)
+
 	VectorSet( missile->maxs, BOWCASTER_SIZE, BOWCASTER_SIZE, BOWCASTER_SIZE );
 	VectorScale( missile->maxs, -1, missile->mins );
 
@@ -1165,7 +1177,7 @@ static void WP_BowcasterAltFire( gentity_t *ent )
 	missile->dflags = DAMAGE_DEATH_KNOCKBACK;
 	missile->methodOfDeath = MOD_BOWCASTER_ALT;
 	missile->clipmask = MASK_SHOT | CONTENTS_LIGHTSABER;
-	missile->splashDamage = BOWCASTER_SPLASH_DAMAGE;
+	missile->splashDamage = BOWCASTER_SPLASH_DAMAGE * g_projectileBowcasterDamageMultiplier->value; //Fluffy (ProjectileCVars)
 	missile->splashRadius = BOWCASTER_SPLASH_RADIUS;
 }
 
@@ -1198,7 +1210,7 @@ static void WP_RepeaterMainFire( gentity_t *ent, vec3_t dir )
 	VectorCopy( wpMuzzle, start );
 	WP_TraceSetStart( ent, start, vec3_origin, vec3_origin );//make sure our start point isn't on the other side of a wall
 
-	gentity_t *missile = CreateMissile( start, dir, REPEATER_VELOCITY, 10000, ent );
+	gentity_t *missile = CreateMissile( start, dir, REPEATER_VELOCITY * g_projectileRepeaterSpeedMultiplier->value, 10000, ent ); //Fluffy (ProjectileCVars)
 
 	missile->classname = "repeater_proj";
 	missile->s.weapon = WP_REPEATER;
@@ -1219,6 +1231,8 @@ static void WP_RepeaterMainFire( gentity_t *ent, vec3_t dir )
 			damage = REPEATER_NPC_DAMAGE_HARD;
 		}
 	}
+
+	damage *= g_projectileRepeaterDamageMultiplier->value; //Fluffy (ProjectileCVars)
 
 //	if ( ent->client && ent->client->ps.powerups[PW_WEAPON_OVERCHARGE] > 0 && ent->client->ps.powerups[PW_WEAPON_OVERCHARGE] > cg.time )
 //	{
@@ -1253,7 +1267,7 @@ static void WP_RepeaterAltFire( gentity_t *ent )
 	}
 	else
 	{
-		missile = CreateMissile( start, wpForward, REPEATER_ALT_VELOCITY, 10000, ent, qtrue );
+		missile = CreateMissile( start, wpForward, REPEATER_ALT_VELOCITY * g_projectileRepeaterSpeedMultiplier->value, 10000, ent, qtrue ); //Fluffy (ProjectileCVars)
 	}
 
 	missile->classname = "repeater_alt_proj";
@@ -1277,6 +1291,8 @@ static void WP_RepeaterAltFire( gentity_t *ent )
 		}
 	}
 
+	damage *= g_projectileRepeaterDamageMultiplier->value; //Fluffy (ProjectileCVars)
+
 	VectorSet( missile->maxs, REPEATER_ALT_SIZE, REPEATER_ALT_SIZE, REPEATER_ALT_SIZE );
 	VectorScale( missile->maxs, -1, missile->mins );
 	missile->s.pos.trType = TR_GRAVITY;
@@ -1294,7 +1310,7 @@ static void WP_RepeaterAltFire( gentity_t *ent )
 	missile->methodOfDeath = MOD_REPEATER_ALT;
 	missile->splashMethodOfDeath = MOD_REPEATER_ALT;
 	missile->clipmask = MASK_SHOT | CONTENTS_LIGHTSABER;
-	missile->splashDamage = REPEATER_ALT_SPLASH_DAMAGE;
+	missile->splashDamage = REPEATER_ALT_SPLASH_DAMAGE * g_projectileRepeaterDamageMultiplier->value; //Fluffy (ProjectileCVars)
 	missile->splashRadius = REPEATER_ALT_SPLASH_RADIUS;
 
 	// we don't want it to bounce forever
@@ -1353,7 +1369,7 @@ static void WP_DEMP2_MainFire( gentity_t *ent )
 	VectorCopy( wpMuzzle, start );
 	WP_TraceSetStart( ent, start, vec3_origin, vec3_origin );//make sure our start point isn't on the other side of a wall
 
-	gentity_t *missile = CreateMissile( start, wpForward, DEMP2_VELOCITY, 10000, ent );
+	gentity_t *missile = CreateMissile( start, wpForward, DEMP2_VELOCITY * g_projectileDempSpeedMultiplier->value, 10000, ent ); //Fluffy (ProjectileCVars)
 
 	missile->classname = "demp2_proj";
 	missile->s.weapon = WP_DEMP2;
@@ -1374,6 +1390,8 @@ static void WP_DEMP2_MainFire( gentity_t *ent )
 			damage = DEMP2_NPC_DAMAGE_HARD;
 		}
 	}
+
+	damage *= g_projectileDempDamageMultiplier->value; //Fluffy (ProjectileCVars)
 
 	VectorSet( missile->maxs, DEMP2_SIZE, DEMP2_SIZE, DEMP2_SIZE );
 	VectorScale( missile->maxs, -1, missile->mins );
@@ -1467,8 +1485,7 @@ void DEMP2_AltRadiusDamage( gentity_t *ent )
 		// push the center of mass higher than the origin so players get knocked into the air more
 		dir[2] += 12;
 
-		G_Damage( gent, ent, ent->owner, dir, ent->currentOrigin, DEMP2_ALT_DAMAGE, DAMAGE_DEATH_KNOCKBACK, ent->splashMethodOfDeath );
-		if ( gent->takedamage && gent->client ) 
+		G_Damage( gent, ent, ent->owner, dir, ent->currentOrigin, DEMP2_ALT_DAMAGE * g_projectileDempDamageMultiplier->value, DAMAGE_DEATH_KNOCKBACK, ent->splashMethodOfDeath ); //		if ( gent->takedamage && gent->client ) //Fluffy (ProjectileCVars)
 		{
 			gent->s.powerups |= ( 1 << PW_SHOCKED );
 			gent->client->ps.powerups[PW_SHOCKED] = level.time + 2000;
@@ -1507,7 +1524,7 @@ void DEMP2_AltDetonate( gentity_t *ent )
 static void WP_DEMP2_AltFire( gentity_t *ent )
 //---------------------------------------------------------
 {
-	int		damage	= DEMP2_ALT_DAMAGE;
+	int		damage	= DEMP2_ALT_DAMAGE * g_projectileDempDamageMultiplier->value; //Fluffy (ProjectileCVars)
 	int		count;
 	vec3_t	start;
 	trace_t	tr;
@@ -1579,7 +1596,7 @@ static void WP_FlechetteMainFire( gentity_t *ent )
 {
 	vec3_t		fwd, angs, start;
 	gentity_t	*missile;
-	float		damage = FLECHETTE_DAMAGE, vel = FLECHETTE_VEL;
+	float		damage = FLECHETTE_DAMAGE * g_projectileFlechetteDamageMultiplier->value, vel = FLECHETTE_VEL * g_projectileFlechetteSpeedMultiplier->value; //Fluffy (ProjectileCVars)
 
 	VectorCopy( wpMuzzle, start );
 	WP_TraceSetStart( ent, start, vec3_origin, vec3_origin );//make sure our start point isn't on the other side of a wall
@@ -1777,9 +1794,9 @@ static void WP_CreateFlechetteBouncyThing( vec3_t start, vec3_t fwd, gentity_t *
 
 	missile->s.eFlags |= EF_BOUNCE_HALF;
 
-	missile->damage = FLECHETTE_ALT_DAMAGE;
+	missile->damage = FLECHETTE_ALT_DAMAGE * g_projectileFlechetteDamageMultiplier->value; //Fluffy (ProjectileCVars)
 	missile->dflags = 0;
-	missile->splashDamage = FLECHETTE_ALT_SPLASH_DAM;
+	missile->splashDamage = FLECHETTE_ALT_SPLASH_DAM * g_projectileFlechetteDamageMultiplier->value; //Fluffy (ProjectileCVars)
 	missile->splashRadius = FLECHETTE_ALT_SPLASH_RAD;
 
 	missile->svFlags = SVF_USE_CURRENT_ORIGIN;
@@ -1844,7 +1861,7 @@ void rocketThink( gentity_t *ent )
 
 	if ( ent->enemy && ent->enemy->inuse )
 	{	
-		float vel = ROCKET_VELOCITY;
+		float vel = ROCKET_VELOCITY * g_projectileRocketSpeedMultiplier->value; //Fluffy (ProjectileCVars)
 
 		VectorCopy( ent->enemy->currentOrigin, org );
 		org[2] += (ent->enemy->mins[2] + ent->enemy->maxs[2]) * 0.5f;
@@ -1943,7 +1960,7 @@ static void WP_FireRocket( gentity_t *ent, qboolean alt_fire )
 {
 	vec3_t	start;
 	int		damage	= ROCKET_DAMAGE;
-	float	vel = ROCKET_VELOCITY;
+	float	vel = ROCKET_VELOCITY * g_projectileRocketSpeedMultiplier->value; //Fluffy (ProjectileCVars)
 
 	if ( alt_fire )
 	{
@@ -1975,6 +1992,8 @@ static void WP_FireRocket( gentity_t *ent, qboolean alt_fire )
 			damage = ROCKET_NPC_DAMAGE_HARD;
 		}
 	}
+
+	damage *= g_projectileRocketDamageMultiplier->value; //Fluffy (ProjectileCVars)
 
 	if ( alt_fire )
 	{
@@ -2052,7 +2071,7 @@ static void WP_FireRocket( gentity_t *ent, qboolean alt_fire )
 	}
 
 	missile->clipmask = MASK_SHOT | CONTENTS_LIGHTSABER;
-	missile->splashDamage = ROCKET_SPLASH_DAMAGE;
+	missile->splashDamage = ROCKET_SPLASH_DAMAGE * g_projectileRocketDamageMultiplier->value; //Fluffy (ProjectileCVars)
 	missile->splashRadius = ROCKET_SPLASH_RADIUS;
 
 	// we don't want it to ever bounce
@@ -2337,9 +2356,9 @@ void CreateLaserTrap( gentity_t *laserTrap, vec3_t start, gentity_t *owner )
 		laserTrap->classname = "tripmine";
 	}
 
-	laserTrap->splashDamage = LT_SPLASH_DAM;
+	laserTrap->splashDamage = LT_SPLASH_DAM * g_projectileMineDamageMultiplier->value; //Fluffy (ProjectileCVars)
 	laserTrap->splashRadius = LT_SPLASH_RAD;
-	laserTrap->damage = LT_DAMAGE;
+	laserTrap->damage = LT_DAMAGE * g_projectileMineDamageMultiplier->value; //Fluffy (ProjectileCVars)
 	laserTrap->methodOfDeath = MOD_LASERTRIP;
 	laserTrap->splashMethodOfDeath = MOD_LASERTRIP;//? SPLASH;
 
@@ -2495,8 +2514,7 @@ void thermalDetonatorExplode( gentity_t *ent )
 
 		ent->takedamage = qfalse; // don't allow double deaths!
 
-		G_RadiusDamage( ent->currentOrigin, ent->owner, TD_SPLASH_DAM, TD_SPLASH_RAD, NULL, MOD_EXPLOSIVE_SPLASH );
-
+		G_RadiusDamage( ent->currentOrigin, ent->owner, TD_SPLASH_DAM * g_projectileDetonatorDamageMultiplier->value, TD_SPLASH_RAD, NULL, MOD_EXPLOSIVE_SPLASH ); //Fluffy (ProjectileCVars)
 		G_PlayEffect( "thermal/explosion", ent->currentOrigin );
 		G_PlayEffect( "thermal/shockwave", ent->currentOrigin );
 
@@ -2817,9 +2835,9 @@ gentity_t *WP_FireThermalDetonator( gentity_t *ent, qboolean alt_fire )
 
 	bolt->s.loopSound = G_SoundIndex( "sound/weapons/thermal/thermloop.wav" );
 
-	bolt->damage = TD_DAMAGE * damageScale;
+	bolt->damage = TD_DAMAGE * damageScale * g_projectileDetonatorDamageMultiplier->value; //Fluffy (ProjectileCVars)
 	bolt->dflags = 0;
-	bolt->splashDamage = TD_SPLASH_DAM * damageScale;
+	bolt->splashDamage = TD_SPLASH_DAM * damageScale * g_projectileDetonatorDamageMultiplier->value; //Fluffy (ProjectileCVars)
 	bolt->splashRadius = TD_SPLASH_RAD;
 
 	bolt->s.eType = ET_MISSILE;
@@ -2863,12 +2881,12 @@ gentity_t *WP_DropThermal( gentity_t *ent )
 void WP_BotLaser( gentity_t *ent )
 //---------------------------------------------------------
 {
-	gentity_t	*missile = CreateMissile( wpMuzzle, wpForward, BRYAR_PISTOL_VEL, 10000, ent );
+	gentity_t	*missile = CreateMissile( wpMuzzle, wpForward, BRYAR_PISTOL_VEL * g_projectileBlasterSpeedMultiplier->value, 10000, ent ); //Fluffy (ProjectileCVars)
 
 	missile->classname = "bryar_proj";
 	missile->s.weapon = WP_BRYAR_PISTOL;
 
-	missile->damage = BRYAR_PISTOL_DAMAGE;
+	missile->damage = BRYAR_PISTOL_DAMAGE * g_projectileBlasterDamageMultiplier->value; //Fluffy (ProjectileCVars);
 	missile->dflags = DAMAGE_DEATH_KNOCKBACK;
 	missile->methodOfDeath = MOD_ENERGY;
 	missile->clipmask = MASK_SHOT | CONTENTS_LIGHTSABER;
@@ -2926,7 +2944,7 @@ void WP_ATSTMainFire( gentity_t *ent )
 	missile->classname = "atst_main_proj";
 	missile->s.weapon = WP_ATST_MAIN;
 
-	missile->damage = ATST_MAIN_DAMAGE;
+	missile->damage = ATST_MAIN_DAMAGE * g_projectileATSTDamageMultiplier->value; //Fluffy (ProjectileCVars)
 	missile->dflags = DAMAGE_DEATH_KNOCKBACK|DAMAGE_HEAVY_WEAP_CLASS;
 	missile->methodOfDeath = MOD_ENERGY;
 	missile->clipmask = MASK_SHOT | CONTENTS_LIGHTSABER;
@@ -2975,6 +2993,8 @@ void WP_ATSTSideAltFire( gentity_t *ent )
 		}
 	}
 
+	damage *= g_projectileATSTDamageMultiplier->value; //Fluffy (ProjectileCVars)
+
 	VectorCopy( wpForward, missile->movedir );
 
 	// Make it easier to hit things
@@ -2988,7 +3008,7 @@ void WP_ATSTSideAltFire( gentity_t *ent )
 	missile->clipmask = MASK_SHOT | CONTENTS_LIGHTSABER;
 
 	// Scale damage down a bit if it is coming from an NPC
-	missile->splashDamage = ATST_SIDE_ALT_SPLASH_DAMAGE * ( ent->s.number == 0 ? 1.0f : ATST_SIDE_ALT_ROCKET_SPLASH_SCALE );
+	missile->splashDamage = ATST_SIDE_ALT_SPLASH_DAMAGE * ( ent->s.number == 0 ? 1.0f : ATST_SIDE_ALT_ROCKET_SPLASH_SCALE ) * g_projectileATSTDamageMultiplier->value; //Fluffy (ProjectileCVars)
 	missile->splashRadius = ATST_SIDE_ALT_SPLASH_RADIUS;
 
 	// we don't want it to ever bounce
@@ -3024,6 +3044,8 @@ void WP_ATSTSideFire( gentity_t *ent )
 		}
 	}
 
+	damage *= g_projectileATSTDamageMultiplier->value; //Fluffy (ProjectileCVars)
+
 	VectorSet( missile->maxs, ATST_SIDE_MAIN_SIZE, ATST_SIDE_MAIN_SIZE, ATST_SIDE_MAIN_SIZE );
 	VectorScale( missile->maxs, -1, missile->mins );
 
@@ -3032,7 +3054,7 @@ void WP_ATSTSideFire( gentity_t *ent )
 	missile->methodOfDeath = MOD_ENERGY;
 	missile->clipmask = MASK_SHOT | CONTENTS_LIGHTSABER;
 
-	missile->splashDamage = ATST_SIDE_MAIN_SPLASH_DAMAGE * ( ent->s.number == 0 ? 1.0f : 0.6f );
+	missile->splashDamage = ATST_SIDE_MAIN_SPLASH_DAMAGE * ( ent->s.number == 0 ? 1.0f : 0.6f ) * g_projectileATSTDamageMultiplier->value; //Fluffy (ProjectileCVars)
 	missile->splashRadius = ATST_SIDE_MAIN_SPLASH_RADIUS;
 
 	// we don't want it to bounce

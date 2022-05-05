@@ -2625,6 +2625,8 @@ void WP_SaberDamageTrace( gentity_t *ent )
 		VectorCopy( ent->client->renderInfo.muzzleDirOld, md1 );
 		VectorCopy( ent->client->renderInfo.muzzlePoint, mp2 );
 		VectorCopy( ent->client->renderInfo.muzzleDir, md2 );
+
+		baseDamage *= g_projectileFlyingSaberDamageMultiplier->value; //Fluffy (ProjectileCVars)
 	}
 	else
 	{
@@ -2721,6 +2723,8 @@ void WP_SaberDamageTrace( gentity_t *ent )
 				}
 				*/
 			}
+
+			baseDamage *= g_projectileSaberDamageMultiplier->value; //Fluffy (ProjectileCVars)
 		}
 
 		//Use current to next since can predict it
