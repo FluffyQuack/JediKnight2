@@ -338,7 +338,7 @@ cvarTable_t		cvarTable[] = {
 	{ &cg_autoswitch, "cg_autoswitch", "1", CVAR_ARCHIVE },
 	{ &cg_drawGun, "cg_drawGun", "1", CVAR_ARCHIVE },
 	{ &cg_fov, "cg_fov", "80", 0 },//must be 80
-	{ &cg_autoChangeGunFOV, "cg_autoChangeGunFOV", "0", 0 }, //Fluffy (DontAutoChangeGunFOV)
+	{ &cg_autoChangeGunFOV, "cg_autoChangeGunFOV", "0", CVAR_ARCHIVE }, //Fluffy (DontAutoChangeGunFOV)
 	{ &cg_stereoSeparation, "cg_stereoSeparation", "0.4", CVAR_ARCHIVE  },
 	{ &cg_shadows, "cg_shadows", "1", CVAR_ARCHIVE  },
 
