@@ -300,8 +300,8 @@ void	cgi_R_SetColor( const float *rgba ) {
 }
 
 void	cgi_R_DrawStretchPic( float x, float y, float w, float h, 
-							   float s1, float t1, float s2, float t2, qhandle_t hShader ) {
-	syscall( CG_R_DRAWSTRETCHPIC, PASSFLOAT(x), PASSFLOAT(y), PASSFLOAT(w), PASSFLOAT(h), PASSFLOAT(s1), PASSFLOAT(t1), PASSFLOAT(s2), PASSFLOAT(t2), hShader );
+							   float s1, float t1, float s2, float t2, qhandle_t hShader, int widescreenAnchor) { //Fluffy (Widescreen2D)
+	syscall( CG_R_DRAWSTRETCHPIC, PASSFLOAT(x), PASSFLOAT(y), PASSFLOAT(w), PASSFLOAT(h), PASSFLOAT(s1), PASSFLOAT(t1), PASSFLOAT(s2), PASSFLOAT(t2), hShader, widescreenAnchor); //Fluffy (Widescreen2D)
 }
 
 void	cgi_R_DrawScreenShot( float x, float y, float w, float h){

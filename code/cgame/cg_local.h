@@ -709,12 +709,12 @@ void CG_DrawRotatePic2( float x, float y, float width, float height,float angle,
 void CG_DrawString( float x, float y, const char *string, 
 				   float charWidth, float charHeight, const float *modulate );
 void CG_PrintInterfaceGraphics(int min,int max);
-void CG_DrawNumField (int x, int y, int width, int value,int charWidth,int charHeight,int style,qboolean zeroFill);
+void CG_DrawNumField (int x, int y, int width, int value,int charWidth,int charHeight,int style,qboolean zeroFill, int widescreenAnchor = -1); //Fluffy (Widescreen2D)
 void CG_DrawProportionalString( int x, int y, const char* str, int style, vec4_t color );
 
 
 void CG_DrawStringExt( int x, int y, const char *string, const float *setColor, 
-		qboolean forceColor, qboolean shadow, int charWidth, int charHeight );
+		qboolean forceColor, qboolean shadow, int charWidth, int charHeight, int widescreenAnchor); //Fluffy (Widescreen2D)
 void CG_DrawSmallStringColor( int x, int y, const char *s, vec4_t color );
 
 int CG_DrawStrlen( const char *str );
@@ -1016,7 +1016,7 @@ void	cgi_R_AddLightToScene( const vec3_t org, float intensity, float r, float g,
 void	cgi_R_RenderScene( const refdef_t *fd );
 void	cgi_R_SetColor( const float *rgba );	// NULL = 1,1,1,1
 void	cgi_R_DrawStretchPic( float x, float y, float w, float h, 
-	float s1, float t1, float s2, float t2, qhandle_t hShader );
+	float s1, float t1, float s2, float t2, qhandle_t hShader, int widescreenAnchor ); //Fluffy (Widescreen2D)
 void	cgi_R_DrawScreenShot( float x, float y, float w, float h);
 
 void	cgi_R_ModelBounds( qhandle_t model, vec3_t mins, vec3_t maxs );

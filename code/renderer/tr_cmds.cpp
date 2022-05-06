@@ -281,14 +281,24 @@ RE_StretchPic
 =============
 */
 void RE_StretchPic ( float x, float y, float w, float h, 
-					  float s1, float t1, float s2, float t2, qhandle_t hShader ) {
+					  float s1, float t1, float s2, float t2, qhandle_t hShader, int widescreenAchor) { //Fluffy (Widescreen2D)
 	stretchPicCommand_t	*cmd;
 
 	cmd = (stretchPicCommand_t *) R_GetCommandBuffer( sizeof( *cmd ) );
 	if ( !cmd ) {
 		return;
 	}
-	cmd->commandId = RC_STRETCH_PIC;
+	
+	//Fluffy (Widescreen2D)
+	if(widescreenAchor == 0 && r_stretch2D->integer == 0)
+		cmd->commandId = RC_STRETCH_PIC_LEFT;
+	else if(widescreenAchor == 1 && r_stretch2D->integer == 0)
+		cmd->commandId = RC_STRETCH_PIC_MIDDLE;
+	else if(widescreenAchor == 2 && r_stretch2D->integer == 0)
+		cmd->commandId = RC_STRETCH_PIC_RIGHT;
+	else	
+		cmd->commandId = RC_STRETCH_PIC;
+
 	cmd->shader = R_GetShaderByHandle( hShader );
 	cmd->x = x;
 	cmd->y = y;

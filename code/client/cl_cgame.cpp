@@ -572,7 +572,7 @@ int CL_CgameSystemCalls( int *args ) {
 		re.SetColor( (const float *) VMA(1) );
 		return 0;
 	case CG_R_DRAWSTRETCHPIC:
-		re.DrawStretchPic( VMF(1), VMF(2), VMF(3), VMF(4), VMF(5), VMF(6), VMF(7), VMF(8), args[9] );
+		re.DrawStretchPic( VMF(1), VMF(2), VMF(3), VMF(4), VMF(5), VMF(6), VMF(7), VMF(8), args[9], args[10] ); //Fluffy (Widescreen2D)
 		return 0;
 	case CG_R_DRAWSCREENSHOT:
 		re.DrawStretchRaw( VMF(1), VMF(2), VMF(3), VMF(4), SG_SCR_WIDTH, SG_SCR_HEIGHT, SCR_GetScreenshot(0), 0, qtrue);

@@ -951,6 +951,7 @@ typedef struct {
 	qboolean	skyRenderedThisView;	// flag for drawing sun
 
 	qboolean	projection2D;	// if qtrue, drawstretchpic doesn't need to change modes
+	qboolean	projection2D_widescreen;	//Fluffy (Widescreen2D)
 	byte		color2D[4];
 	qboolean	vertexes2D;		// shader needs to be finished
 	trRefEntity_t	entity2D;	// currentEntity will point at this when doing 2D rendering
@@ -1198,6 +1199,7 @@ extern	cvar_t	*r_debugStyle;
 extern	cvar_t	*r_printShaders;
 
 extern cvar_t *r_noSelfShadow; //Fluffy (StencilNoSelfShadows)
+extern cvar_t *r_stretch2D; //Fluffy (Widescreen2D)
 
 /*
 Ghoul2 Insert Start
@@ -1750,6 +1752,13 @@ typedef enum {
 	RC_END_OF_LIST,
 	RC_SET_COLOR,
 	RC_STRETCH_PIC,
+
+	//Fluffy (Widescreen2D): Variants of RC_STRETCH_PIC that define how the element should be rendered on a widescreen aspect ratio
+	//These all stretch the virtual screen horizontally based on aspect ratio and give x rendering coordiante an offset
+	RC_STRETCH_PIC_LEFT, //X = 0
+	RC_STRETCH_PIC_MIDDLE, //X = half of horizontal size diff
+	RC_STRETCH_PIC_RIGHT, //X = horizontal size diff
+
 	RC_SCISSOR,
 	RC_ROTATE_PIC,
 	RC_ROTATE_PIC2,
@@ -1798,7 +1807,7 @@ void R_AddDrawSurfCmd( drawSurf_t *drawSurfs, int numDrawSurfs );
 
 void RE_SetColor( const float *rgba );
 void RE_StretchPic ( float x, float y, float w, float h, 
-					  float s1, float t1, float s2, float t2, qhandle_t hShader );
+					  float s1, float t1, float s2, float t2, qhandle_t hShader, int widescreenAnchor ); //Fluffy (Widescreen2D)
 void RE_RotatePic ( float x, float y, float w, float h, 
 					  float s1, float t1, float s2, float t2,float a, qhandle_t hShader );
 void RE_RotatePic2 ( float x, float y, float w, float h, 

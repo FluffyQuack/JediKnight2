@@ -31,7 +31,7 @@ Coordinates are 640*480 virtual values
 */
 void CG_FillRect( float x, float y, float width, float height, const float *color ) {
 	cgi_R_SetColor( color );
-	cgi_R_DrawStretchPic( x, y, width, height, 0, 0, 0, 0, cgs.media.whiteShader);
+	cgi_R_DrawStretchPic( x, y, width, height, 0, 0, 0, 0, cgs.media.whiteShader, -1); //Fluffy (Widescreen2D)
 	cgi_R_SetColor( NULL );
 }
 
@@ -60,7 +60,7 @@ A width of 0 will draw with the original image width
 =================
 */
 void CG_DrawPic( float x, float y, float width, float height, qhandle_t hShader ) {
-	cgi_R_DrawStretchPic( x, y, width, height, 0, 0, 1, 1, hShader );
+	cgi_R_DrawStretchPic( x, y, width, height, 0, 0, 1, 1, hShader, -1 ); //Fluffy (Widescreen2D)
 }
 
 /*
@@ -74,7 +74,7 @@ Can also specify the exact texture coordinates
 */
 void CG_DrawPic2( float x, float y, float width, float height, float s1, float t1, float s2, float t2, qhandle_t hShader ) 
 {
-	cgi_R_DrawStretchPic( x, y, width, height, s1, t1, s2, t2, hShader );
+	cgi_R_DrawStretchPic( x, y, width, height, s1, t1, s2, t2, hShader, -1 ); //Fluffy (Widescreen2D)
 }
 
 /*
@@ -110,7 +110,7 @@ CG_DrawChar
 Coordinates and size in 640*480 virtual screen size
 ===============
 */
-void CG_DrawChar( int x, int y, int width, int height, int ch ) {
+void CG_DrawChar( int x, int y, int width, int height, int ch, int widescreenAnchor ) { //Fluffy (Widescreen2D)
 	int row, col;
 	float frow, fcol;
 	float size;
@@ -148,7 +148,8 @@ void CG_DrawChar( int x, int y, int width, int height, int ch ) {
 	size2 = 0.0625;
 
 	cgi_R_DrawStretchPic( ax, ay, aw, ah, fcol, frow, fcol + size, frow + size2, 
-		cgs.media.charsetShader );
+		cgs.media.charsetShader,
+		widescreenAnchor ); //Fluffy (Widescreen2D)
 
 }
 
@@ -164,7 +165,7 @@ Coordinates are at 640 by 480 virtual resolution
 ==================
 */
 void CG_DrawStringExt( int x, int y, const char *string, const float *setColor, 
-		qboolean forceColor, qboolean shadow, int charWidth, int charHeight ) {
+		qboolean forceColor, qboolean shadow, int charWidth, int charHeight, int widescreenAnchor) { //Fluffy (Widescreen2D)
 	vec4_t		color;
 	const char	*s;
 	int			xx;
@@ -181,7 +182,7 @@ void CG_DrawStringExt( int x, int y, const char *string, const float *setColor,
 				s += 2;
 				continue;
 			}
-			CG_DrawChar( xx + 2, y + 2, charWidth, charHeight, *s );
+			CG_DrawChar( xx + 2, y + 2, charWidth, charHeight, *s, widescreenAnchor ); //Fluffy (Widescreen2D)
 			xx += charWidth;
 			s++;
 		}
@@ -201,7 +202,7 @@ void CG_DrawStringExt( int x, int y, const char *string, const float *setColor,
 			s += 2;
 			continue;
 		}
-		CG_DrawChar( xx, y, charWidth, charHeight, *s );
+		CG_DrawChar( xx, y, charWidth, charHeight, *s, widescreenAnchor ); //Fluffy (Widescreen2D)
 		xx += charWidth;
 		s++;
 	}
@@ -210,7 +211,7 @@ void CG_DrawStringExt( int x, int y, const char *string, const float *setColor,
 
 
 void CG_DrawSmallStringColor( int x, int y, const char *s, vec4_t color ) {
-	CG_DrawStringExt( x, y, s, color, qtrue, qfalse, SMALLCHAR_WIDTH, SMALLCHAR_HEIGHT );
+	CG_DrawStringExt( x, y, s, color, qtrue, qfalse, SMALLCHAR_WIDTH, SMALLCHAR_HEIGHT, -1 ); //Fluffy (Widescreen2D)
 }
 
 /*
@@ -251,7 +252,7 @@ static void CG_TileClearBox( int x, int y, int w, int h, qhandle_t hShader ) {
 	t1 = y/64.0;
 	s2 = (x+w)/64.0;
 	t2 = (y+h)/64.0;
-	cgi_R_DrawStretchPic( x, y, w, h, s1, t1, s2, t2, hShader );
+	cgi_R_DrawStretchPic( x, y, w, h, s1, t1, s2, t2, hShader, -1 ); //Fluffy (Widescreen2D)
 }
 
 
@@ -333,7 +334,7 @@ Take x,y positions as if 640 x 480 and scales them to the proper resolution
 
 ==============
 */
-void CG_DrawNumField (int x, int y, int width, int value,int charWidth,int charHeight,int style,qboolean zeroFill) 
+void CG_DrawNumField (int x, int y, int width, int value,int charWidth,int charHeight,int style,qboolean zeroFill, int widescreenAnchor) //Fluffy (Widescreen2D)
 {
 	char	num[16], *ptr;
 	int		l;
@@ -395,14 +396,20 @@ void CG_DrawNumField (int x, int y, int width, int value,int charWidth,int charH
 			switch(style)
 			{
 			case NUM_FONT_SMALL:
-				CG_DrawPic( x,y, charWidth, charHeight, cgs.media.smallnumberShaders[0] );
+				//Fluffy (Widescreen2D)
+				//CG_DrawPic( x,y, charWidth, charHeight, cgs.media.smallnumberShaders[0] );
+				cgi_R_DrawStretchPic( x, y, charWidth, charHeight, 0, 0, 1, 1, cgs.media.smallnumberShaders[0], widescreenAnchor ); 
 				break;
 			case NUM_FONT_CHUNKY:
-				CG_DrawPic( x,y, charWidth, charHeight, cgs.media.chunkyNumberShaders[0] );
+				//Fluffy (Widescreen2D)
+				//CG_DrawPic( x,y, charWidth, charHeight, cgs.media.chunkyNumberShaders[0] );
+				cgi_R_DrawStretchPic( x, y, charWidth, charHeight, 0, 0, 1, 1, cgs.media.chunkyNumberShaders[0], widescreenAnchor ); 
 				break;
 			default:
 			case NUM_FONT_BIG:
-				CG_DrawPic( x,y, charWidth, charHeight, cgs.media.numberShaders[0] );
+				//Fluffy (Widescreen2D)
+				//CG_DrawPic( x,y, charWidth, charHeight, cgs.media.numberShaders[0] );
+				cgi_R_DrawStretchPic( x, y, charWidth, charHeight, 0, 0, 1, 1, cgs.media.numberShaders[0], widescreenAnchor ); 
 				break;
 			}
 			x += 2 + (xWidth);
@@ -424,15 +431,21 @@ void CG_DrawNumField (int x, int y, int width, int value,int charWidth,int charH
 		switch(style)
 		{
 		case NUM_FONT_SMALL:
-			CG_DrawPic( x,y, charWidth, charHeight, cgs.media.smallnumberShaders[frame] );
+			//Fluffy (Widescreen2D)
+			//CG_DrawPic( x,y, charWidth, charHeight, cgs.media.smallnumberShaders[frame] );
+			cgi_R_DrawStretchPic( x, y, charWidth, charHeight, 0, 0, 1, 1, cgs.media.smallnumberShaders[frame], widescreenAnchor ); 
 			x++;	// For a one line gap
 			break;
 		case NUM_FONT_CHUNKY:
-			CG_DrawPic( x,y, charWidth, charHeight, cgs.media.chunkyNumberShaders[frame] );
+			//Fluffy (Widescreen2D)
+			//CG_DrawPic( x,y, charWidth, charHeight, cgs.media.chunkyNumberShaders[frame] );
+			cgi_R_DrawStretchPic( x, y, charWidth, charHeight, 0, 0, 1, 1, cgs.media.chunkyNumberShaders[frame], widescreenAnchor ); 
 			break;
 		default:
 		case NUM_FONT_BIG:
-			CG_DrawPic( x,y, charWidth, charHeight, cgs.media.numberShaders[frame] );
+			//Fluffy (Widescreen2D)
+			//CG_DrawPic( x,y, charWidth, charHeight, cgs.media.numberShaders[frame] );
+			cgi_R_DrawStretchPic( x, y, charWidth, charHeight, 0, 0, 1, 1, cgs.media.numberShaders[frame], widescreenAnchor ); 
 			break;
 		}
 

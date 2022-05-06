@@ -166,6 +166,7 @@ cvar_t	*r_printShaders;
 cvar_t	*r_modelpoolmegs;
 
 cvar_t *r_noSelfShadow; //Fluffy (StencilNoSelfShadows)
+cvar_t *r_stretch2D; //Fluffy (Widescreen2D)
 
 /*
 Ghoul2 Insert Start
@@ -363,7 +364,11 @@ qboolean R_GetModeInfo( int *width, int *height, float *windowAspect, int mode )
 	if ( mode == -1 ) {
 		*width = r_customwidth->integer;
 		*height = r_customheight->integer;
-		*windowAspect = r_customaspect->value;
+		
+		//Fluffy: Automatically define aspect ratio rather than use cvar
+		//*windowAspect = r_customaspect->value;
+		*windowAspect = (float) *width / ( (float) *height * 1.0f );
+
 		return qtrue;
 	}
 
@@ -1115,6 +1120,7 @@ void R_Register( void )
 	r_scissorbroken = ri.Cvar_Get( "r_scissorbroken", "0", 0 );
 
 	r_noSelfShadow = ri.Cvar_Get( "r_noSelfShadow", "0", CVAR_ARCHIVE ); //Fluffy (StencilNoSelfShadows)
+	r_stretch2D = ri.Cvar_Get( "r_stretch2D", "0", CVAR_ARCHIVE ); //Fluffy (Widescreen2D)
 /*
 Ghoul2 Insert Start
 */

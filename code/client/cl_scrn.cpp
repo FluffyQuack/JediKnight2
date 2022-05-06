@@ -49,7 +49,7 @@ void SCR_DrawNamedPic( float x, float y, float width, float height, const char *
 	assert( width != 0 );
 
 	hShader = re.RegisterShader( picname );
-	re.DrawStretchPic( x, y, width, height, 0, 0, 1, 1, hShader );
+	re.DrawStretchPic( x, y, width, height, 0, 0, 1, 1, hShader, -1 ); //Fluffy (Widescreen2D)
 }
 
 
@@ -63,7 +63,7 @@ Coordinates are 640*480 virtual values
 void SCR_FillRect( float x, float y, float width, float height, const float *color ) {
 	re.SetColor( color );
 
-	re.DrawStretchPic( x, y, width, height, 0, 0, 0, 0, cls.whiteShader );
+	re.DrawStretchPic( x, y, width, height, 0, 0, 0, 0, cls.whiteShader, -1); //Fluffy (Widescreen2D)
 
 	re.SetColor( NULL );
 }
@@ -78,7 +78,7 @@ A width of 0 will draw with the original image width
 =================
 */
 void SCR_DrawPic( float x, float y, float width, float height, qhandle_t hShader ) {
-	re.DrawStretchPic( x, y, width, height, 0, 0, 1, 1, hShader );
+	re.DrawStretchPic( x, y, width, height, 0, 0, 1, 1, hShader, -1 ); //Fluffy (Widescreen2D)
 }
 
 
@@ -129,7 +129,8 @@ void SCR_DrawBigChar( int x, int y, int ch ) {
 	re.DrawStretchPic( ax, ay, aw, ah,
 					   fcol, frow, 
 					   fcol + size, frow + size2, 
-					   cls.charSetShader );
+					   cls.charSetShader,
+						-1); //Fluffy (Widescreen2D)
 
 }
 
@@ -176,7 +177,8 @@ void SCR_DrawSmallChar( int x, int y, int ch ) {
 						SMALLCHAR_WIDTH * con.xadjust, SMALLCHAR_HEIGHT * con.yadjust, 
 		fcol, frow, 
 		fcol + size, frow + size2, 
-		cls.charSetShader );
+		cls.charSetShader,
+		-1); //Fluffy (Widescreen2D)
 
 }
 
@@ -326,7 +328,7 @@ void SCR_DrawDebugGraph (void)
 	y = cls.glconfig.vidHeight;
 	re.SetColor( g_color_table[0] );
 	re.DrawStretchPic(x, y - cl_graphheight->integer, 
-		w, cl_graphheight->integer, 0, 0, 0, 0, 0 );
+		w, cl_graphheight->integer, 0, 0, 0, 0, 0, -1); //Fluffy (Widescreen2D)
 	re.SetColor( NULL );
 
 	for (a=0 ; a<w ; a++)
@@ -339,7 +341,7 @@ void SCR_DrawDebugGraph (void)
 		if (v < 0)
 			v += cl_graphheight->integer * (1+(int)(-v / cl_graphheight->integer));
 		h = (int)v % cl_graphheight->integer;
-		re.DrawStretchPic( x+w-1-a, y - h, 1, h, 0, 0, 0, 0, 0 );
+		re.DrawStretchPic( x+w-1-a, y - h, 1, h, 0, 0, 0, 0, 0, -1); //Fluffy (Widescreen2D)
 	}
 }
 
@@ -386,7 +388,7 @@ void SCR_DrawScreenField( stereoFrame_t stereoFrame ) {
 	if ( uiFullscreen || (cls.state != CA_ACTIVE && cls.state != CA_CINEMATIC) ) {
 		if ( cls.glconfig.vidWidth * 480 > cls.glconfig.vidHeight * 640 ) {
 			re.SetColor( g_color_table[0] );
-			re.DrawStretchPic( 0, 0, cls.glconfig.vidWidth, cls.glconfig.vidHeight, 0, 0, 0, 0, 0 );
+			re.DrawStretchPic( 0, 0, cls.glconfig.vidWidth, cls.glconfig.vidHeight, 0, 0, 0, 0, 0, -1); //Fluffy (Widescreen2D)
 			re.SetColor( NULL );
 		}
 	}

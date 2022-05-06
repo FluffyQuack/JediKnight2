@@ -77,7 +77,7 @@ void trap_R_DrawStretchPic( float x, float y, float w, float h, float s1, float 
 //	syscall( UI_R_DRAWSTRETCHPIC, PASSFLOAT(x), PASSFLOAT(y), PASSFLOAT(w), PASSFLOAT(h), PASSFLOAT(s1), PASSFLOAT(t1), PASSFLOAT(s2), PASSFLOAT(t2), hShader );
 //	re.DrawStretchPic( x, y, w, h, s1, t1, s2, t2, hShader  );
 
-	ui.R_DrawStretchPic( x, y, w, h, s1, t1, s2, t2, hShader );
+	ui.R_DrawStretchPic( x, y, w, h, s1, t1, s2, t2, hShader, -1 ); //Fluffy (Widescreen2D)
 
 }
 

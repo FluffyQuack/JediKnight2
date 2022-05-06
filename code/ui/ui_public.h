@@ -85,7 +85,7 @@ typedef struct {
 	void		(*R_ModelBounds)( qhandle_t handle, vec3_t mins, vec3_t maxs );
 
 	void		(*R_SetColor)( const float *rgba );	// NULL = 1,1,1,1
-	void		(*R_DrawStretchPic) ( float x, float y, float w, float h, float s1, float t1, float s2, float t2, qhandle_t hShader );	// 0 = white
+	void		(*R_DrawStretchPic) ( float x, float y, float w, float h, float s1, float t1, float s2, float t2, qhandle_t hShader, int widescreenAnchor);	// 0 = white //Fluffy (Widescreen2D)
 	void		(*R_ScissorPic) ( float x, float y, float w, float h, float s1, float t1, float s2, float t2, qhandle_t hShader );	// 0 = white
 
 	// force a screen update, only used during gamestate load
