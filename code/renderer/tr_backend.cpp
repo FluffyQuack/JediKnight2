@@ -453,7 +453,6 @@ void RB_BeginDrawingView (void) {
 	// we will need to change the projection matrix before drawing
 	// 2D images again
 	backEnd.projection2D = qfalse;
-	backEnd.projection2D_widescreen = qfalse; //Fluffy (Widescreen2D)
 
 	//
 	// set the modelview matrix for the viewer
@@ -704,7 +703,6 @@ RB_SetGL2D
 */
 void	RB_SetGL2D (void) {
 	backEnd.projection2D = qtrue;
-	backEnd.projection2D_widescreen = qfalse; //Fluffy (Widescreen2D)
 
 	// set 2D virtual screen size
 	qglViewport( 0, 0, glConfig.vidWidth, glConfig.vidHeight );
@@ -718,33 +716,6 @@ void	RB_SetGL2D (void) {
 	GL_State( GLS_DEPTHTEST_DISABLE |
 			  GLS_SRCBLEND_SRC_ALPHA |
 			  GLS_DSTBLEND_ONE_MINUS_SRC_ALPHA );
-
-	qglDisable( GL_CULL_FACE );
-	qglDisable( GL_CLIP_PLANE0 );
-
-	// set time for 2D shaders
-	backEnd.refdef.time = ri.Milliseconds();
-	backEnd.refdef.floatTime = backEnd.refdef.time * 0.001;
-}
-
-//Fluffy (Widescreen2D): Variant of RB_SetGL2D() that sets up widescreen virtual screen. TODO: We should merge this with RB_SetGL2D() and add an argument that changes the behaviour
-void	RB_SetGL2D_Widescreen (void) {
-	backEnd.projection2D = qfalse;
-	backEnd.projection2D_widescreen = qtrue; //Fluffy (Widescreen2D)
-
-	// set 2D virtual screen size
-	qglViewport( 0, 0, glConfig.vidWidth, glConfig.vidHeight );
-	qglScissor( 0, 0, glConfig.vidWidth, glConfig.vidHeight );
-	qglMatrixMode(GL_PROJECTION);
-	qglLoadIdentity ();
-	//qglOrtho (0, 640 * (glConfig.windowAspect / (640.f / 480.f)), 480, 0, 0, 1);
-	qglOrtho (0, 480.f * glConfig.windowAspect, 480, 0, 0, 1);
-	qglMatrixMode(GL_MODELVIEW);
-	qglLoadIdentity ();
-
-	GL_State( GLS_DEPTHTEST_DISABLE |
-		GLS_SRCBLEND_SRC_ALPHA |
-		GLS_DSTBLEND_ONE_MINUS_SRC_ALPHA );
 
 	qglDisable( GL_CULL_FACE );
 	qglDisable( GL_CLIP_PLANE0 );
@@ -794,28 +765,31 @@ const void *RB_StretchPic ( const void *data ) {
 		RB_BeginSurface( shader, 0 );
 	}
 
-	//Fluffy (Widescreen2D)
-	if(cmd->commandId == RC_STRETCH_PIC)
-	{
-		if ( !backEnd.projection2D ) {
-			RB_SetGL2D();	//set culling and other states
-		}
-	}
-	else
-	{
-		if ( !backEnd.projection2D_widescreen ) {
-			RB_SetGL2D_Widescreen();
-		}
+	if ( !backEnd.projection2D ) {
+		RB_SetGL2D();	//set culling and other states
 	}
 
 	//Fluffy (Widescreen2D)
 	float x;
-	if(cmd->commandId == RC_STRETCH_PIC_MIDDLE)
-		x = cmd->x + (((480.f * glConfig.windowAspect) - 640.f) / 2);
-	else if(cmd->commandId == RC_STRETCH_PIC_RIGHT)
-		x = cmd->x + ((480.f * glConfig.windowAspect) - 640.f);
-	else
+	float w;
+	if(cmd->commandId == RC_STRETCH_PIC) //Default behaviour
+	{
 		x = cmd->x;
+		w = cmd->w;
+	}
+	else //Behaviour where we adjust scale and position of the 2D element so it's not stretched
+	{
+		x = cmd->x / (glConfig.windowAspect / (640.f / 480.f));
+		w = cmd->w / (glConfig.windowAspect / (640.f / 480.f));
+		if(cmd->commandId == RC_STRETCH_PIC_MIDDLE || cmd->commandId == RC_STRETCH_PIC_RIGHT)
+		{
+			float squashedWidthDiff = 640.f - (640.f / (glConfig.windowAspect / (640.f / 480.f)));
+			if(cmd->commandId == RC_STRETCH_PIC_MIDDLE)
+				x += (squashedWidthDiff / 2);
+			else if(cmd->commandId == RC_STRETCH_PIC_RIGHT)
+				x += squashedWidthDiff;
+		}
+	}
 
 	RB_CHECKOVERFLOW( 4, 6 );
 	numVerts = tess.numVertexes;
@@ -843,14 +817,14 @@ const void *RB_StretchPic ( const void *data ) {
 	tess.texCoords[ numVerts ][0][0] = cmd->s1;
 	tess.texCoords[ numVerts ][0][1] = cmd->t1;
 
-	tess.xyz[ numVerts + 1 ][0] = x + cmd->w; //Fluffy (Widescreen2D)
+	tess.xyz[ numVerts + 1 ][0] = x + w; //Fluffy (Widescreen2D)
 	tess.xyz[ numVerts + 1 ][1] = cmd->y;
 	tess.xyz[ numVerts + 1 ][2] = 0;
 
 	tess.texCoords[ numVerts + 1 ][0][0] = cmd->s2;
 	tess.texCoords[ numVerts + 1 ][0][1] = cmd->t1;
 
-	tess.xyz[ numVerts + 2 ][0] = x + cmd->w; //Fluffy (Widescreen2D)
+	tess.xyz[ numVerts + 2 ][0] = x + w; //Fluffy (Widescreen2D)
 	tess.xyz[ numVerts + 2 ][1] = cmd->y + cmd->h;
 	tess.xyz[ numVerts + 2 ][2] = 0;
 
@@ -1266,7 +1240,6 @@ const void	*RB_SwapBuffers( const void *data ) {
     GLimp_EndFrame();
 
 	backEnd.projection2D = qfalse;
-	backEnd.projection2D_widescreen = qfalse; //Fluffy (Widescreen2D)
 
 	return (const void *)(cmd + 1);
 }
