@@ -779,11 +779,11 @@ const void *RB_StretchPic ( const void *data ) {
 	}
 	else //Behaviour where we adjust scale and position of the 2D element so it's not stretched
 	{
-		x = cmd->x / (glConfig.windowAspect / (640.f / 480.f));
-		w = cmd->w / (glConfig.windowAspect / (640.f / 480.f));
+		x = cmd->x / (glConfig.windowAspect / (SCREEN_WIDTH_F / SCREEN_HEIGHT_F));
+		w = cmd->w / (glConfig.windowAspect / (SCREEN_WIDTH_F / SCREEN_HEIGHT_F));
 		if(cmd->commandId == RC_STRETCH_PIC_MIDDLE || cmd->commandId == RC_STRETCH_PIC_RIGHT)
 		{
-			float squashedWidthDiff = 640.f - (640.f / (glConfig.windowAspect / (640.f / 480.f)));
+			float squashedWidthDiff = SCREEN_WIDTH_F - (SCREEN_WIDTH_F / (glConfig.windowAspect / (SCREEN_WIDTH_F / SCREEN_HEIGHT_F)));
 			if(cmd->commandId == RC_STRETCH_PIC_MIDDLE)
 				x += (squashedWidthDiff / 2);
 			else if(cmd->commandId == RC_STRETCH_PIC_RIGHT)
