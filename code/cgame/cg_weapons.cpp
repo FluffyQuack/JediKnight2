@@ -1332,15 +1332,8 @@ void CG_DrawIconBackground(void)
 		}
 
 		cgi_R_SetColor( colorTable[CT_WHITE] );
-
-		//Fluffy (Widescreen2D)
-		//CG_DrawPic( prongLeftX+xAdd, y2-10, 40, 80, cgs.media.weaponProngsOff);
-		cgi_R_DrawStretchPic( prongLeftX+xAdd, y2-10, 40, 80, 0, 0, 1, 1, cgs.media.weaponProngsOff, RENDER2D_ANCHOR_LEFT); //Fluffy (Widescreen2D)
-		
-		//Fluffy (Widescreen2D)
-		//CG_DrawPic( prongRightX-xAdd, y2-10, -40, 80, cgs.media.weaponProngsOff);
-		cgi_R_DrawStretchPic( prongRightX-xAdd, y2-10, -40, 80, 0, 0, 1, 1, cgs.media.weaponProngsOff, RENDER2D_ANCHOR_RIGHT); //Fluffy (Widescreen2D)
-
+		CG_DrawPic( prongLeftX+xAdd, y2-10, 40, 80, cgs.media.weaponProngsOff, RENDER2D_ANCHOR_LEFT); //Fluffy (Widescreen2D)
+		CG_DrawPic( prongRightX-xAdd, y2-10, -40, 80, cgs.media.weaponProngsOff, RENDER2D_ANCHOR_RIGHT); //Fluffy (Widescreen2D)
 		return;
 	}
 

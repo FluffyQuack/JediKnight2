@@ -702,8 +702,8 @@ Ghoul2 Insert End
 
 void CG_FillRect( float x, float y, float width, float height, const float *color );
 void CG_Scissor( float x, float y, float width, float height);
-void CG_DrawPic( float x, float y, float width, float height, qhandle_t hShader );
-void CG_DrawPic2( float x, float y, float width, float height, float s1, float t1, float s2, float t2, qhandle_t hShader );
+void CG_DrawPic( float x, float y, float width, float height, qhandle_t hShader, int widescreenAnchor = RENDER2D_STRETCH); //Fluffy (Widescreen2D)
+void CG_DrawPic2( float x, float y, float width, float height, float s1, float t1, float s2, float t2, qhandle_t hShader, int widescreenAnchor = RENDER2D_STRETCH); //Fluffy (Widescreen2D)
 void CG_DrawRotatePic( float x, float y, float width, float height,float angle, qhandle_t hShader );
 void CG_DrawRotatePic2( float x, float y, float width, float height,float angle, qhandle_t hShader );
 void CG_DrawString( float x, float y, const char *string, 

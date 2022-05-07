@@ -59,8 +59,8 @@ Coordinates are 640*480 virtual values
 A width of 0 will draw with the original image width
 =================
 */
-void CG_DrawPic( float x, float y, float width, float height, qhandle_t hShader ) {
-	cgi_R_DrawStretchPic( x, y, width, height, 0, 0, 1, 1, hShader, RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
+void CG_DrawPic( float x, float y, float width, float height, qhandle_t hShader, int widescreenAnchor) { //Fluffy (Widescreen2D)
+	cgi_R_DrawStretchPic( x, y, width, height, 0, 0, 1, 1, hShader, widescreenAnchor ); //Fluffy (Widescreen2D)
 }
 
 /*
@@ -72,9 +72,9 @@ A width of 0 will draw with the original image width
 Can also specify the exact texture coordinates
 =================
 */
-void CG_DrawPic2( float x, float y, float width, float height, float s1, float t1, float s2, float t2, qhandle_t hShader ) 
+void CG_DrawPic2( float x, float y, float width, float height, float s1, float t1, float s2, float t2, qhandle_t hShader, int widescreenAnchor) //Fluffy (Widescreen2D)
 {
-	cgi_R_DrawStretchPic( x, y, width, height, s1, t1, s2, t2, hShader, RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
+	cgi_R_DrawStretchPic( x, y, width, height, s1, t1, s2, t2, hShader, widescreenAnchor ); //Fluffy (Widescreen2D)
 }
 
 /*
@@ -396,20 +396,14 @@ void CG_DrawNumField (int x, int y, int width, int value,int charWidth,int charH
 			switch(style)
 			{
 			case NUM_FONT_SMALL:
-				//Fluffy (Widescreen2D)
-				//CG_DrawPic( x,y, charWidth, charHeight, cgs.media.smallnumberShaders[0] );
-				cgi_R_DrawStretchPic( x, y, charWidth, charHeight, 0, 0, 1, 1, cgs.media.smallnumberShaders[0], widescreenAnchor ); 
+				CG_DrawPic( x,y, charWidth, charHeight, cgs.media.smallnumberShaders[0], widescreenAnchor  ); //Fluffy (Widescreen2D)
 				break;
 			case NUM_FONT_CHUNKY:
-				//Fluffy (Widescreen2D)
-				//CG_DrawPic( x,y, charWidth, charHeight, cgs.media.chunkyNumberShaders[0] );
-				cgi_R_DrawStretchPic( x, y, charWidth, charHeight, 0, 0, 1, 1, cgs.media.chunkyNumberShaders[0], widescreenAnchor ); 
+				CG_DrawPic( x,y, charWidth, charHeight, cgs.media.chunkyNumberShaders[0], widescreenAnchor  ); //Fluffy (Widescreen2D)
 				break;
 			default:
 			case NUM_FONT_BIG:
-				//Fluffy (Widescreen2D)
-				//CG_DrawPic( x,y, charWidth, charHeight, cgs.media.numberShaders[0] );
-				cgi_R_DrawStretchPic( x, y, charWidth, charHeight, 0, 0, 1, 1, cgs.media.numberShaders[0], widescreenAnchor ); 
+				CG_DrawPic( x,y, charWidth, charHeight, cgs.media.numberShaders[0], widescreenAnchor  ); //Fluffy (Widescreen2D)
 				break;
 			}
 			x += 2 + (xWidth);
@@ -431,21 +425,15 @@ void CG_DrawNumField (int x, int y, int width, int value,int charWidth,int charH
 		switch(style)
 		{
 		case NUM_FONT_SMALL:
-			//Fluffy (Widescreen2D)
-			//CG_DrawPic( x,y, charWidth, charHeight, cgs.media.smallnumberShaders[frame] );
-			cgi_R_DrawStretchPic( x, y, charWidth, charHeight, 0, 0, 1, 1, cgs.media.smallnumberShaders[frame], widescreenAnchor ); 
+			CG_DrawPic( x,y, charWidth, charHeight, cgs.media.smallnumberShaders[frame], widescreenAnchor );  //Fluffy (Widescreen2D)
 			x++;	// For a one line gap
 			break;
 		case NUM_FONT_CHUNKY:
-			//Fluffy (Widescreen2D)
-			//CG_DrawPic( x,y, charWidth, charHeight, cgs.media.chunkyNumberShaders[frame] );
-			cgi_R_DrawStretchPic( x, y, charWidth, charHeight, 0, 0, 1, 1, cgs.media.chunkyNumberShaders[frame], widescreenAnchor ); 
+			CG_DrawPic( x,y, charWidth, charHeight, cgs.media.chunkyNumberShaders[frame], widescreenAnchor ); //Fluffy (Widescreen2D)
 			break;
 		default:
 		case NUM_FONT_BIG:
-			//Fluffy (Widescreen2D)
-			//CG_DrawPic( x,y, charWidth, charHeight, cgs.media.numberShaders[frame] );
-			cgi_R_DrawStretchPic( x, y, charWidth, charHeight, 0, 0, 1, 1, cgs.media.numberShaders[frame], widescreenAnchor ); 
+			CG_DrawPic( x,y, charWidth, charHeight, cgs.media.numberShaders[frame], widescreenAnchor ); //Fluffy (Widescreen2D)
 			break;
 		}
 
