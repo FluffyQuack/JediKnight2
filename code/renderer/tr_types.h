@@ -212,6 +212,11 @@ typedef struct {
 	// than scrWidth / scrHeight if the pixels are non-square
 	// normal screens should be 4/3, but wide aspect monitors may be 16/9
 	float					windowAspect;
+	
+	//Fluffy (Widescreen2D): For aspect ratios that aren't 4:3 we have to modify a bunch of coordinates and texture sizes to ensure they aren't stretched
+	//This value represents the horizontal size difference between default virtual width (640) and the one that's currently used.
+	//If value is 0, that means current aspect ratio matches the default one.
+	float					aspectWidthDiff; 
 
 	int						displayFrequency;
 

@@ -783,11 +783,10 @@ const void *RB_StretchPic ( const void *data ) {
 		w = cmd->w / (glConfig.windowAspect / (SCREEN_WIDTH_F / SCREEN_HEIGHT_F));
 		if(cmd->commandId == RC_STRETCH_PIC_MIDDLE || cmd->commandId == RC_STRETCH_PIC_RIGHT)
 		{
-			float squashedWidthDiff = SCREEN_WIDTH_F - (SCREEN_WIDTH_F / (glConfig.windowAspect / (SCREEN_WIDTH_F / SCREEN_HEIGHT_F)));
 			if(cmd->commandId == RC_STRETCH_PIC_MIDDLE)
-				x += (squashedWidthDiff / 2);
+				x += (glConfig.aspectWidthDiff / 2);
 			else if(cmd->commandId == RC_STRETCH_PIC_RIGHT)
-				x += squashedWidthDiff;
+				x += glConfig.aspectWidthDiff;
 		}
 	}
 

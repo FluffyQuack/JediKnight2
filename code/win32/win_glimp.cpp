@@ -730,6 +730,10 @@ static rserr_t GLW_SetMode( int mode,
 		ri.Printf( PRINT_ALL, " invalid mode\n" );
 		return RSERR_INVALID_MODE;
 	}
+
+	//Fluffy (Widescreen2D): Calculate aspectWidthDiff
+	glConfig.aspectWidthDiff = SCREEN_WIDTH_F - (SCREEN_WIDTH_F / (glConfig.windowAspect / (SCREEN_WIDTH_F / SCREEN_HEIGHT_F)));
+
 	ri.Printf( PRINT_ALL, " %d %d %s\n", glConfig.vidWidth, glConfig.vidHeight, win_fs[cdsFullscreen] );
 
 	//
