@@ -1671,4 +1671,13 @@ typedef enum
 
 #include "../game/genericparser2.h"
 
+//Fluffy (Widescreen2D)
+enum
+{
+	RENDER2D_STRETCH = -1, //Default rendering of 2D element where we use 640x480 virtual screen as-is
+	RENDER2D_ANCHOR_LEFT, //This and the following modifies coordinates of an element so it renders non-stretched, but we'll have to define an "anchor" point for the element. Left, middle, or right.
+	RENDER2D_ANCHOR_MIDDLE,
+	RENDER2D_ANCHOR_RIGHT,
+};
+
 #endif	// __Q_SHARED_H

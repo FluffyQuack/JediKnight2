@@ -917,7 +917,7 @@ void RE_Font_DrawString(int ox, int oy, const char *psText, const float *rgba, c
 								pLetter->t2,					// float t2
 								//lastcolour.c, 
 								hShader,							// qhandle_t hShader
-								-1 ); //Fluffy (Widescreen2D)
+					RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
 
 				x += iAdvancePixels;
 			}

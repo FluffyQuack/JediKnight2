@@ -709,7 +709,7 @@ void CG_DrawRotatePic2( float x, float y, float width, float height,float angle,
 void CG_DrawString( float x, float y, const char *string, 
 				   float charWidth, float charHeight, const float *modulate );
 void CG_PrintInterfaceGraphics(int min,int max);
-void CG_DrawNumField (int x, int y, int width, int value,int charWidth,int charHeight,int style,qboolean zeroFill, int widescreenAnchor = -1); //Fluffy (Widescreen2D)
+void CG_DrawNumField (int x, int y, int width, int value,int charWidth,int charHeight,int style,qboolean zeroFill, int widescreenAnchor = RENDER2D_STRETCH); //Fluffy (Widescreen2D)
 void CG_DrawProportionalString( int x, int y, const char* str, int style, vec4_t color );
 
 

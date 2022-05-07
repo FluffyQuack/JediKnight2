@@ -31,7 +31,7 @@ Coordinates are 640*480 virtual values
 */
 void CG_FillRect( float x, float y, float width, float height, const float *color ) {
 	cgi_R_SetColor( color );
-	cgi_R_DrawStretchPic( x, y, width, height, 0, 0, 0, 0, cgs.media.whiteShader, -1); //Fluffy (Widescreen2D)
+	cgi_R_DrawStretchPic( x, y, width, height, 0, 0, 0, 0, cgs.media.whiteShader, RENDER2D_STRETCH); //Fluffy (Widescreen2D)
 	cgi_R_SetColor( NULL );
 }
 
@@ -60,7 +60,7 @@ A width of 0 will draw with the original image width
 =================
 */
 void CG_DrawPic( float x, float y, float width, float height, qhandle_t hShader ) {
-	cgi_R_DrawStretchPic( x, y, width, height, 0, 0, 1, 1, hShader, -1 ); //Fluffy (Widescreen2D)
+	cgi_R_DrawStretchPic( x, y, width, height, 0, 0, 1, 1, hShader, RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
 }
 
 /*
@@ -74,7 +74,7 @@ Can also specify the exact texture coordinates
 */
 void CG_DrawPic2( float x, float y, float width, float height, float s1, float t1, float s2, float t2, qhandle_t hShader ) 
 {
-	cgi_R_DrawStretchPic( x, y, width, height, s1, t1, s2, t2, hShader, -1 ); //Fluffy (Widescreen2D)
+	cgi_R_DrawStretchPic( x, y, width, height, s1, t1, s2, t2, hShader, RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
 }
 
 /*
@@ -211,7 +211,7 @@ void CG_DrawStringExt( int x, int y, const char *string, const float *setColor,
 
 
 void CG_DrawSmallStringColor( int x, int y, const char *s, vec4_t color ) {
-	CG_DrawStringExt( x, y, s, color, qtrue, qfalse, SMALLCHAR_WIDTH, SMALLCHAR_HEIGHT, -1 ); //Fluffy (Widescreen2D)
+	CG_DrawStringExt( x, y, s, color, qtrue, qfalse, SMALLCHAR_WIDTH, SMALLCHAR_HEIGHT, RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
 }
 
 /*
@@ -252,7 +252,7 @@ static void CG_TileClearBox( int x, int y, int w, int h, qhandle_t hShader ) {
 	t1 = y/64.0;
 	s2 = (x+w)/64.0;
 	t2 = (y+h)/64.0;
-	cgi_R_DrawStretchPic( x, y, w, h, s1, t1, s2, t2, hShader, -1 ); //Fluffy (Widescreen2D)
+	cgi_R_DrawStretchPic( x, y, w, h, s1, t1, s2, t2, hShader, RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
 }
 
 

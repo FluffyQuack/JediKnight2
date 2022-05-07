@@ -540,7 +540,7 @@ void Con_DrawSolidConsole( float frac )
 	// draw the bottom bar and version number
 
 	re.SetColor( color );
-	re.DrawStretchPic( 0, y, SCREEN_WIDTH, 2, 0, 0, 0, 0, cls.whiteShader, -1 ); //Fluffy (Widescreen2D)
+	re.DrawStretchPic( 0, y, SCREEN_WIDTH, 2, 0, 0, 0, 0, cls.whiteShader, RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
 
 	i = strlen( Q3_VERSION );
 

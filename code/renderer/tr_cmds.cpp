@@ -290,11 +290,11 @@ void RE_StretchPic ( float x, float y, float w, float h,
 	}
 	
 	//Fluffy (Widescreen2D)
-	if(widescreenAchor == 0 && r_stretch2D->integer == 0)
+	if(widescreenAchor == RENDER2D_ANCHOR_LEFT && r_stretch2D->integer == 0)
 		cmd->commandId = RC_STRETCH_PIC_LEFT;
-	else if(widescreenAchor == 1 && r_stretch2D->integer == 0)
+	else if(widescreenAchor == RENDER2D_ANCHOR_MIDDLE && r_stretch2D->integer == 0)
 		cmd->commandId = RC_STRETCH_PIC_MIDDLE;
-	else if(widescreenAchor == 2 && r_stretch2D->integer == 0)
+	else if(widescreenAchor == RENDER2D_ANCHOR_RIGHT && r_stretch2D->integer == 0)
 		cmd->commandId = RC_STRETCH_PIC_RIGHT;
 	else	
 		cmd->commandId = RC_STRETCH_PIC;
