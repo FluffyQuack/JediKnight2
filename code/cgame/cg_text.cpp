@@ -273,7 +273,7 @@ void CG_DrawGameText(void)
 //
 const char *CG_DisplayBoxedText(int iBoxX, int iBoxY, int iBoxWidth, int iBoxHeight, 
 								const char *psText, int iFontHandle, float fScale,
-								const vec4_t v4Color)
+								const vec4_t v4Color, int widescreenAnchor) //Fluffy (Widescreen2D)
 {
 	cgi_R_SetColor( v4Color );
 
@@ -377,7 +377,7 @@ const char *CG_DisplayBoxedText(int iBoxX, int iBoxY, int iBoxWidth, int iBoxHei
 
 		// ... and print it...
 		//
-		cgi_R_Font_DrawString(iBoxX, iYpos, sLineForDisplay, v4Color, iFontHandle, -1, fScale);
+		cgi_R_Font_DrawString(iBoxX, iYpos, sLineForDisplay, v4Color, iFontHandle, -1, fScale, widescreenAnchor); //Fluffy (Widescreen2D
 		iYpos += iFontHeightAdvance;
 
 		// and echo to console in dev mode...

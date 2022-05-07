@@ -69,7 +69,7 @@ typedef struct {
 	int			(*R_Font_StrLenPixels)(const char *text, const int setIndex, const float scale/* = 1.0f*/);
 	int			(*R_Font_StrLenChars)(const char *text);
 	int			(*R_Font_HeightPixels)(const int setIndex, const float scale/* = 1.0f*/);
-	void		(*R_Font_DrawString)(int ox, int oy, const char *text, const float *rgba, const int setIndex, int iMaxPixelWidth, const float scale/* = 1.0f*/);
+	void		(*R_Font_DrawString)(int ox, int oy, const char *text, const float *rgba, const int setIndex, int iMaxPixelWidth, const float scale/* = 1.0f*/, int widescreenAnchor);	// 0 = white //Fluffy (Widescreen2D)
 	qboolean	(*Language_IsAsian) (void);
 	qboolean	(*Language_UsesSpaces) (void);
 	unsigned int (*AnyLanguage_ReadCharFromString)( const char **ppsText, qboolean *pbIsTrailingPunctuation /* = NULL */);

@@ -45,7 +45,7 @@ int CG_GetCameraPos( vec3_t camerapos );
 void UseItem(int itemNum);
 const char *CG_DisplayBoxedText(int iBoxX, int iBoxY, int iBoxWidth, int iBoxHeight, 
 								const char *psText, int iFontHandle, float fScale,
-								const vec4_t v4Color);
+								const vec4_t v4Color, int widescreenAnchor); //Fluffy (Widescreen2D)
 
 #define NUM_CHUNKS		6
 /*
@@ -2790,7 +2790,7 @@ void CG_DrawInventorySelect( void )
 		cgi_SP_GetStringTextString("INGAME_EMPTY_INV",text, sizeof(text) );
 		int w = cgi_R_Font_StrLenPixels( text, cgs.media.qhFontSmall, 1.0f );	
 		x = ( SCREEN_WIDTH - w ) / 2;
-		CG_DrawProportionalString(x, y2 + 22, text, CG_CENTER | CG_SMALLFONT, colorTable[CT_ICON_BLUE]);
+		CG_DrawProportionalString(x, y2 + 22, text, CG_CENTER | CG_SMALLFONT, colorTable[CT_ICON_BLUE], RENDER2D_ANCHOR_MIDDLE); //Fluffy (Widescreen2D) Fluffy TODO: Should this be middle?
 		return;
 	}
 
@@ -2986,7 +2986,7 @@ void CG_DrawDataPadInventorySelect( void )
 		cgi_SP_GetStringTextString("INGAME_EMPTY_INV",text, sizeof(text) );
 		int w = cgi_R_Font_StrLenPixels( text, cgs.media.qhFontSmall, 1.0f );	
 		x = ( SCREEN_WIDTH - w ) / 2;
-		CG_DrawProportionalString(x, 300 + 22, text, CG_CENTER | CG_SMALLFONT, colorTable[CT_ICON_BLUE]);
+		CG_DrawProportionalString(x, 300 + 22, text, CG_CENTER | CG_SMALLFONT, colorTable[CT_ICON_BLUE], RENDER2D_ANCHOR_MIDDLE); //Fluffy (Widescreen2D)
 		return;
 	}
 
@@ -3049,11 +3049,11 @@ void CG_DrawDataPadInventorySelect( void )
 		if (inv_icons[i])
 		{
 			cgi_R_SetColor(NULL);
-			CG_DrawPic( holdX, y+10, smallIconSize, smallIconSize, inv_icons[i] );
+			CG_DrawPic( holdX, y+10, smallIconSize, smallIconSize, inv_icons[i], RENDER2D_ANCHOR_MIDDLE); //Fluffy (Widescreen2D)
 
 			cgi_R_SetColor(colorTable[CT_ICON_BLUE]);
 			CG_DrawNumField (holdX + addX, y + smallIconSize, 2, cg.snap->ps.inventory[i], 6, 12, 
-				NUM_FONT_SMALL,qfalse);
+				NUM_FONT_SMALL,qfalse, RENDER2D_ANCHOR_MIDDLE); //Fluffy (Widescreen2D)
 
 			holdX -= (smallIconSize+pad);
 		}
@@ -3064,11 +3064,11 @@ void CG_DrawDataPadInventorySelect( void )
 	if (inv_icons[cg.DataPadInventorySelect])
 	{
 		cgi_R_SetColor(NULL);
-		CG_DrawPic( x-(bigIconSize/2), (y-((bigIconSize-smallIconSize)/2))+10, bigIconSize, bigIconSize, inv_icons[cg.DataPadInventorySelect] );
+		CG_DrawPic( x-(bigIconSize/2), (y-((bigIconSize-smallIconSize)/2))+10, bigIconSize, bigIconSize, inv_icons[cg.DataPadInventorySelect], RENDER2D_ANCHOR_MIDDLE); //Fluffy (Widescreen2D)
 		addX = (float) bigIconSize * .75;
 		cgi_R_SetColor(colorTable[CT_ICON_BLUE]);
 		CG_DrawNumField ((x-(bigIconSize/2)) + addX, y, 2, cg.snap->ps.inventory[cg.DataPadInventorySelect], 6, 12, 
-			NUM_FONT_SMALL,qfalse);
+			NUM_FONT_SMALL,qfalse, RENDER2D_ANCHOR_MIDDLE); //Fluffy (Widescreen2D)
 
 		if (inv_names[cg.DataPadInventorySelect])
 		{
@@ -3111,11 +3111,11 @@ void CG_DrawDataPadInventorySelect( void )
 		if (inv_icons[i])
 		{
 			cgi_R_SetColor(NULL);
-			CG_DrawPic( holdX, y+10, smallIconSize, smallIconSize, inv_icons[i] );
+			CG_DrawPic( holdX, y+10, smallIconSize, smallIconSize, inv_icons[i], RENDER2D_ANCHOR_MIDDLE); //Fluffy (Widescreen2D)
 
 			cgi_R_SetColor(colorTable[CT_ICON_BLUE]);
 			CG_DrawNumField (holdX + addX, y + smallIconSize, 2, cg.snap->ps.inventory[i], 6, 12, 
-				NUM_FONT_SMALL,qfalse);
+				NUM_FONT_SMALL,qfalse, RENDER2D_ANCHOR_MIDDLE); //Fluffy (Widescreen2D)
 
 			holdX += (smallIconSize+pad);
 		}
@@ -3134,8 +3134,8 @@ void CG_DrawDataPadInventorySelect( void )
 			CG_DisplayBoxedText(70,50,500,300,text,
 														cgs.media.qhFontSmall,
 														0.7f,
-														textColor	
-														);
+														textColor,
+														RENDER2D_ANCHOR_MIDDLE); //Fluffy (Widescreen2D)
 		}
 	}
 }
@@ -3723,7 +3723,7 @@ void CG_DrawDataPadForceSelect( void )
 
 		if (force_icons[showDataPadPowers[i]])
 		{
-			CG_DrawPic( holdX, y, smallIconSize, smallIconSize, force_icons[showDataPadPowers[i]] ); 
+			CG_DrawPic( holdX, y, smallIconSize, smallIconSize, force_icons[showDataPadPowers[i]], RENDER2D_ANCHOR_MIDDLE); //Fluffy (Widescreen2D)
 		}
 
 		// A new force power
@@ -3731,7 +3731,7 @@ void CG_DrawDataPadForceSelect( void )
 			((cg_updatedDataPadForcePower2.integer - 1) == showDataPadPowers[i]) ||
 			((cg_updatedDataPadForcePower3.integer - 1) == showDataPadPowers[i]))
 		{
-			CG_DrawPic( holdX, y, smallIconSize, smallIconSize, cgs.media.DPForcePowerOverlay ); 
+			CG_DrawPic( holdX, y, smallIconSize, smallIconSize, cgs.media.DPForcePowerOverlay, RENDER2D_ANCHOR_MIDDLE); //Fluffy (Widescreen2D)
 		}
 
 		if (force_icons[showDataPadPowers[i]])
@@ -3744,14 +3744,14 @@ void CG_DrawDataPadForceSelect( void )
 	if (force_icons[showDataPadPowers[cg.DataPadforcepowerSelect]])
 	{
 
-		CG_DrawPic( x-(bigIconSize/2), (y-((bigIconSize-smallIconSize)/2)), bigIconSize, bigIconSize, force_icons[showDataPadPowers[cg.DataPadforcepowerSelect]] ); //only cache the icon for display
+		CG_DrawPic( x-(bigIconSize/2), (y-((bigIconSize-smallIconSize)/2)), bigIconSize, bigIconSize, force_icons[showDataPadPowers[cg.DataPadforcepowerSelect]], RENDER2D_ANCHOR_MIDDLE ); //only cache the icon for display //Fluffy (Widescreen2D)
 
 		// New force power
 		if (((cg_updatedDataPadForcePower1.integer - 1) == showDataPadPowers[cg.DataPadforcepowerSelect]) ||
 			((cg_updatedDataPadForcePower2.integer - 1) == showDataPadPowers[cg.DataPadforcepowerSelect]) ||
 			((cg_updatedDataPadForcePower3.integer - 1) == showDataPadPowers[cg.DataPadforcepowerSelect]))
 		{			
-			CG_DrawPic( x-(bigIconSize/2), (y-((bigIconSize-smallIconSize)/2)), bigIconSize, bigIconSize, cgs.media.DPForcePowerOverlay ); 
+			CG_DrawPic( x-(bigIconSize/2), (y-((bigIconSize-smallIconSize)/2)), bigIconSize, bigIconSize, cgs.media.DPForcePowerOverlay, RENDER2D_ANCHOR_MIDDLE); //Fluffy (Widescreen2D)
 		}
 	}
 
@@ -3780,7 +3780,7 @@ void CG_DrawDataPadForceSelect( void )
 
 		if (force_icons[showDataPadPowers[i]])
 		{
-			CG_DrawPic( holdX, y, smallIconSize, smallIconSize, force_icons[showDataPadPowers[i]] ); //only cache the icon for display
+			CG_DrawPic( holdX, y, smallIconSize, smallIconSize, force_icons[showDataPadPowers[i]], RENDER2D_ANCHOR_MIDDLE ); //only cache the icon for display //Fluffy (Widescreen2D)
 		}
 
 		// A new force power
@@ -3788,7 +3788,7 @@ void CG_DrawDataPadForceSelect( void )
 			((cg_updatedDataPadForcePower2.integer - 1) == showDataPadPowers[i]) ||
 			((cg_updatedDataPadForcePower3.integer - 1) == showDataPadPowers[i]))
 		{
-			CG_DrawPic( holdX, y, smallIconSize, smallIconSize, cgs.media.DPForcePowerOverlay ); //only cache the icon for display
+			CG_DrawPic( holdX, y, smallIconSize, smallIconSize, cgs.media.DPForcePowerOverlay, RENDER2D_ANCHOR_MIDDLE ); //only cache the icon for display //Fluffy (Widescreen2D)
 		}
 
 		if (force_icons[showDataPadPowers[i]])
@@ -3818,8 +3818,8 @@ void CG_DrawDataPadForceSelect( void )
 		CG_DisplayBoxedText(70,50,500,300,va("%s%s",text,text2),
 													cgs.media.qhFontSmall,
 													0.7f,
-													colorTable[CT_ICON_BLUE]	
-													);
+													colorTable[CT_ICON_BLUE],	
+													RENDER2D_ANCHOR_MIDDLE); //Fluffy (Widescreen2D)
 	}
 }
 

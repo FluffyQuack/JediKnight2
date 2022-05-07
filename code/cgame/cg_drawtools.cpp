@@ -449,8 +449,8 @@ void CG_DrawNumField (int x, int y, int width, int value,int charWidth,int charH
 CG_DrawProportionalString
 =================
 */
-void CG_DrawProportionalString( int x, int y, const char* str, int style, vec4_t color ) 
+void CG_DrawProportionalString( int x, int y, const char* str, int style, vec4_t color, int widescreenAnchor ) //Fluffy (Widescreen2D)
 {
 	//assert(!style);//call this directly if you need style (OR it into the font handle)
-	cgi_R_Font_DrawString (x, y, str, color, cgs.media.qhFontMedium, -1, 1.0f);
+	cgi_R_Font_DrawString (x, y, str, color, cgs.media.qhFontMedium, -1, 1.0f, widescreenAnchor ); //Fluffy (Widescreen2D)
 }

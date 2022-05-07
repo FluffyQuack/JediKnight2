@@ -225,7 +225,7 @@ static void CG_DrawHUDRightFrame1(int x,int y, qboolean dataPad) //Fluffy (Wides
 {
 	cgi_R_SetColor( colorTable[CT_WHITE] );
 	// Inner gray wire frame
-	CG_DrawPic(   x, y, 80, 80, cgs.media.HUDInnerRight, dataPad ? RENDER2D_STRETCH : RENDER2D_ANCHOR_RIGHT); //Fluffy (Widescreen2D)
+	CG_DrawPic(   x, y, 80, 80, cgs.media.HUDInnerRight, dataPad ? RENDER2D_ANCHOR_MIDDLE : RENDER2D_ANCHOR_RIGHT); //Fluffy (Widescreen2D)
 }
 
 /*
@@ -259,7 +259,7 @@ static void CG_DrawMessageLit(centity_t *cent,int x,int y, qboolean dataPad) //F
 			}
 
 			cgi_R_SetColor(colorTable[CT_HUD_RED]);
-			CG_DrawPic( x + 33,y + 41, 16,16, cgs.media.messageLitOn, dataPad ? RENDER2D_STRETCH : RENDER2D_ANCHOR_RIGHT); //Fluffy (Widescreen2D)
+			CG_DrawPic( x + 33,y + 41, 16,16, cgs.media.messageLitOn, dataPad ? RENDER2D_ANCHOR_MIDDLE : RENDER2D_ANCHOR_RIGHT); //Fluffy (Widescreen2D)
 		}
 		else
 		{
@@ -268,7 +268,7 @@ static void CG_DrawMessageLit(centity_t *cent,int x,int y, qboolean dataPad) //F
 	}
 
 	cgi_R_SetColor(colorTable[CT_WHITE]);
-	CG_DrawPic( x + 33,y + 41, 16,16, cgs.media.messageLitOff, dataPad ? RENDER2D_STRETCH : RENDER2D_ANCHOR_RIGHT); //Fluffy (Widescreen2D)
+	CG_DrawPic( x + 33,y + 41, 16,16, cgs.media.messageLitOff, dataPad ? RENDER2D_ANCHOR_MIDDLE : RENDER2D_ANCHOR_RIGHT); //Fluffy (Widescreen2D)
 }
 
 /*
@@ -328,7 +328,7 @@ static void CG_DrawForcePower(centity_t *cent,int x,int y, qboolean dataPad) //F
 			forceTicPos[i].width, 
 			forceTicPos[i].height, 
 			forceTicPos[i].tic,
-			dataPad ? RENDER2D_STRETCH : RENDER2D_ANCHOR_RIGHT); //Fluffy (Widescreen2D)
+			dataPad ? RENDER2D_ANCHOR_MIDDLE : RENDER2D_ANCHOR_RIGHT); //Fluffy (Widescreen2D)
 
 		value -= inc;
 	}
@@ -372,14 +372,14 @@ static void CG_DrawAmmo(centity_t	*cent,int x,int y, qboolean dataPad) //Fluffy 
 		{
 		case 1://FORCE_LEVEL_1:
 		case 5://FORCE_LEVEL_5://Tavion
-			CG_DrawPic( x, y, 80, 40, cgs.media.HUDSaberStyleFast, dataPad ? RENDER2D_STRETCH : RENDER2D_ANCHOR_RIGHT); //Fluffy (Widescreen2D)
+			CG_DrawPic( x, y, 80, 40, cgs.media.HUDSaberStyleFast, dataPad ? RENDER2D_ANCHOR_MIDDLE : RENDER2D_ANCHOR_RIGHT); //Fluffy (Widescreen2D)
 			break;
 		case 2://FORCE_LEVEL_2:
-			CG_DrawPic( x, y, 80, 40, cgs.media.HUDSaberStyleMed, dataPad ? RENDER2D_STRETCH : RENDER2D_ANCHOR_RIGHT); //Fluffy (Widescreen2D)
+			CG_DrawPic( x, y, 80, 40, cgs.media.HUDSaberStyleMed, dataPad ? RENDER2D_ANCHOR_MIDDLE : RENDER2D_ANCHOR_RIGHT); //Fluffy (Widescreen2D)
 			break;
 		case 3://FORCE_LEVEL_3:
 		case 4://FORCE_LEVEL_4://Desann
-			CG_DrawPic( x, y, 80, 40, cgs.media.HUDSaberStyleStrong, dataPad ? RENDER2D_STRETCH : RENDER2D_ANCHOR_RIGHT); //Fluffy (Widescreen2D)
+			CG_DrawPic( x, y, 80, 40, cgs.media.HUDSaberStyleStrong, dataPad ? RENDER2D_ANCHOR_MIDDLE : RENDER2D_ANCHOR_RIGHT); //Fluffy (Widescreen2D)
 			break;
 		}
 		return;
@@ -431,7 +431,7 @@ static void CG_DrawAmmo(centity_t	*cent,int x,int y, qboolean dataPad) //Fluffy 
 	}
 
 	cgi_R_SetColor( colorTable[numColor_i] );	
-	CG_DrawNumField(x + 29, y + 26, 3, value, 6, 12, NUM_FONT_SMALL,qfalse, dataPad ? RENDER2D_STRETCH : RENDER2D_ANCHOR_RIGHT); //Fluffy (Widescreen2D)
+	CG_DrawNumField(x + 29, y + 26, 3, value, 6, 12, NUM_FONT_SMALL,qfalse, dataPad ? RENDER2D_ANCHOR_MIDDLE : RENDER2D_ANCHOR_RIGHT); //Fluffy (Widescreen2D)
 
 	inc = (float) ammoData[weaponData[cent->currentState.weapon].ammoIndex].max / MAX_TICS;
 	value =ps->ammo[weaponData[cent->currentState.weapon].ammoIndex];
@@ -462,7 +462,7 @@ static void CG_DrawAmmo(centity_t	*cent,int x,int y, qboolean dataPad) //Fluffy 
 			ammoTicPos[i].width, 
 			ammoTicPos[i].height, 
 			ammoTicPos[i].tic,
-			dataPad ? RENDER2D_STRETCH : RENDER2D_ANCHOR_RIGHT); //Fluffy (Widescreen2D)
+			dataPad ? RENDER2D_ANCHOR_MIDDLE : RENDER2D_ANCHOR_RIGHT); //Fluffy (Widescreen2D)
 
 		value -= inc;
 	}
@@ -478,7 +478,7 @@ static void CG_DrawHUDLeftFrame1(int x,int y, qboolean dataPad) //Fluffy (Widesc
 {
 	// Inner gray wire frame
 	cgi_R_SetColor( colorTable[CT_WHITE] );
-	CG_DrawPic(   x, y, 80, 80, cgs.media.HUDInnerLeft, dataPad ? RENDER2D_STRETCH : RENDER2D_ANCHOR_LEFT); //Fluffy (Widescreen2D)
+	CG_DrawPic(   x, y, 80, 80, cgs.media.HUDInnerLeft, dataPad ? RENDER2D_ANCHOR_MIDDLE : RENDER2D_ANCHOR_LEFT); //Fluffy (Widescreen2D)
 }
 
 /*
@@ -511,18 +511,18 @@ static void CG_DrawHealth(int x,int y, qboolean dataPad) //Fluffy (Widescreen2D)
 	calcColor[1] *= healthPercent;
 	calcColor[2] *= healthPercent;
 	cgi_R_SetColor( calcColor);					
-	CG_DrawPic(   x, y, 80, 80, cgs.media.HUDHealth, dataPad ? RENDER2D_STRETCH : RENDER2D_ANCHOR_LEFT); //Fluffy (Widescreen2D)
+	CG_DrawPic(   x, y, 80, 80, cgs.media.HUDHealth, dataPad ? RENDER2D_ANCHOR_MIDDLE : RENDER2D_ANCHOR_LEFT); //Fluffy (Widescreen2D)
 
 	// Draw the ticks
 	if (cg.HUDHealthFlag)
 	{
 		cgi_R_SetColor( colorTable[CT_HUD_RED] );					
-		CG_DrawPic(   x, y, 80, 80, cgs.media.HUDHealthTic, dataPad ? RENDER2D_STRETCH : RENDER2D_ANCHOR_LEFT); //Fluffy (Widescreen2D)
+		CG_DrawPic(   x, y, 80, 80, cgs.media.HUDHealthTic, dataPad ? RENDER2D_ANCHOR_MIDDLE : RENDER2D_ANCHOR_LEFT); //Fluffy (Widescreen2D)
 	}
 
 	cgi_R_SetColor( colorTable[CT_HUD_RED] );	
 	CG_DrawNumField (x + 16, y + 40, 3, ps->stats[STAT_HEALTH], 6, 12, 
-		NUM_FONT_SMALL,qtrue, dataPad ? RENDER2D_STRETCH : RENDER2D_ANCHOR_LEFT); //Fluffy (Widescreen2D)
+		NUM_FONT_SMALL,qtrue, dataPad ? RENDER2D_ANCHOR_MIDDLE : RENDER2D_ANCHOR_LEFT); //Fluffy (Widescreen2D)
 
 }
 
@@ -552,7 +552,7 @@ static void CG_DrawArmor(int x,int y, qboolean dataPad) //Fluffy (Widescreen2D)
 	calcColor[1] *= armorPercent;
 	calcColor[2] *= armorPercent;
 	cgi_R_SetColor( calcColor);					
-	CG_DrawPic(   x, y, 80, 80, cgs.media.HUDArmor1, dataPad ? RENDER2D_STRETCH : RENDER2D_ANCHOR_LEFT); //Fluffy (Widescreen2D)
+	CG_DrawPic(   x, y, 80, 80, cgs.media.HUDArmor1, dataPad ? RENDER2D_ANCHOR_MIDDLE : RENDER2D_ANCHOR_LEFT); //Fluffy (Widescreen2D)
 
 	// Inner Armor circular
 	if (armorPercent>0)
@@ -568,7 +568,7 @@ static void CG_DrawArmor(int x,int y, qboolean dataPad) //Fluffy (Widescreen2D)
 	calcColor[1] *= armorPercent;
 	calcColor[2] *= armorPercent;
 	cgi_R_SetColor( calcColor);
-	CG_DrawPic(   x, y, 80, 80, cgs.media.HUDArmor2, dataPad ? RENDER2D_STRETCH : RENDER2D_ANCHOR_LEFT);			//	Inner Armor circular //Fluffy (Widescreen2D)
+	CG_DrawPic(   x, y, 80, 80, cgs.media.HUDArmor2, dataPad ? RENDER2D_ANCHOR_MIDDLE : RENDER2D_ANCHOR_LEFT);			//	Inner Armor circular //Fluffy (Widescreen2D)
 	
 /*
 	if (ps->stats[STAT_ARMOR])	// Is there armor? Draw the HUD Armor TIC
@@ -607,7 +607,7 @@ static void CG_DrawArmor(int x,int y, qboolean dataPad) //Fluffy (Widescreen2D)
 */
 	cgi_R_SetColor( colorTable[CT_HUD_GREEN] );	
 	CG_DrawNumField (x + 16 + 14, y + 40 + 14, 3, ps->stats[STAT_ARMOR], 6, 12, 
-		NUM_FONT_SMALL,qfalse, dataPad ? RENDER2D_STRETCH : RENDER2D_ANCHOR_LEFT); //Fluffy (Widescreen2D)
+		NUM_FONT_SMALL,qfalse, dataPad ? RENDER2D_ANCHOR_MIDDLE : RENDER2D_ANCHOR_LEFT); //Fluffy (Widescreen2D)
 
 }
 
@@ -866,7 +866,7 @@ void CG_DrawDataPadHUD( centity_t *cent )
 	CG_DrawMessageLit(cent,x,y, 1); //Fluffy (Widescreen2D)
 
 	cgi_R_SetColor( colorTable[CT_WHITE]);
-	CG_DrawPic( 0, 0, 640, 480, cgs.media.dataPadFrame );
+	CG_DrawPic( 0, 0, 640, 480, cgs.media.dataPadFrame, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D)
 
 }
 

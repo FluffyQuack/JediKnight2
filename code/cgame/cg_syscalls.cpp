@@ -267,8 +267,8 @@ unsigned int cgi_AnyLanguage_ReadCharFromString( const char **ppText, qboolean *
 	return syscall( CG_ANYLANGUAGE_READFROMSTRING, ppText, pbIsTrailingPunctuation );
 }
 
-void cgi_R_Font_DrawString(int ox, int oy, const char *text, const float *rgba, const int setIndex, int iMaxPixelWidth, const float scale /*= 1.0f*/) {
-	syscall (CG_R_FONTDRAWSTRING, ox, oy, text, rgba, setIndex, iMaxPixelWidth, PASSFLOAT(scale) );
+void cgi_R_Font_DrawString(int ox, int oy, const char *text, const float *rgba, const int setIndex, int iMaxPixelWidth, const float scale /*= 1.0f*/, int widescreenAnchor) { //Fluffy (Widescreen2D)
+	syscall (CG_R_FONTDRAWSTRING, ox, oy, text, rgba, setIndex, iMaxPixelWidth, PASSFLOAT(scale), widescreenAnchor); //Fluffy (Widescreen2D)
 }
 
 void	cgi_R_ClearScene( void ) {

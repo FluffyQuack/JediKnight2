@@ -710,7 +710,7 @@ void CG_DrawString( float x, float y, const char *string,
 				   float charWidth, float charHeight, const float *modulate );
 void CG_PrintInterfaceGraphics(int min,int max);
 void CG_DrawNumField (int x, int y, int width, int value,int charWidth,int charHeight,int style,qboolean zeroFill, int widescreenAnchor = RENDER2D_STRETCH); //Fluffy (Widescreen2D)
-void CG_DrawProportionalString( int x, int y, const char* str, int style, vec4_t color );
+void CG_DrawProportionalString( int x, int y, const char* str, int style, vec4_t color, int widescreenAnchor ); //Fluffy (Widescreen2D)
 
 
 void CG_DrawStringExt( int x, int y, const char *string, const float *setColor, 
@@ -998,7 +998,7 @@ qhandle_t	cgi_R_RegisterFont( const char *name );
 int			cgi_R_Font_StrLenPixels(const char *text, const int iFontIndex, const float scale = 1.0f);
 int			cgi_R_Font_StrLenChars(const char *text);
 int			cgi_R_Font_HeightPixels(const int iFontIndex, const float scale = 1.0f);
-void		cgi_R_Font_DrawString(int ox, int oy, const char *text, const float *rgba, const int setIndex, int iMaxPixelWidth, const float scale = 1.0f);
+void		cgi_R_Font_DrawString(int ox, int oy, const char *text, const float *rgba, const int setIndex, int iMaxPixelWidth, const float scale = 1.0f, int widescreenAnchor = RENDER2D_STRETCH); //Fluffy (Widescreen2D)
 qboolean	cgi_Language_IsAsian(void);
 qboolean	cgi_Language_UsesSpaces(void);
 unsigned	cgi_AnyLanguage_ReadCharFromString( const char **ppText, qboolean *pbIsTrailingPunctuation = NULL );

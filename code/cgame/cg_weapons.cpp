@@ -34,7 +34,7 @@ int cgi_UI_GetMenuInfo(char *menuFile,int *x,int *y);
 extern void G_SoundOnEnt( gentity_t *ent, soundChannel_t channel, const char *soundPath );
 const char *CG_DisplayBoxedText(int iBoxX, int iBoxY, int iBoxWidth, int iBoxHeight, 
 								const char *psText, int iFontHandle, float fScale,
-								const vec4_t v4Color);
+								const vec4_t v4Color, int widescreenAnchor); //Fluffy (Widescreen2D)
 
 /*
 =================
@@ -1527,11 +1527,11 @@ void CG_DrawDataPadWeaponSelect( void )
 
 			if (!CG_WeaponCheck(i))
 			{
-				CG_DrawPic( holdX, y+10, smallIconSize, smallIconSize, weaponInfo->weaponIconNoAmmo );
+				CG_DrawPic( holdX, y+10, smallIconSize, smallIconSize, weaponInfo->weaponIconNoAmmo, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D
 			}
 			else
 			{
-				CG_DrawPic( holdX, y+10, smallIconSize, smallIconSize, weaponInfo->weaponIcon );
+				CG_DrawPic( holdX, y+10, smallIconSize, smallIconSize, weaponInfo->weaponIcon, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D
 			}
 
 			holdX -= (smallIconSize+pad);
@@ -1553,11 +1553,11 @@ void CG_DrawDataPadWeaponSelect( void )
 
 		if (!CG_WeaponCheck(cg.DataPadWeaponSelect))
 		{
-			CG_DrawPic( x-(bigIconSize/2), (y-((bigIconSize-smallIconSize)/2))+10, bigIconSize, bigIconSize, weaponInfo->weaponIconNoAmmo );
+			CG_DrawPic( x-(bigIconSize/2), (y-((bigIconSize-smallIconSize)/2))+10, bigIconSize, bigIconSize, weaponInfo->weaponIconNoAmmo, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D
 		}
 		else
 		{
-			CG_DrawPic( x-(bigIconSize/2), (y-((bigIconSize-smallIconSize)/2))+10, bigIconSize, bigIconSize, weaponInfo->weaponIcon );
+			CG_DrawPic( x-(bigIconSize/2), (y-((bigIconSize-smallIconSize)/2))+10, bigIconSize, bigIconSize, weaponInfo->weaponIcon, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D
 		}
 	}
 
@@ -1594,11 +1594,11 @@ void CG_DrawDataPadWeaponSelect( void )
 			// No ammo for this weapon?
 			if (!CG_WeaponCheck(i))
 			{
-				CG_DrawPic( holdX, y+10, smallIconSize, smallIconSize, weaponInfo->weaponIconNoAmmo );
+				CG_DrawPic( holdX, y+10, smallIconSize, smallIconSize, weaponInfo->weaponIconNoAmmo, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D
 			}
 			else
 			{
-				CG_DrawPic( holdX, y+10, smallIconSize, smallIconSize, weaponInfo->weaponIcon );
+				CG_DrawPic( holdX, y+10, smallIconSize, smallIconSize, weaponInfo->weaponIcon, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D
 			}
 
 
@@ -1617,8 +1617,8 @@ void CG_DrawDataPadWeaponSelect( void )
 		CG_DisplayBoxedText(70,50,500,300,text,
 												cgs.media.qhFontSmall,
 												0.7f,
-												textColor	
-												);
+												textColor,
+												RENDER2D_ANCHOR_MIDDLE); //Fluffy (Widescreen2D)
 	}
 
 /*	CG_DisplayBoxedText(70,50,500,300,weaponDesc[cg.DataPadWeaponSelect-1],
@@ -1722,8 +1722,8 @@ void CG_DrawDataPadIconBackground(int backgroundType)
 	cgi_R_SetColor( colorTable[CT_WHITE] );					
 //	height = (int) (60.0f*cg.iconDataPadHUDPercent);
 	height = (int) 60.0f;
-	CG_DrawPic( x2+110, y2+30, 410, -height, background);	// Top half
-	CG_DrawPic( x2+110, y2+30-2,410, height, background);	// Bottom half
+	CG_DrawPic( x2+110, y2+30, 410, -height, background, RENDER2D_ANCHOR_MIDDLE);	// Top half //Fluffy (Widescreen2D)
+	CG_DrawPic( x2+110, y2+30-2,410, height, background, RENDER2D_ANCHOR_MIDDLE);	// Bottom half //Fluffy (Widescreen2D)
 
 	// And now for the prongs
 	if (backgroundType==ICON_INVENTORY)	
@@ -1746,8 +1746,8 @@ void CG_DrawDataPadIconBackground(int backgroundType)
 	cgi_R_SetColor( colorTable[CT_WHITE]);					
 //	xAdd = (int) 8*cg.iconDataPadHUDPercent;
 	xAdd = (int) 8;
-	CG_DrawPic( prongLeftX+xAdd, y2-10, 40, 80, background);
-	CG_DrawPic( prongRightX-xAdd, y2-10, -40, 80, background);
+	CG_DrawPic( prongLeftX+xAdd, y2-10, 40, 80, background, RENDER2D_ANCHOR_MIDDLE); //Fluffy (Widescreen2D)
+	CG_DrawPic( prongRightX-xAdd, y2-10, -40, 80, background, RENDER2D_ANCHOR_MIDDLE); //Fluffy (Widescreen2D)
 }
 
 /*

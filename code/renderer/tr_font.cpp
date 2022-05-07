@@ -797,7 +797,7 @@ int RE_Font_HeightPixels(const int iFontHandle, const float fScale)
 
 // iMaxPixelWidth is -1 for "all of string", else pixel display count...
 //
-void RE_Font_DrawString(int ox, int oy, const char *psText, const float *rgba, const int iFontHandle, int iMaxPixelWidth, const float fScale)
+void RE_Font_DrawString(int ox, int oy, const char *psText, const float *rgba, const int iFontHandle, int iMaxPixelWidth, const float fScale, int widescreenAnchor) //Fluffy (Widescreen2D))
 {
 	static qboolean gbInShadow = qfalse;	// MUST default to this
 	int					x, y, colour, offset;
@@ -917,7 +917,7 @@ void RE_Font_DrawString(int ox, int oy, const char *psText, const float *rgba, c
 								pLetter->t2,					// float t2
 								//lastcolour.c, 
 								hShader,							// qhandle_t hShader
-					RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
+					widescreenAnchor ); //Fluffy (Widescreen2D)
 
 				x += iAdvancePixels;
 			}

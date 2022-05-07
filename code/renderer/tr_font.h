@@ -88,7 +88,7 @@ int RE_RegisterFont(const char *psName);
 int RE_Font_StrLenPixels(const char *psText, const int iFontHandle, const float fScale = 1.0f);
 int RE_Font_StrLenChars(const char *psText);
 int RE_Font_HeightPixels(const int iFontHandle, const float fScale = 1.0f);
-void RE_Font_DrawString(int ox, int oy, const char *psText, const float *rgba, const int iFontHandle, int iMaxPixelWidth, const float fScale = 1.0f);
+void RE_Font_DrawString(int ox, int oy, const char *psText, const float *rgba, const int iFontHandle, int iMaxPixelWidth, const float fScale = 1.0f, int widescreenAnchor = RENDER2D_STRETCH); //Fluffy (Widescreen2D)
 unsigned int AnyLanguage_ReadCharFromString( const char **ppsText, qboolean *pbIsTrailingPunctuation = NULL);
 qboolean Language_IsAsian(void);
 qboolean Language_UsesSpaces(void);
