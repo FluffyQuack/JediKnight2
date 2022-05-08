@@ -1762,7 +1762,24 @@ static void PlayCinematic(const char *arg, const char *s, qboolean qbInGame)
 		//
 		////////////////////////////////////////////////////////////////////
 
-		CL_handle = CIN_PlayCinematic( arg, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, bits, psAudioFile );
+		//Fluffy (Widescreen2D)
+#define VIDEOHEIGHT 338.f //This is the height of the pre-rendered video within the letterboxing when presented at virtual 640x480 screen size
+		if(glConfig.windowAspect == SCREEN_WIDTH_F / SCREEN_HEIGHT_F) //Default aspect ratio
+			CL_handle = CIN_PlayCinematic( arg, 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, bits, psAudioFile );
+		else if(glConfig.windowAspect < SCREEN_WIDTH_F / VIDEOHEIGHT) //Aspect ratio is less wide than the cutscene. So X coordinate width should be the same as default, but we need to increase height and lower y coordinate according to the aspect ratio
+		{
+			float aspectRatioDiff = glConfig.windowAspect / (SCREEN_WIDTH_F / SCREEN_HEIGHT_F);
+			float newHeight = SCREEN_HEIGHT * aspectRatioDiff;
+			CL_handle = CIN_PlayCinematic( arg, 0, -((newHeight - SCREEN_HEIGHT) / 2), SCREEN_WIDTH, newHeight, bits, psAudioFile );
+		}
+		else //Aspect ratio is wider than the cutscene, so we need to adjust vertical height and offset to be fullscreen, and then lower horizontal size and increase x offset according to the aspect ratio
+		{
+			float vertAspectRatioDiff = (SCREEN_WIDTH_F / VIDEOHEIGHT) / (SCREEN_WIDTH_F / SCREEN_HEIGHT_F); //If we multiply 480 by this and apply a proper Y offset, then the video will be fullscreen vertically
+			float newHeight = SCREEN_HEIGHT * vertAspectRatioDiff;
+			float newWidth = (vertAspectRatioDiff * SCREEN_WIDTH_F) / (glConfig.windowAspect / (SCREEN_WIDTH_F / SCREEN_HEIGHT_F));
+			CL_handle = CIN_PlayCinematic( arg, ((SCREEN_WIDTH - newWidth) / 2), -((newHeight - SCREEN_HEIGHT) / 2), newWidth, SCREEN_HEIGHT * vertAspectRatioDiff, bits, psAudioFile );
+		}
+		
 		if (CL_handle >= 0) 
 		{
 			cinTable[CL_handle].hCRAWLTEXT = hCrawl;
