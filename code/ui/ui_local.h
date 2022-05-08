@@ -102,7 +102,7 @@ typedef struct {
 
 extern void			UI_FillRect( float x, float y, float width, float height, const float *color );
 extern void			UI_DrawString( int x, int y, const char* str, int style, vec4_t color );
-extern void			UI_DrawHandlePic( float x, float y, float w, float h, qhandle_t hShader ); 
+extern void			UI_DrawHandlePic( float x, float y, float w, float h, qhandle_t hShader, int widescreenAnchor ); //Fluffy (Widescreen2D)
 extern void			UI_UpdateScreen( void );
 extern int			UI_RegisterFont(const char *fontName);
 extern void			UI_SetColor( const float *rgba );

@@ -1753,6 +1753,7 @@ typedef enum {
 	RC_STRETCH_PIC,
 
 	//Fluffy (Widescreen2D): Variants of RC_STRETCH_PIC that define how the element should be rendered on a widescreen aspect ratio
+	RC_NONSTRETCH, //Coordinates are not changed, but texture is not stretched
 	//These all stretch the virtual screen horizontally based on aspect ratio and give x rendering coordiante an offset
 	RC_STRETCH_PIC_LEFT, //X = 0
 	RC_STRETCH_PIC_MIDDLE, //X = half of horizontal size diff

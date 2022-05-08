@@ -188,7 +188,7 @@ void _UI_Refresh( int realtime )
 	{
 		if (uiInfo.uiDC.cursorShow == qtrue)
 		{
-			UI_DrawHandlePic( uiInfo.uiDC.cursorx, uiInfo.uiDC.cursory, 48, 48, uiInfo.uiDC.Assets.cursor);
+			UI_DrawHandlePic( uiInfo.uiDC.cursorx, uiInfo.uiDC.cursory, 48, 48, uiInfo.uiDC.Assets.cursor, RENDER2D_NONSTRETCH ); //Fluffy (Widescreen2D)
 		}
 	}
 }
@@ -1744,8 +1744,8 @@ UI_DrawEffects
 */
 static void UI_DrawEffects(rectDef_t *rect, float scale, vec4_t color) 
 {
-	UI_DrawHandlePic( rect->x, rect->y - 14, 128, 8, uiInfo.uiDC.Assets.fxBasePic );
-	UI_DrawHandlePic( rect->x + uiInfo.effectsColor * 16 + 8, rect->y - 16, 16, 12, uiInfo.uiDC.Assets.fxPic[uiInfo.effectsColor] );
+	UI_DrawHandlePic( rect->x, rect->y - 14, 128, 8, uiInfo.uiDC.Assets.fxBasePic, RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
+	UI_DrawHandlePic( rect->x + uiInfo.effectsColor * 16 + 8, rect->y - 16, 16, 12, uiInfo.uiDC.Assets.fxPic[uiInfo.effectsColor], RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
 }
 
 /*
@@ -1871,7 +1871,7 @@ static void UI_DrawCrosshair(rectDef_t *rect, float scale, vec4_t color) {
 	if (uiInfo.currentCrosshair < 0 || uiInfo.currentCrosshair >= NUM_CROSSHAIRS) {
 		uiInfo.currentCrosshair = 0;
 	}
-	UI_DrawHandlePic( rect->x, rect->y, rect->w, rect->h, uiInfo.uiDC.Assets.crosshairShader[uiInfo.currentCrosshair]);
+	UI_DrawHandlePic( rect->x, rect->y, rect->w, rect->h, uiInfo.uiDC.Assets.crosshairShader[uiInfo.currentCrosshair], RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
  	trap_R_SetColor( NULL );
 }
 

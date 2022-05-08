@@ -4578,7 +4578,7 @@ void Menu_Paint(menuDef_t *menu, qboolean forcePaint)
 			menu->window.background = uis.whiteShader;
 		}
 
-		DC->drawHandlePic( 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, menu->window.background );
+		DC->drawHandlePic( 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, menu->window.background, RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
 	} 
 	else if (menu->window.background) 
 	{
@@ -5052,19 +5052,19 @@ void Item_ListBox_Paint(itemDef_t *item)
 		// bar
 		x = item->window.rect.x + 1;
 		y = item->window.rect.y + item->window.rect.h - SCROLLBAR_SIZE - 1;
-		DC->drawHandlePic(x, y, SCROLLBAR_SIZE, SCROLLBAR_SIZE, DC->Assets.scrollBarArrowLeft);
+		DC->drawHandlePic(x, y, SCROLLBAR_SIZE, SCROLLBAR_SIZE, DC->Assets.scrollBarArrowLeft, RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
 		x += SCROLLBAR_SIZE - 1;
 		size = item->window.rect.w - (SCROLLBAR_SIZE * 2);
-		DC->drawHandlePic(x, y, size+1, SCROLLBAR_SIZE, DC->Assets.scrollBar);
+		DC->drawHandlePic(x, y, size+1, SCROLLBAR_SIZE, DC->Assets.scrollBar, RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
 		x += size - 1;
-		DC->drawHandlePic(x, y, SCROLLBAR_SIZE, SCROLLBAR_SIZE, DC->Assets.scrollBarArrowRight);
+		DC->drawHandlePic(x, y, SCROLLBAR_SIZE, SCROLLBAR_SIZE, DC->Assets.scrollBarArrowRight, RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
 		// thumb
 		thumb = Item_ListBox_ThumbDrawPosition(item);//Item_ListBox_ThumbPosition(item);
 		if (thumb > x - SCROLLBAR_SIZE - 1) 
 		{
 			thumb = x - SCROLLBAR_SIZE - 1;
 		}
-		DC->drawHandlePic(thumb, y, SCROLLBAR_SIZE, SCROLLBAR_SIZE, DC->Assets.scrollBarThumb);
+		DC->drawHandlePic(thumb, y, SCROLLBAR_SIZE, SCROLLBAR_SIZE, DC->Assets.scrollBarThumb, RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
 		//
 		listPtr->endPos = listPtr->startPos;
 		size = item->window.rect.w - 2;
@@ -5082,7 +5082,7 @@ void Item_ListBox_Paint(itemDef_t *item)
 				image = DC->feederItemImage(item->special, i);
 				if (image) 
 				{
-					DC->drawHandlePic(x+1, y+1, listPtr->elementWidth - 2, listPtr->elementHeight - 2, image);
+					DC->drawHandlePic(x+1, y+1, listPtr->elementWidth - 2, listPtr->elementHeight - 2, image, RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
 				}
 
 				if (i == item->cursorPos) 
@@ -5111,21 +5111,21 @@ void Item_ListBox_Paint(itemDef_t *item)
 		// draw scrollbar to right side of the window
 		x = item->window.rect.x + item->window.rect.w - SCROLLBAR_SIZE - 1;
 		y = item->window.rect.y + 1;
-		DC->drawHandlePic(x, y, SCROLLBAR_SIZE, SCROLLBAR_SIZE, DC->Assets.scrollBarArrowUp);
+		DC->drawHandlePic(x, y, SCROLLBAR_SIZE, SCROLLBAR_SIZE, DC->Assets.scrollBarArrowUp, RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
 		y += SCROLLBAR_SIZE - 1;
 
 		listPtr->endPos = listPtr->startPos;
 		size = item->window.rect.h - (SCROLLBAR_SIZE * 2);
-		DC->drawHandlePic(x, y, SCROLLBAR_SIZE, size+1, DC->Assets.scrollBar);
+		DC->drawHandlePic(x, y, SCROLLBAR_SIZE, size+1, DC->Assets.scrollBar, RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
 		y += size - 1;
-		DC->drawHandlePic(x, y, SCROLLBAR_SIZE, SCROLLBAR_SIZE, DC->Assets.scrollBarArrowDown);
+		DC->drawHandlePic(x, y, SCROLLBAR_SIZE, SCROLLBAR_SIZE, DC->Assets.scrollBarArrowDown, RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
 		// thumb
 		thumb = Item_ListBox_ThumbDrawPosition(item);//Item_ListBox_ThumbPosition(item);
 		if (thumb > y - SCROLLBAR_SIZE - 1) 
 		{
 			thumb = y - SCROLLBAR_SIZE - 1;
 		}
-		DC->drawHandlePic(x, thumb, SCROLLBAR_SIZE, SCROLLBAR_SIZE, DC->Assets.scrollBarThumb);
+		DC->drawHandlePic(x, thumb, SCROLLBAR_SIZE, SCROLLBAR_SIZE, DC->Assets.scrollBarThumb, RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
 
 		// adjust size for item painting
 		size = item->window.rect.h - 2;
@@ -5141,7 +5141,7 @@ void Item_ListBox_Paint(itemDef_t *item)
 				image = DC->feederItemImage(item->special, i);
 				if (image) 
 				{
-					DC->drawHandlePic(x+1, y+1, listPtr->elementWidth - 2, listPtr->elementHeight - 2, image);
+					DC->drawHandlePic(x+1, y+1, listPtr->elementWidth - 2, listPtr->elementHeight - 2, image, RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
 				}
 
 				if (i == item->cursorPos) 
@@ -5178,7 +5178,7 @@ void Item_ListBox_Paint(itemDef_t *item)
 						text = DC->feederItemText(item->special, i, j, &optionalImage);
 						if (optionalImage >= 0) 
 						{
-							DC->drawHandlePic(x + 4 + listPtr->columnInfo[j].pos, y - 1 + listPtr->elementHeight / 2, listPtr->columnInfo[j].width, listPtr->columnInfo[j].width, optionalImage);
+							DC->drawHandlePic(x + 4 + listPtr->columnInfo[j].pos, y - 1 + listPtr->elementHeight / 2, listPtr->columnInfo[j].width, listPtr->columnInfo[j].width, optionalImage, RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
 						} 
 						else if (text) 
 						{
@@ -5725,11 +5725,11 @@ void Item_Slider_Paint(itemDef_t *item)
 		x = item->window.rect.x;
 	}
 	DC->setColor(newColor);
-	DC->drawHandlePic( x, y+2, SLIDER_WIDTH, SLIDER_HEIGHT, DC->Assets.sliderBar );
+	DC->drawHandlePic( x, y+2, SLIDER_WIDTH, SLIDER_HEIGHT, DC->Assets.sliderBar, RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
 
 	x = Item_Slider_ThumbPosition(item);
 //	DC->drawHandlePic( x - (SLIDER_THUMB_WIDTH / 2), y - 2, SLIDER_THUMB_WIDTH, SLIDER_THUMB_HEIGHT, DC->Assets.sliderThumb );
-	DC->drawHandlePic( x - (SLIDER_THUMB_WIDTH / 2), y+2, SLIDER_THUMB_WIDTH, SLIDER_THUMB_HEIGHT, DC->Assets.sliderThumb );
+	DC->drawHandlePic( x - (SLIDER_THUMB_WIDTH / 2), y+2, SLIDER_THUMB_WIDTH, SLIDER_THUMB_HEIGHT, DC->Assets.sliderThumb, RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
 
 }
 
@@ -6122,7 +6122,7 @@ void GradientBar_Paint(rectDef_t *rect, vec4_t color)
 {
 	// gradient bar takes two paints
 	DC->setColor( color );
-	DC->drawHandlePic(rect->x, rect->y, rect->w, rect->h, DC->Assets.gradientBar);
+	DC->drawHandlePic(rect->x, rect->y, rect->w, rect->h, DC->Assets.gradientBar, RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
 	DC->setColor( NULL );
 }
 
@@ -6164,7 +6164,7 @@ void Window_Paint(Window *w, float fadeAmount, float fadeClamp, float fadeCycle)
 		{
 			Fade(&w->flags, &w->backColor[3], fadeClamp, &w->nextTime, fadeCycle, qtrue, fadeAmount);
 			DC->setColor(w->backColor);
-			DC->drawHandlePic(fillRect.x, fillRect.y, fillRect.w, fillRect.h, w->background);
+			DC->drawHandlePic(fillRect.x, fillRect.y, fillRect.w, fillRect.h, w->background, RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
 			DC->setColor(NULL);
 		} 
 		else 
@@ -6183,7 +6183,7 @@ void Window_Paint(Window *w, float fadeAmount, float fadeClamp, float fadeCycle)
 		{
 			DC->setColor(w->foreColor);
 		}
-		DC->drawHandlePic(fillRect.x, fillRect.y, fillRect.w, fillRect.h, w->background);
+		DC->drawHandlePic(fillRect.x, fillRect.y, fillRect.w, fillRect.h, w->background, RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
 		DC->setColor(NULL);
 	} 
 

@@ -777,16 +777,21 @@ const void *RB_StretchPic ( const void *data ) {
 		x = cmd->x;
 		w = cmd->w;
 	}
-	else //Behaviour where we adjust scale and position of the 2D element so it's not stretched
+	else //"Unstretch" the texture
 	{
-		x = cmd->x / (glConfig.windowAspect / (SCREEN_WIDTH_F / SCREEN_HEIGHT_F));
 		w = cmd->w / (glConfig.windowAspect / (SCREEN_WIDTH_F / SCREEN_HEIGHT_F));
-		if(cmd->commandId == RC_STRETCH_PIC_MIDDLE || cmd->commandId == RC_STRETCH_PIC_RIGHT)
+		if(cmd->commandId == RC_NONSTRETCH) //Use x as-is
+			x = cmd->x;
+		else //Behaviour where we adjust scale and position of the 2D element so it's not stretched
 		{
-			if(cmd->commandId == RC_STRETCH_PIC_MIDDLE)
-				x += (glConfig.aspectWidthDiff / 2);
-			else if(cmd->commandId == RC_STRETCH_PIC_RIGHT)
-				x += glConfig.aspectWidthDiff;
+			x = cmd->x / (glConfig.windowAspect / (SCREEN_WIDTH_F / SCREEN_HEIGHT_F));
+			if(cmd->commandId == RC_STRETCH_PIC_MIDDLE || cmd->commandId == RC_STRETCH_PIC_RIGHT)
+			{
+				if(cmd->commandId == RC_STRETCH_PIC_MIDDLE)
+					x += (glConfig.aspectWidthDiff / 2);
+				else if(cmd->commandId == RC_STRETCH_PIC_RIGHT)
+					x += glConfig.aspectWidthDiff;
+			}
 		}
 	}
 
@@ -1290,6 +1295,7 @@ void RB_ExecuteRenderCommands( const void *data ) {
 			break;
 		case RC_STRETCH_PIC:
 		//Fluffy (Widescreen2D)
+		case RC_NONSTRETCH:
 		case RC_STRETCH_PIC_LEFT:
 		case RC_STRETCH_PIC_MIDDLE:
 		case RC_STRETCH_PIC_RIGHT:

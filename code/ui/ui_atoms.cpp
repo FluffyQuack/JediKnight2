@@ -296,7 +296,7 @@ void UI_DrawNamedPic( float x, float y, float width, float height, const char *p
 UI_DrawHandlePic
 =================
 */
-void UI_DrawHandlePic( float x, float y, float w, float h, qhandle_t hShader ) 
+void UI_DrawHandlePic( float x, float y, float w, float h, qhandle_t hShader, int widescreenAnchor ) //Fluffy (Widescreen2D)
 {
 	float	s0;
 	float	s1;
@@ -323,7 +323,7 @@ void UI_DrawHandlePic( float x, float y, float w, float h, qhandle_t hShader )
 		t1 = 1;
 	}
 
-	ui.R_DrawStretchPic( x, y, w, h, s0, t0, s1, t1, hShader, RENDER2D_STRETCH );//Fluffy (Widescreen2D)
+	ui.R_DrawStretchPic( x, y, w, h, s0, t0, s1, t1, hShader, widescreenAnchor );//Fluffy (Widescreen2D)
 }
 
 /*
