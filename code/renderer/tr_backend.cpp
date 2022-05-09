@@ -515,7 +515,7 @@ void RB_BeginDrawingView (void) {
 
 #define	MAC_EVENT_PUMP_MSEC		5
 
-qboolean *stencilShadowSource = 0; //Fluffy (StencilNoSelfShadows): Array for flagging surfaces that project shadow volumes
+qboolean *secondPassSurfaces = 0; //Fluffy (StencilNoSelfShadows): Array for flagging surfaces that'll we render in a second pass
 	
 /*
 ==================
@@ -563,11 +563,11 @@ void RB_RenderDrawSurfList( drawSurf_t *drawSurfs, int numDrawSurfs, bool drawSt
 
 	for (i = 0, drawSurf = drawSurfs ; i < numDrawSurfs ; i++, drawSurf++) {
 		//Fluffy (StencilNoSelfShadows): We render this in two passes. First pass we render everything that doesn't project shadow volumes and we render the shadow volumes and stencil shadows. Second pass we only render models that project stencil shadows
-		if(stencilShadowSource)
+		if(secondPassSurfaces)
 		{
-			if(drawStencilSources && stencilShadowSource[i] == 0)
+			if(drawStencilSources && secondPassSurfaces[i] == 0)
 				continue;
-			else if(!drawStencilSources && stencilShadowSource[i] == 1)
+			else if(!drawStencilSources && secondPassSurfaces[i] == 1)
 				continue;
 		}
 		if ( drawSurf->sort == oldSort ) {
@@ -1012,8 +1012,8 @@ const void	*RB_DrawSurfs( const void *data ) {
 	//Fluffy (StencilNoSelfShadows): Flag surfaces that project shadow volumes
 	if(r_noSelfShadow->integer == 1 && cmd->numDrawSurfs && r_shadows->integer == 2)
 	{
-		stencilShadowSource = new qboolean[cmd->numDrawSurfs];
-		memset(stencilShadowSource, 0, sizeof(qboolean) * cmd->numDrawSurfs);
+		secondPassSurfaces = new qboolean[cmd->numDrawSurfs];
+		memset(secondPassSurfaces, 0, sizeof(qboolean) * cmd->numDrawSurfs);
 		drawSurf_t *drawSurf = cmd->drawSurfs;
 		shader_t		*shader;
 		int				fogNum;
@@ -1028,7 +1028,7 @@ const void	*RB_DrawSurfs( const void *data ) {
 				shader_t		*shader_b;
 				for(int j = 0; j < cmd->numDrawSurfs; j++, drawSurf_b++)
 				{
-					if(j == i || stencilShadowSource[j] == 1)
+					if(j == i || secondPassSurfaces[j] == 1)
 						continue;
 					
 					R_DecomposeSort( drawSurf_b->sort, &entityNum, &shader_b, &fogNum, &dlighted );
@@ -1037,15 +1037,17 @@ const void	*RB_DrawSurfs( const void *data ) {
 
 					if( ((CRenderableSurface *) drawSurf->surface)->surfaceData == ((CRenderableSurface *) drawSurf_b->surface)->surfaceData)
 					{
-						stencilShadowSource[j] = 1; //Mark as shared surface
+						secondPassSurfaces[j] = 1; //Mark as shared surface
 						break;
 					}
 				}
 			}
+			else if(shader->sort >= SS_SEE_THROUGH && shader->sort != SS_STENCIL_SHADOW) //Any surface with transparency gets added to the second pass as well
+				secondPassSurfaces[i] = 1;
 		}
 	}
 	else
-		stencilShadowSource = 0;
+		secondPassSurfaces = 0;
 
 	RB_RenderDrawSurfList( cmd->drawSurfs, cmd->numDrawSurfs );
 
@@ -1053,10 +1055,10 @@ const void	*RB_DrawSurfs( const void *data ) {
 		RB_RenderDrawSurfList( cmd->drawSurfs, cmd->numDrawSurfs, 1 ); //Fluffy (StencilNoSelfShadows): Second pass
 
 	//Delete the list of marked surfaces
-	if(stencilShadowSource)
+	if(secondPassSurfaces)
 	{
-		delete[]stencilShadowSource;
-		stencilShadowSource = 0;
+		delete[]secondPassSurfaces;
+		secondPassSurfaces = 0;
 	}
 
 	return (const void *)(cmd + 1);
