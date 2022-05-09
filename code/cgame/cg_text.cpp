@@ -477,7 +477,8 @@ void CG_CaptionText( const char *str, int sound, int y )
 
 	cg.captionTextTime = cg.time;
 	if (in_camera) {
-		cg.captionTextY = SCREEN_HEIGHT - (client_camera.bar_height_dest/2);	// ths is now a centre'd Y, not a start Y
+		//cg.captionTextY = SCREEN_HEIGHT - (client_camera.bar_height_dest/2);	// ths is now a centre'd Y, not a start Y
+		cg.captionTextY = SCREEN_HEIGHT - (48.f/2); //Fluffy (Widescreen2D): bar_height_dest is changed dynamically based on aspect ratio, so we hardcore what the value would have been
 	} else {	//get above the hud
 		cg.captionTextY = (int) (0.88f * ((float)SCREEN_HEIGHT - (float)fontHeight * 1.5f));	// do NOT move this, it has to fit in between the weapon HUD and the datapad update.
 	}
@@ -669,7 +670,7 @@ void CG_DrawCaptionText(void)
 		if (w)
 		{
 			x = (SCREEN_WIDTH-w) / 2;
-			cgi_R_Font_DrawString(x, y, cg.captionText[i], textcolor_caption, cgs.media.qhFontMedium, -1, fFontScale);
+			cgi_R_Font_DrawString(x, y, cg.captionText[i], textcolor_caption, cgs.media.qhFontMedium, -1, fFontScale, RENDER2D_ANCHOR_MIDDLE); //Fluffy (Widescreen2D)
 			y += fontHeight;
 		}
 	}
