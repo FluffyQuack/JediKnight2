@@ -240,6 +240,7 @@ vmCvar_t	cg_bobpitch;
 vmCvar_t	cg_bobroll;
 vmCvar_t	cg_swingSpeed;
 vmCvar_t	cg_shadows;
+vmCvar_t	cg_alwaysLetterboxCutscenes; //Fluffy (Widescreen2D)
 vmCvar_t	cg_paused;
 vmCvar_t	cg_drawTimer;
 vmCvar_t	cg_drawFPS;
@@ -341,6 +342,7 @@ cvarTable_t		cvarTable[] = {
 	{ &cg_autoChangeGunFOV, "cg_autoChangeGunFOV", "0", CVAR_ARCHIVE }, //Fluffy (DontAutoChangeGunFOV)
 	{ &cg_stereoSeparation, "cg_stereoSeparation", "0.4", CVAR_ARCHIVE  },
 	{ &cg_shadows, "cg_shadows", "1", CVAR_ARCHIVE  },
+	{ &cg_alwaysLetterboxCutscenes, "cg_alwaysLetterboxCutscenes", "0", CVAR_ARCHIVE }, //Fluffy (Widescreen2D)
 
 	{ &cg_draw2D, "cg_draw2D", "1", CVAR_ARCHIVE  },
 	{ &cg_drawStatus, "cg_drawStatus", "1", CVAR_ARCHIVE  },
