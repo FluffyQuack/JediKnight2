@@ -80,7 +80,13 @@ void CGCam_Enable( void )
 	client_camera.bar_alpha_dest = 1.0f;
 	
 	client_camera.bar_height_source = 0.0f;
-	client_camera.bar_height_dest = 480/10;
+
+	//Fluffy (Widescreen2D): Adjust letterboxing size based on aspect ratio
+	if(cgs.glconfig.aspectWidthDiff >= (16.f / 9.f)) //Aspect ratio is as wide or wider than cutscene aspect ratio (which is 16:9), so we'll want no letterboxing
+		client_camera.bar_height_dest = 0;
+	else
+		client_camera.bar_height_dest = (480/10) / (cgs.glconfig.windowAspect / (SCREEN_WIDTH_F / SCREEN_HEIGHT_F));
+
 	client_camera.bar_height = 0.0f;
 
 	client_camera.info_state |= CAMERA_BAR_FADING;
@@ -140,7 +146,12 @@ void CGCam_Disable( void )
 	client_camera.bar_alpha_source = 1.0f;
 	client_camera.bar_alpha_dest = 0.0f;
 	
-	client_camera.bar_height_source = 480/10;
+	//Fluffy (Widescreen2D): Adjust letterboxing size based on aspect ratio
+	if(cgs.glconfig.aspectWidthDiff >= (16.f / 9.f)) //Aspect ratio is as wide or wider than cutscene aspect ratio (which is a bit taller than 16:9, at 1280x768), so we'll want no letterboxing
+		client_camera.bar_height_source = 0;
+	else
+		client_camera.bar_height_source = (480/10) / (cgs.glconfig.windowAspect / (SCREEN_WIDTH_F / SCREEN_HEIGHT_F));
+
 	client_camera.bar_height_dest = 0.0f;
 
 	client_camera.info_state |= CAMERA_BAR_FADING;
@@ -356,6 +367,14 @@ CGCam_Zoom
 
 void CGCam_Zoom( float FOV, float duration )
 {
+	//Fluffy (Widescreen2D)
+	if(cgs.glconfig.windowAspect >= (16.f / 9.f))
+	{
+		float width = cgs.glconfig.vidHeight * (1280.f / 768.f);
+		float x = width / tan(DEG2RAD(0.5f * FOV));
+		FOV = RAD2DEG(2 * atan2(cgs.glconfig.vidWidth, x));
+	}
+
 	if ( !duration )
 	{
 		CGCam_SetFOV( FOV );
