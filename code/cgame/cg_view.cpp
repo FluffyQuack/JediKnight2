@@ -1229,6 +1229,18 @@ void CG_ZoomUp_f( void )
 }
 */
 
+float CG_UpdateFOVBasedOnAspectRatio(float fov_x) //Fluffy (Widescreen2D)
+{
+	if(cgs.glconfig.windowAspect >= (4.f / 3.f))
+	{
+		float width = cgs.glconfig.vidHeight * (4.f / 3.f);
+		float x = width / tan(DEG2RAD(0.5f * fov_x));
+		return (RAD2DEG(2 * atan2(cgs.glconfig.vidWidth, x)));
+	}
+	else
+		return fov_x;
+}
+
 /*
 ====================
 CG_CalcFovFromX
@@ -1438,6 +1450,8 @@ static qboolean	CG_CalcFov( void ) {
 			}
 		}
 	}
+
+	fov_x = CG_UpdateFOVBasedOnAspectRatio(fov_x); //Fluffy (Widescreen2D): Change FOV so that we maintain a static vertical FOV no matter the aspect ratio
 
 //	g_fov = fov_x;
 	return ( CG_CalcFOVFromX( fov_x ) );
