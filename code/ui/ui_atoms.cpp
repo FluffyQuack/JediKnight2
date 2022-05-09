@@ -61,18 +61,18 @@ UI_SetActiveMenu -
  
 =================
 */
-void UI_SetActiveMenu( const char* menuname,const char *menuID ) 
+bool UI_SetActiveMenu( const char* menuname,const char *menuID ) //Fluffy (EscapeToSkipCutscenes)
 {
 	// this should be the ONLY way the menu system is brought up (besides the UI_ConsoleCommand below)
 
 	if (cls.state != CA_DISCONNECTED && !ui.SG_GameAllowedToSaveHere(qtrue))	//don't check full sytem, only if incamera
 	{
-		return;
+		return 0; //Fluffy (EscapeToSkipCutscenes)
 	}
 
 	if ( !menuname ) {
 		UI_ForceMenuOff();
-		return;
+		return 1; //Fluffy (EscapeToSkipCutscenes)
 	}
 
 	//make sure force-speed and slowmodeath doesn't slow down menus - NOTE: they should reset the timescale when the game un-pauses
@@ -86,22 +86,23 @@ void UI_SetActiveMenu( const char* menuname,const char *menuID )
 	if ( Q_stricmp (menuname, "mainMenu") == 0 ) 
 	{
 		UI_MainMenu();
-		return;
+		return 1; //Fluffy (EscapeToSkipCutscenes)
 	}
 
 	if ( Q_stricmp (menuname, "ingame") == 0 ) 
 	{
 		ui.Cvar_Set( "cl_paused", "1" );
 		UI_InGameMenu(menuID);
-		return;
+		return 1; //Fluffy (EscapeToSkipCutscenes)
 	}
 
 	if ( Q_stricmp (menuname, "datapad") == 0 ) 
 	{
 		ui.Cvar_Set( "cl_paused", "1" );
 		UI_DataPadMenu();
-		return;
+		return 1; //Fluffy (EscapeToSkipCutscenes)
 	}
+	return 1; //Fluffy (EscapeToSkipCutscenes)
 }
 
 

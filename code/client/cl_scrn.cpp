@@ -365,7 +365,7 @@ void SCR_Init( void ) {
 
 //=======================================================
 
-void UI_SetActiveMenu( const char* menuname,const char *menuID );
+bool UI_SetActiveMenu( const char* menuname,const char *menuID ); //Fluffy (EscapeToSkipCutscenes)
 void _UI_Refresh( int realtime );
 void UI_DrawConnect( const char *servername, const char * updateInfoString );
 void UI_DrawConnectText( const char *servername, const char * updateInfoString );

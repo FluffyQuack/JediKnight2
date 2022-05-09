@@ -23,7 +23,7 @@ This file is part of Jedi Knight 2.
 #include "../ui/ui_public.h"
 
 void _UI_KeyEvent( int key, qboolean down );
-void UI_SetActiveMenu( const char* menuname,const char *menuID );
+bool UI_SetActiveMenu( const char* menuname,const char *menuID ); //Fluffy (EscapeToSkipCutscenes)
 void UI_UpdateConnectionMessageString( char *string );
 qboolean UI_ConsoleCommand( void ) ;
 qboolean _UI_IsFullscreen( void );

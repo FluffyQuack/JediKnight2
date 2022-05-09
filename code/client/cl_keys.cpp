@@ -1384,7 +1384,11 @@ void CL_KeyEvent (int key, qboolean down, unsigned time) {
 		{
 			if ( cls.state == CA_ACTIVE ) 
 			{
-				UI_SetActiveMenu( "ingame",NULL );
+				if(UI_SetActiveMenu( "ingame",NULL ) == 0) //Fluffy (EscapeToSkipCutscenes): If UI_SetActiveMenu() returned true, then it should have been due to in_camera being true, in which case we send a "use" command activation to skip the cutscene
+				{
+					Cmd_ExecuteString("+use");
+					Cmd_ExecuteString("-use");
+				}
 			}
 			else 
 			{
