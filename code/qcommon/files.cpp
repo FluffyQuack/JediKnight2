@@ -1926,7 +1926,7 @@ static void FS_AddGameDirectory( const char *path, const char *dir ) {
 	pakfile = FS_BuildOSPath( path, dir, "" );
 	pakfile[ strlen(pakfile) - 1 ] = 0;	// strip the trailing slash
 
-	pakfiles = Sys_ListFiles( pakfile, ".pk3", &numfiles, qfalse );
+	pakfiles = Sys_ListFiles( pakfile, ".*", &numfiles, qfalse ); //Fluffy (LoadZipAlongsidePk3)
 
 	// sort them so that later alphabetic matches override
 	// earlier ones.  This makes pak1.pk3 override asset0.pk3
@@ -1941,6 +1941,25 @@ static void FS_AddGameDirectory( const char *path, const char *dir ) {
 
 	for ( i = 0 ; i < numfiles ; i++ ) {
 		pakfile = FS_BuildOSPath( path, dir, sorted[i] );
+
+		//Fluffy (LoadZipAlongsidePk3): Check if the extension is ZIP or PK3
+		{
+			int lastDotPos = -1, pos = 0;
+			while(1)
+			{
+				if(pakfile[pos] == 0)
+					break;
+				if(pakfile[pos] == '.' && pakfile[pos + 1] != 0)
+					lastDotPos = pos;
+				pos++;
+			}
+			if(lastDotPos == -1)
+				continue;
+			char *ext = &pakfile[lastDotPos + 1];
+			if(_stricmp(ext, "pk3") != 0 && _stricmp(ext, "zip") != 0)
+				continue;
+		}
+
 		if ( ( pak = FS_LoadZipFile( pakfile ) ) == 0 )
 			continue;
 		search = (searchpath_t*)Z_Malloc(sizeof(searchpath_t), TAG_FILESYS, qtrue );
