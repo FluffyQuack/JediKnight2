@@ -2193,8 +2193,12 @@ UI_MouseEvent
 void _UI_MouseEvent( int dx, int dy )
 {
 	//Fluffy (Widescreen2D): Slow down X mouse movement for wider aspect ratios
-	if(glConfig.windowAspect != SCREEN_WIDTH_F / SCREEN_HEIGHT_F)
+	if(dx > 0 && glConfig.windowAspect != SCREEN_WIDTH_F / SCREEN_HEIGHT_F)
+	{
 		dx /= glConfig.windowAspect / (SCREEN_WIDTH_F / SCREEN_HEIGHT_F);
+		if(dx < 1)
+			dx = 1;
+	}
 
 	// update mouse screen position
 	uiInfo.uiDC.cursorx += dx;
