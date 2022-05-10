@@ -369,9 +369,9 @@ cvarTable_t		cvarTable[] = {
 	{ &cg_addMarks, "cg_marks", "1", CVAR_ARCHIVE },
 
 	{ &cg_gun_frame, "gun_frame", "0", CVAR_CHEAT },
-	{ &cg_gun_x, "cg_gunX", "0", CVAR_CHEAT|CVAR_DONTRESET|CVAR_ARCHIVE }, //Fluffy (DontResetAllCheatCvarsToDefault)
-	{ &cg_gun_y, "cg_gunY", "0", CVAR_CHEAT|CVAR_DONTRESET|CVAR_ARCHIVE }, //Fluffy (DontResetAllCheatCvarsToDefault)
-	{ &cg_gun_z, "cg_gunZ", "0", CVAR_CHEAT|CVAR_DONTRESET|CVAR_ARCHIVE }, //Fluffy (DontResetAllCheatCvarsToDefault)
+	{ &cg_gun_x, "cg_gunX", "0", CVAR_CHEAT },
+	{ &cg_gun_y, "cg_gunY", "0", CVAR_CHEAT },
+	{ &cg_gun_z, "cg_gunZ", "0", CVAR_CHEAT },
 	{ &cg_centertime, "cg_centertime", "3", CVAR_CHEAT },
 
 	{ &cg_runpitch, "cg_runpitch", "0.002", CVAR_ARCHIVE},
@@ -391,13 +391,13 @@ cvarTable_t		cvarTable[] = {
 	{ &cg_footsteps, "cg_footsteps", "1", CVAR_CHEAT },
 
 	{ &cg_thirdPerson, "cg_thirdPerson", "0", CVAR_USERINFO },
-	{ &cg_thirdPersonRange, "cg_thirdPersonRange", "80", CVAR_ARCHIVE },
-	{ &cg_thirdPersonMaxRange, "cg_thirdPersonMaxRange", "150", CVAR_ARCHIVE },
-	{ &cg_thirdPersonAngle, "cg_thirdPersonAngle", "0", CVAR_ARCHIVE },
-	{ &cg_thirdPersonPitchOffset, "cg_thirdPersonPitchOffset", "0", CVAR_ARCHIVE },
-	{ &cg_thirdPersonVertOffset, "cg_thirdPersonVertOffset", "16", CVAR_ARCHIVE},
-	{ &cg_thirdPersonCameraDamp, "cg_thirdPersonCameraDamp", "0.3", CVAR_ARCHIVE},
-	{ &cg_thirdPersonTargetDamp, "cg_thirdPersonTargetDamp", "0.5", CVAR_ARCHIVE},
+	{ &cg_thirdPersonRange, "cg_thirdPersonRange", "80", 0 },
+	{ &cg_thirdPersonMaxRange, "cg_thirdPersonMaxRange", "150", 0 },
+	{ &cg_thirdPersonAngle, "cg_thirdPersonAngle", "0", 0 },
+	{ &cg_thirdPersonPitchOffset, "cg_thirdPersonPitchOffset", "0", 0 },
+	{ &cg_thirdPersonVertOffset, "cg_thirdPersonVertOffset", "16", 0},
+	{ &cg_thirdPersonCameraDamp, "cg_thirdPersonCameraDamp", "0.3", 0},
+	{ &cg_thirdPersonTargetDamp, "cg_thirdPersonTargetDamp", "0.5", 0},
 	
 	{ &cg_thirdPersonHorzOffset, "cg_thirdPersonHorzOffset", "0", 0},
 	{ &cg_thirdPersonAlpha,	"cg_thirdPersonAlpha",	"1.0", CVAR_CHEAT },
