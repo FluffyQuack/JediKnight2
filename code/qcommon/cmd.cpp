@@ -226,6 +226,24 @@ void Cmd_Exec_f( void ) {
 	}
 
 	Q_strncpyz( filename, Cmd_Argv(1), sizeof( filename ) );
+
+	//Fluffy (AllowMultipleAutoexecs)
+	if(_stricmp(filename, "autoexec.cfg") == 0)
+	{
+		//Try loading ZIP variants (when loaded via ZIP files they're automatically renamed to autoexec_###.cfg)
+		for(int i = 0; i < 1000; i++)
+		{
+			char autoexecFilename[20];
+			sprintf(autoexecFilename, "autoexec_%03i.cfg", i);
+			len = FS_ReadFile( autoexecFilename, (void **)&f);
+			if (!f)
+				break;
+			Com_Printf ("execing %s\n",autoexecFilename);
+			Cbuf_InsertText (f);
+			FS_FreeFile (f);
+		}
+	}
+
 	COM_DefaultExtension( filename, sizeof( filename ), ".cfg" ); 
 	len = FS_ReadFile( filename, (void **)&f);
 	if (!f) {

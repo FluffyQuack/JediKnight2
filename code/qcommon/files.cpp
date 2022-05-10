@@ -1270,7 +1270,8 @@ void FS_WriteFile( const char *qpath, const void *buffer, int size ) {
 	FS_FCloseFile( f );
 }
 
-
+//Fluffy (AllowMultipleAutoexecs)
+int autoexecsFound = 0;
 
 /*
 ==========================================================================
@@ -1326,6 +1327,11 @@ static pack_t *FS_LoadZipFile( char *zipfile )
 			Com_Error(ERR_FATAL, "ERROR: filename length > MAX_QPATH ( strlen(%s) = %d) \n", filename_inzip, file_info.size_filename );
 		}
 		len += strlen(filename_inzip) + 1;
+
+		//Fluffy (AllowMultipleAutoExecs)
+		if(_stricmp(filename_inzip, "autoexec.cfg") == 0)
+			len += 4;
+
 		unzGoToNextFile(uf);
 	}
 
@@ -1361,11 +1367,24 @@ static pack_t *FS_LoadZipFile( char *zipfile )
 		if (file_info.uncompressed_size > 0) {
 			fs_headerLongs[fs_numHeaderLongs++] = LittleLong(file_info.crc);
 		}
-		Q_strlwr( filename_inzip );
-		hash = FS_HashFileName(filename_inzip, pack->hashSize);
+
+		//Fluffy (AllowMultipleAutoexecs)
+		char *filename;
+		char newFilenameForAutoexec[MAX_ZPATH];
+		if(_stricmp(filename_inzip, "autoexec.cfg") == 0 && autoexecsFound < 999)
+		{
+			sprintf(newFilenameForAutoexec, "autoexec_%03i.cfg", autoexecsFound);
+			autoexecsFound++;
+			filename = newFilenameForAutoexec;
+		}
+		else
+			filename = filename_inzip;
+
+		Q_strlwr( filename ); //Fluffy (AllowMultipleAutoexecs)
+		hash = FS_HashFileName(filename, pack->hashSize); //Fluffy (AllowMultipleAutoexecs)
 		buildBuffer[i].name = namePtr;
-		strcpy( buildBuffer[i].name, filename_inzip );
-		namePtr += strlen(filename_inzip) + 1;
+		strcpy( buildBuffer[i].name, filename ); //Fluffy (AllowMultipleAutoexecs)
+		namePtr += strlen(filename) + 1; //Fluffy (AllowMultipleAutoexecs)
 		// store the file position in the zip
 		unzGetCurrentFileInfoPosition(uf, &buildBuffer[i].pos);
 		//
