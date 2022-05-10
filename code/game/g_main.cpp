@@ -571,7 +571,7 @@ void G_InitCvars( void ) {
 	g_gravity = gi.cvar( "g_gravity", "800", CVAR_USERINFO|CVAR_ROM );	//using userinfo as savegame flag
 	g_sex = gi.cvar ("sex", "male", CVAR_USERINFO | CVAR_ARCHIVE );
 	g_spskill = gi.cvar ("g_spskill", "0", CVAR_ARCHIVE | CVAR_USERINFO);	//using userinfo as savegame flag
-	g_knockback = gi.cvar( "g_knockback", "1000", CVAR_CHEAT );
+	g_knockback = gi.cvar( "g_knockback", "1000", 0 );
 	g_dismemberment = gi.cvar ( "g_dismemberment", "3", CVAR_ARCHIVE );//0 = none, 1 = arms and hands, 2 = legs, 3 = waist and head, 4 = mega dismemberment
 	g_dismemberProbabilities = gi.cvar ( "g_dismemberProbabilities", "1", CVAR_ARCHIVE );//0 = ignore probabilities, 1 = use probabilities
 	g_synchSplitAnims = gi.cvar ( "g_synchSplitAnims", "1", 0 );
@@ -589,13 +589,13 @@ void G_InitCvars( void ) {
 	g_subtitles = gi.cvar( "g_subtitles", "2", CVAR_ARCHIVE );
 	com_buildScript = gi.cvar ("com_buildscript", "0", 0);
 
-	g_saberAutoBlocking = gi.cvar( "g_saberAutoBlocking", "1", CVAR_ARCHIVE|CVAR_CHEAT );//must press +block button to do any blocking
-	g_saberRealisticCombat = gi.cvar( "g_saberRealisticCombat", "0", CVAR_ARCHIVE|CVAR_CHEAT );//makes collision more precise, increases damage
-	g_saberMoveSpeed = gi.cvar( "g_saberMoveSpeed", "1", CVAR_ARCHIVE|CVAR_CHEAT );//how fast you run while attacking with a saber
-	g_saberAnimSpeed = gi.cvar( "g_saberAnimSpeed", "1", CVAR_ARCHIVE|CVAR_CHEAT );//how fast saber animations run
-	g_saberAutoAim = gi.cvar( "g_saberAutoAim", "1", CVAR_ARCHIVE|CVAR_CHEAT );//auto-aims at enemies when not moving or when just running forward
+	g_saberAutoBlocking = gi.cvar( "g_saberAutoBlocking", "1", 0 );//must press +block button to do any blocking
+	g_saberRealisticCombat = gi.cvar( "g_saberRealisticCombat", "0", 0 );//makes collision more precise, increases damage
+	g_saberMoveSpeed = gi.cvar( "g_saberMoveSpeed", "1", 0 );//how fast you run while attacking with a saber
+	g_saberAnimSpeed = gi.cvar( "g_saberAnimSpeed", "1", 0 );//how fast saber animations run
+	g_saberAutoAim = gi.cvar( "g_saberAutoAim", "1", 0 );//auto-aims at enemies when not moving or when just running forward
 
-	g_AIsurrender = gi.cvar( "g_AIsurrender", "0", CVAR_CHEAT );
+	g_AIsurrender = gi.cvar( "g_AIsurrender", "0", 0 );
 	g_numEntities = gi.cvar( "g_numEntities", "0", CVAR_CHEAT );
 	
 	gi.cvar( "newTotalSecrets", "0", CVAR_ROM );
@@ -603,24 +603,24 @@ void G_InitCvars( void ) {
 	g_iscensored = gi.cvar( "ui_iscensored", "0", CVAR_ARCHIVE|CVAR_ROM|CVAR_INIT|CVAR_CHEAT|CVAR_NORESTART );
 
 	//Fluffy (ProjectileCVars): New cvars for controlling speed and damage of projectiles
-	g_projectileBlasterSpeedMultiplier = gi.cvar ( "g_blasterVelocity", "1", CVAR_CHEAT );
-	g_projectileBlasterDamageMultiplier = gi.cvar ( "g_blasterDamage", "1", CVAR_CHEAT );
-	g_projectileDisruptorDamageMultiplier = gi.cvar ( "g_disruptorDamage", "1", CVAR_CHEAT );
-	g_projectileBowcasterSpeedMultiplier = gi.cvar ( "g_bowcasterVelocity", "1", CVAR_CHEAT );
-	g_projectileBowcasterDamageMultiplier = gi.cvar ( "g_bowcasterDamage", "1", CVAR_CHEAT );
-	g_projectileRepeaterSpeedMultiplier = gi.cvar ( "g_repeaterVelocity", "1", CVAR_CHEAT );
-	g_projectileRepeaterDamageMultiplier = gi.cvar ( "g_repeaterDamage", "1", CVAR_CHEAT );
-	g_projectileDempSpeedMultiplier = gi.cvar ( "g_dempVelocity", "1", CVAR_CHEAT );
-	g_projectileDempDamageMultiplier = gi.cvar ( "g_dempDamage", "1", CVAR_CHEAT );
-	g_projectileFlechetteSpeedMultiplier = gi.cvar ( "g_flechetteVelocity", "1", CVAR_CHEAT );
-	g_projectileFlechetteDamageMultiplier = gi.cvar ( "g_flechetteDamage", "1", CVAR_CHEAT );
-	g_projectileRocketSpeedMultiplier = gi.cvar ( "g_rocketLauncherVelocity", "1", CVAR_CHEAT );
-	g_projectileRocketDamageMultiplier = gi.cvar ( "g_rocketLauncherDamage", "1", CVAR_CHEAT );
-	g_projectileATSTDamageMultiplier = gi.cvar ( "g_ATSTDamage", "1", CVAR_CHEAT );
-	g_projectileMineDamageMultiplier = gi.cvar ( "g_mineDamage", "1", CVAR_CHEAT );
-	g_projectileDetonatorDamageMultiplier = gi.cvar ( "g_detonatorDamage", "1", CVAR_CHEAT );
-	g_projectileSaberDamageMultiplier = gi.cvar ( "g_saberDamage", "1", CVAR_CHEAT );
-	g_projectileFlyingSaberDamageMultiplier = gi.cvar ( "g_flyingSaberDamage", "1", CVAR_CHEAT );
+	g_projectileBlasterSpeedMultiplier = gi.cvar ( "g_blasterVelocity", "1", 0 );
+	g_projectileBlasterDamageMultiplier = gi.cvar ( "g_blasterDamage", "1", 0 );
+	g_projectileDisruptorDamageMultiplier = gi.cvar ( "g_disruptorDamage", "1", 0 );
+	g_projectileBowcasterSpeedMultiplier = gi.cvar ( "g_bowcasterVelocity", "1", 0 );
+	g_projectileBowcasterDamageMultiplier = gi.cvar ( "g_bowcasterDamage", "1", 0 );
+	g_projectileRepeaterSpeedMultiplier = gi.cvar ( "g_repeaterVelocity", "1", 0 );
+	g_projectileRepeaterDamageMultiplier = gi.cvar ( "g_repeaterDamage", "1", 0 );
+	g_projectileDempSpeedMultiplier = gi.cvar ( "g_dempVelocity", "1", 0 );
+	g_projectileDempDamageMultiplier = gi.cvar ( "g_dempDamage", "1", 0 );
+	g_projectileFlechetteSpeedMultiplier = gi.cvar ( "g_flechetteVelocity", "1", 0 );
+	g_projectileFlechetteDamageMultiplier = gi.cvar ( "g_flechetteDamage", "1", 0 );
+	g_projectileRocketSpeedMultiplier = gi.cvar ( "g_rocketLauncherVelocity", "1", 0 );
+	g_projectileRocketDamageMultiplier = gi.cvar ( "g_rocketLauncherDamage", "1", 0 );
+	g_projectileATSTDamageMultiplier = gi.cvar ( "g_ATSTDamage", "1", 0 );
+	g_projectileMineDamageMultiplier = gi.cvar ( "g_mineDamage", "1", 0 );
+	g_projectileDetonatorDamageMultiplier = gi.cvar ( "g_detonatorDamage", "1", 0 );
+	g_projectileSaberDamageMultiplier = gi.cvar ( "g_saberDamage", "1", 0 );
+	g_projectileFlyingSaberDamageMultiplier = gi.cvar ( "g_flyingSaberDamage", "1", 0 );
 }
 
 /*
