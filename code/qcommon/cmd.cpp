@@ -228,13 +228,13 @@ void Cmd_Exec_f( void ) {
 	Q_strncpyz( filename, Cmd_Argv(1), sizeof( filename ) );
 
 	//Fluffy (AllowMultipleAutoexecs)
-	if(_stricmp(filename, "autoexec.cfg") == 0)
+	if(_stricmp(filename, "alwaysrun.cfg") == 0)
 	{
-		//Try loading ZIP variants (when loaded via ZIP files they're automatically renamed to autoexec_###.cfg)
+		//Try loading variants in ZIP files (when loaded via ZIP files they're automatically renamed to alwaysrun_###.cfg)
 		for(int i = 0; i < 1000; i++)
 		{
 			char autoexecFilename[20];
-			sprintf(autoexecFilename, "autoexec_%03i.cfg", i);
+			sprintf(autoexecFilename, "alwaysrun_%03i.cfg", i);
 			len = FS_ReadFile( autoexecFilename, (void **)&f);
 			if (!f)
 				break;

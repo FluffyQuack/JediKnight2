@@ -1271,7 +1271,7 @@ void FS_WriteFile( const char *qpath, const void *buffer, int size ) {
 }
 
 //Fluffy (AllowMultipleAutoexecs)
-int autoexecsFound = 0;
+int alwaysrunFound = 0;
 
 /*
 ==========================================================================
@@ -1329,7 +1329,7 @@ static pack_t *FS_LoadZipFile( char *zipfile )
 		len += strlen(filename_inzip) + 1;
 
 		//Fluffy (AllowMultipleAutoExecs)
-		if(_stricmp(filename_inzip, "autoexec.cfg") == 0)
+		if(_stricmp(filename_inzip, "alwaysrun.cfg") == 0)
 			len += 4;
 
 		unzGoToNextFile(uf);
@@ -1371,10 +1371,10 @@ static pack_t *FS_LoadZipFile( char *zipfile )
 		//Fluffy (AllowMultipleAutoexecs)
 		char *filename;
 		char newFilenameForAutoexec[MAX_ZPATH];
-		if(_stricmp(filename_inzip, "autoexec.cfg") == 0 && autoexecsFound < 999)
+		if(_stricmp(filename_inzip, "alwaysrun.cfg") == 0 && alwaysrunFound < 999)
 		{
-			sprintf(newFilenameForAutoexec, "autoexec_%03i.cfg", autoexecsFound);
-			autoexecsFound++;
+			sprintf(newFilenameForAutoexec, "alwaysrun_%03i.cfg", alwaysrunFound);
+			alwaysrunFound++;
 			filename = newFilenameForAutoexec;
 		}
 		else
@@ -2041,6 +2041,8 @@ static void FS_Startup( const char *gameName ) {
 	fs_gamedirvar = Cvar_Get ("fs_game", "", CVAR_INIT|CVAR_SERVERINFO );
 	fs_restrict = Cvar_Get ("fs_restrict", "", CVAR_INIT );
 	Cvar_Get( "com_demo", "", CVAR_INIT );
+
+	alwaysrunFound = 0; //Fluffy (AllowMultipleAutoexecs)
 
 	// set up cdpath
 	if (fs_cdpath->string[0]) {

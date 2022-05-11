@@ -1844,6 +1844,8 @@ void Com_Init( char *commandLine ) {
 			Cbuf_AddText ("exec jk2config.cfg\n");
 		}
 
+		Cbuf_AddText ("exec alwaysrun.cfg\n"); //Fluffy (AllowMultipleAutoexecs) //Fluffy TODO: This doesn't combine well with mods that are loaded within the game menu. First of all, this function is only run during the game's init process, and not each time a mod is loaded. And secondly, even if this did get run each time a mod is loaded, any cvar that are set via this don't get unset again until the user quits the game
+		
 		Cbuf_AddText ("exec autoexec.cfg\n");
 		
 		Cbuf_Execute ();
