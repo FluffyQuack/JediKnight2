@@ -1175,7 +1175,7 @@ typedef struct {
 #define	MAX_CLIENTS			1 // 128		// absolute limit
 #define MAX_LOCATIONS		64
 
-#define	GENTITYNUM_BITS		10		// don't need to send any more
+#define	GENTITYNUM_BITS		12		// don't need to send any more //Fluffy (HigherEntityMax): Increased from 10 (1024->4096)
 #define	MAX_GENTITIES		(1<<GENTITYNUM_BITS)
 
 // entitynums are communicated with GENTITY_BITS, so any reserved

@@ -876,13 +876,13 @@ compared quickly during the qsorting process
 the bits are allocated as follows:
 
 22 - 31	: sorted shader index
-12 - 21	: entity index
+10 - 21	: entity index //Fluffy (HigherEntityMax)
 3 - 7	: fog index
 2		: used to be clipped flag
 0 - 1	: dlightmap index
 */
-#define	QSORT_SHADERNUM_SHIFT	22
-#define	QSORT_ENTITYNUM_SHIFT	12
+#define	QSORT_SHADERNUM_SHIFT	22 
+#define	QSORT_ENTITYNUM_SHIFT	10 //Fluffy (HigherEntityMax): Changed from 12
 #define	QSORT_FOGNUM_SHIFT		3
 
 #ifdef _NPATCH
@@ -1224,7 +1224,7 @@ void R_AddLightningBoltSurfaces( trRefEntity_t *e );
 
 void R_AddPolygonSurfaces( void );
 
-void R_DecomposeSort( unsigned sort, int *entityNum, shader_t **shader, 
+void R_DecomposeSort( unsigned sort, int *entityNum, shader_t **shader,
 					 int *fogNum, int *dlightMap );
 
 #ifdef _NPATCH
