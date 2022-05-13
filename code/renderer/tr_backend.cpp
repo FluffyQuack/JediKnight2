@@ -865,22 +865,47 @@ const void *RB_RotatePic ( const void *data )
 			RB_SetGL2D();
 		}
 
+		//Fluffy (Widescreen2D)
+		float x;
+		float w;
+		if(cmd->commandId == RC_ROTATE_PIC) //Default behaviour
+		{
+			x = cmd->x;
+			w = cmd->w;
+		}
+		else //"Unstretch" the texture
+		{
+			w = cmd->w / (glConfig.windowAspect / (SCREEN_WIDTH_F / SCREEN_HEIGHT_F));
+			
+			//Behaviour where we adjust scale and position of the 2D element so it's not stretched
+			{
+				x = cmd->x / (glConfig.windowAspect / (SCREEN_WIDTH_F / SCREEN_HEIGHT_F));
+				if(cmd->commandId == RC_ROTATE_PIC_MIDDLE || cmd->commandId == RC_ROTATE_PIC_RIGHT)
+				{
+					if(cmd->commandId == RC_ROTATE_PIC_MIDDLE)
+						x += (glConfig.aspectWidthDiff / 2);
+					else if(cmd->commandId == RC_ROTATE_PIC_RIGHT)
+						x += glConfig.aspectWidthDiff;
+				}
+			}
+		}
+
 		qglColor4ubv( backEnd.color2D );
 		qglPushMatrix();
 
-		qglTranslatef(cmd->x+cmd->w,cmd->y,0);
+		qglTranslatef(x+cmd->w,cmd->y,0); //Fluffy (Widescreen2D)
 		qglRotatef(cmd->a, 0.0, 0.0, 1.0);
 		
 		GL_Bind( image );
 		qglBegin (GL_QUADS);
 		qglTexCoord2f( cmd->s1, cmd->t1);
-		qglVertex2f( -cmd->w, 0 );
+		qglVertex2f( -w, 0 ); //Fluffy (Widescreen2D)
 		qglTexCoord2f( cmd->s2, cmd->t1 );
 		qglVertex2f( 0, 0 );
 		qglTexCoord2f( cmd->s2, cmd->t2 );
 		qglVertex2f( 0, cmd->h );
 		qglTexCoord2f( cmd->s1, cmd->t2 );
-		qglVertex2f( -cmd->w, cmd->h );
+		qglVertex2f( -w, cmd->h ); //Fluffy (Widescreen2D)
 		qglEnd();
 		
 		qglPopMatrix();
@@ -915,6 +940,31 @@ const void *RB_RotatePic2 ( const void *data )
 				RB_SetGL2D();
 			}
 
+			//Fluffy (Widescreen2D)
+			float x;
+			float w;
+			if(cmd->commandId == RC_ROTATE_PIC2) //Default behaviour
+			{
+				x = cmd->x;
+				w = cmd->w;
+			}
+			else //"Unstretch" the texture
+			{
+				w = cmd->w / (glConfig.windowAspect / (SCREEN_WIDTH_F / SCREEN_HEIGHT_F));
+
+				//Behaviour where we adjust scale and position of the 2D element so it's not stretched
+				{
+					x = cmd->x / (glConfig.windowAspect / (SCREEN_WIDTH_F / SCREEN_HEIGHT_F));
+					if(cmd->commandId == RC_ROTATE_PIC2_MIDDLE || cmd->commandId == RC_ROTATE_PIC2_RIGHT)
+					{
+						if(cmd->commandId == RC_ROTATE_PIC2_MIDDLE)
+							x += (glConfig.aspectWidthDiff / 2);
+						else if(cmd->commandId == RC_ROTATE_PIC2_RIGHT)
+							x += glConfig.aspectWidthDiff;
+					}
+				}
+			}
+
 			// Get our current blend mode, etc.
 			GL_State( shader->stages[0]->stateBits );
 
@@ -922,22 +972,22 @@ const void *RB_RotatePic2 ( const void *data )
 			qglPushMatrix();
 
 			// rotation point is going to be around the center of the passed in coordinates
-			qglTranslatef( cmd->x, cmd->y, 0 );
+			qglTranslatef( x, cmd->y, 0 ); //Fluffy (Widescreen2D)
 			qglRotatef( cmd->a, 0.0, 0.0, 1.0 );
 			
 			GL_Bind( image );
 			qglBegin( GL_QUADS );
 				qglTexCoord2f( cmd->s1, cmd->t1);
-				qglVertex2f( -cmd->w * 0.5f, -cmd->h * 0.5f );
+				qglVertex2f( -w * 0.5f, -cmd->h * 0.5f ); //Fluffy (Widescreen2D)
 
 				qglTexCoord2f( cmd->s2, cmd->t1 );
-				qglVertex2f( cmd->w * 0.5f, -cmd->h * 0.5f );
+				qglVertex2f( w * 0.5f, -cmd->h * 0.5f ); //Fluffy (Widescreen2D)
 
 				qglTexCoord2f( cmd->s2, cmd->t2 );
-				qglVertex2f( cmd->w * 0.5f, cmd->h * 0.5f );
+				qglVertex2f( w * 0.5f, cmd->h * 0.5f ); //Fluffy (Widescreen2D)
 
 				qglTexCoord2f( cmd->s1, cmd->t2 );
-				qglVertex2f( -cmd->w * 0.5f, cmd->h * 0.5f );
+				qglVertex2f( -w * 0.5f, cmd->h * 0.5f ); //Fluffy (Widescreen2D)
 			qglEnd();
 			
 			qglPopMatrix();
@@ -1304,9 +1354,17 @@ void RB_ExecuteRenderCommands( const void *data ) {
 			data = RB_StretchPic( data );
 			break;
 		case RC_ROTATE_PIC:
+		//Fluffy (Widescreen2D)
+		case RC_ROTATE_PIC_LEFT:
+		case RC_ROTATE_PIC_MIDDLE:
+		case RC_ROTATE_PIC_RIGHT:
 			data = RB_RotatePic( data );
 			break;
 		case RC_ROTATE_PIC2:
+		//Fluffy (Widescreen2D)
+		case RC_ROTATE_PIC2_LEFT:
+		case RC_ROTATE_PIC2_MIDDLE:
+		case RC_ROTATE_PIC2_RIGHT:
 			data = RB_RotatePic2( data );
 			break;
 		case RC_SCISSOR:

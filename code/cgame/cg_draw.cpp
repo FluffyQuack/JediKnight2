@@ -1060,7 +1060,7 @@ static void CG_DrawZoomMask( void )
 
 		// Draw target mask
 		cgi_R_SetColor( colorTable[CT_WHITE] );
-		CG_DrawPic( 0, 0, 640, 480, cgs.media.disruptorMask );
+		CG_DrawPic( 0, 0, 640, 480, cgs.media.disruptorMask, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D)
 
 		// apparently 99.0f is the full zoom level
 		if ( level >= 99 )
@@ -1075,7 +1075,7 @@ static void CG_DrawZoomMask( void )
 		}
 
 		// Draw rotating insert
-		CG_DrawRotatePic2( 320, 240, 640, 480, -level, cgs.media.disruptorInsert );
+		CG_DrawRotatePic2( 320, 240, 640, 480, -level, cgs.media.disruptorInsert, RENDER2D_ANCHOR_MIDDLE  );
 
 		float cx, cy;
 		float max;
@@ -1117,7 +1117,7 @@ static void CG_DrawZoomMask( void )
 			cx = 320 + sin( (i+90.0f)/57.296f ) * 190;
 			cy = 240 + cos( (i+90.0f)/57.296f ) * 190;
 
-			CG_DrawRotatePic2( cx, cy, 12, 24, 90 - i, cgs.media.disruptorInsertTick );
+			CG_DrawRotatePic2( cx, cy, 12, 24, 90 - i, cgs.media.disruptorInsertTick, RENDER2D_ANCHOR_MIDDLE  );
 		}
 
 		// FIXME: doesn't know about ammo!! which is bad because it draws charge beyond what ammo you may have..
@@ -1133,7 +1133,7 @@ static void CG_DrawZoomMask( void )
 				max = 1.0f;
 			}
 
-			CG_DrawPic2( 257, 435, 134 * max, 34, 0,0,max,1,cgi_R_RegisterShaderNoMip( "gfx/2d/crop_charge" ));
+			CG_DrawPic2( 257, 435, 134 * max, 34, 0,0,max,1,cgi_R_RegisterShaderNoMip( "gfx/2d/crop_charge" ), RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D)
 		}
 	}
 	//-----------
