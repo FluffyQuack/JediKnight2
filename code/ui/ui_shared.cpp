@@ -6807,6 +6807,10 @@ void Menu_HandleMouseMove(menuDef_t *menu, float x, float y)
 	int i, pass;
 	qboolean focusSet = qfalse;
 
+	//Fluffy (Widescreen2D): Convert mouse coordinates to correspond with UI items rendering in the middle of the screen as a 4:3 screen
+	x -= (glConfig.aspectWidthDiff / 2);
+	x = x * (glConfig.windowAspect / (SCREEN_WIDTH_F / SCREEN_HEIGHT_F));
+
 	itemDef_t *overItem;
 	if (menu == NULL) 
 	{
