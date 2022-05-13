@@ -4507,6 +4507,8 @@ int Menu_Count(void)
 	return menuCount;
 }
 
+static bool drawnFullscreenMenuThisFrame = 0; //Fluffy (Widescreen2D)
+
 /*
 =================
 Menu_PaintAll
@@ -4514,6 +4516,8 @@ Menu_PaintAll
 */
 void Menu_PaintAll(void) 
 {
+	drawnFullscreenMenuThisFrame = 0; //Fluffy (Widescreen2D)
+
 	int i;
 	if (captureFunc) 
 	{
@@ -4552,11 +4556,11 @@ void Menu_Paint(menuDef_t *menu, qboolean forcePaint)
 		return;
 	}
 
-//	if (menu->window.ownerDrawFlags && DC->ownerDrawVisible && !DC->ownerDrawVisible(menu->window.ownerDrawFlags)) 
-//	{
-//		return;
-//	}
-	
+	//	if (menu->window.ownerDrawFlags && DC->ownerDrawVisible && !DC->ownerDrawVisible(menu->window.ownerDrawFlags)) 
+	//	{
+	//		return;
+	//	}
+
 	if (forcePaint) 
 	{
 		menu->window.flags |= WINDOW_FORCED;
@@ -4565,6 +4569,12 @@ void Menu_Paint(menuDef_t *menu, qboolean forcePaint)
 	// draw the background if necessary
 	if (menu->fullScreen) 
 	{
+		//Fluffy (Widescreen2D): If this is wider than 4:3, we need to ensure sides are completely black, so we render a black screen before rendering the menu
+		if ( drawnFullscreenMenuThisFrame == 0 && glConfig.vidWidth * 480 > glConfig.vidHeight * 640 ) {
+			vec4_t vec = {0.0f, 0.0f, 0.0f, 1.0f};
+			DC->fillRect(0, 0, 640, 480, vec);
+		}
+		drawnFullscreenMenuThisFrame = 1;
 
 		vec3_t	color;
 		color[0] = menu->window.backColor[0];
