@@ -24,7 +24,7 @@ This file is part of Jedi Knight 2.
 #define FX_PRIMITIVES_H_INC
 
 
-#define MAX_EFFECTS			1200
+#define MAX_EFFECTS			(MAX_GENTITIES + 176) //Fluffy (HigherEntityMax)
 
 
 // Generic group flags, used by parser, then get converted to the appropriate specific flags

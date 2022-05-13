@@ -182,7 +182,7 @@ void SV_Startup( void ) {
 	const int iSize = sizeof(client_t) * 1;
 	svs.clients = (struct client_s *) Z_Malloc (iSize, TAG_CLIENTS, qfalse );
 	memset(svs.clients,0,iSize);
-	svs.numSnapshotEntities = 1 * 4 * 64;
+	svs.numSnapshotEntities = 1 * 4 * 64 * 4; //Fluffy (HigherEntityMax): Quadrupled limit
 	svs.initialized = qtrue;
 
 	Cvar_Set( "sv_running", "1" );
