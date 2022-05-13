@@ -128,7 +128,7 @@ cvarTable_t		cvarTable[] =
 
 int		cvarTableSize = sizeof(cvarTable) / sizeof(cvarTable[0]);
 
-void Text_Paint(float x, float y, float scale, vec4_t color, const char *text, int iMaxPixelWidth, int style, int iFontIndex);
+void Text_Paint(float x, float y, float scale, vec4_t color, const char *text, int iMaxPixelWidth, int style, int iFontIndex, int widescreenAnchor); //Fluffy (Widescreen2D)
 int Key_GetCatcher( void );
 
 #define	UI_FPS_FRAMES	4
@@ -261,7 +261,7 @@ Text_Paint
 */
 // iMaxPixelWidth is 0 here for no limit (but gets converted to -1), else max printable pixel width relative to start pos
 //
-void Text_Paint(float x, float y, float scale, vec4_t color, const char *text, int iMaxPixelWidth, int style, int iFontIndex)
+void Text_Paint(float x, float y, float scale, vec4_t color, const char *text, int iMaxPixelWidth, int style, int iFontIndex, int widescreenAnchor = RENDER2D_STRETCH) //Fluffy (Widescreen2D)
 {
 	if (iFontIndex == 0)
 	{
@@ -288,7 +288,7 @@ void Text_Paint(float x, float y, float scale, vec4_t color, const char *text, i
 							iStyleOR | iFontIndex,	// const int iFontHandle
 							!iMaxPixelWidth?-1:iMaxPixelWidth,	// iMaxPixelWidth (-1 = none)
 							scale,	// const float scale = 1.0f
-							RENDER2D_STRETCH); //Fluffy (Widescreen2D)
+							widescreenAnchor); //Fluffy (Widescreen2D)
 }
 
 
@@ -1759,7 +1759,7 @@ static void UI_Version(rectDef_t *rect, float scale, vec4_t color, int iFontInde
 	
 	width = DC->textWidth(Q3_VERSION, scale, 0);
 
-	DC->drawText(rect->x - width, rect->y, scale, color, Q3_VERSION, 0, ITEM_TEXTSTYLE_SHADOWED, iFontIndex);
+	DC->drawText(rect->x - width, rect->y, scale, color, Q3_VERSION, 0, ITEM_TEXTSTYLE_SHADOWED, iFontIndex, RENDER2D_STRETCH); //Fluffy (Widescreen2D)
 }
 
 /*

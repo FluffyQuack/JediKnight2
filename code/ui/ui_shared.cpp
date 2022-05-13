@@ -4528,8 +4528,8 @@ void Menu_PaintAll(void)
 	if (uis.debugMode) 
 	{
 		vec4_t v = {1, 1, 1, 1};
-		DC->drawText(5, 25, .75, v, va("(%d,%d)",DC->cursorx,DC->cursory), 0, 0, DC->Assets.qhMediumFont);
-		DC->drawText(5, 10, .75, v, va("fps: %f", DC->FPS), 0, 0, DC->Assets.qhMediumFont);
+		DC->drawText(5, 25, .75, v, va("(%d,%d)",DC->cursorx,DC->cursory), 0, 0, DC->Assets.qhMediumFont, RENDER2D_STRETCH); //Fluffy (Widescreen2D)
+		DC->drawText(5, 10, .75, v, va("fps: %f", DC->FPS), 0, 0, DC->Assets.qhMediumFont, RENDER2D_STRETCH); //Fluffy (Widescreen2D)
 	}
 }
 
@@ -4838,12 +4838,12 @@ void Item_Text_Wrapped_Paint(itemDef_t *item)
 	{
 		strncpy(buff, start, p-start+1);
 		buff[p-start] = '\0';
-		DC->drawText(x, y, item->textscale, color, buff, 0, item->textStyle, item->font);
+		DC->drawText(x, y, item->textscale, color, buff, 0, item->textStyle, item->font, RENDER2D_ANCHOR_MIDDLE); //Fluffy (Widescreen2D)
 		y += height + 5;
 		start += p - start + 1;
 		p = strchr(p+1, '\r');
 	}
-	DC->drawText(x, y, item->textscale, color, start, 0, item->textStyle, item->font);
+	DC->drawText(x, y, item->textscale, color, start, 0, item->textStyle, item->font, RENDER2D_ANCHOR_MIDDLE); //Fluffy (Widescreen2D)
 }
 
 
@@ -4901,7 +4901,7 @@ void Item_Text_Paint(itemDef_t *item)
 	}
 
 	Item_TextColor(item, &color);
-	DC->drawText(item->textRect.x, item->textRect.y, item->textscale, color, textPtr, 0, item->textStyle, item->font);
+	DC->drawText(item->textRect.x, item->textRect.y, item->textscale, color, textPtr, 0, item->textStyle, item->font, RENDER2D_ANCHOR_MIDDLE); //Fluffy (Widescreen2D)
 
 	if (item->text2)	// Is there a second line of text?
 	{
@@ -4915,7 +4915,7 @@ void Item_Text_Paint(itemDef_t *item)
 		}
 
 		Item_TextColor(item, &color);
-		DC->drawText(item->textRect.x + item->text2alignx, item->textRect.y + item->text2aligny, item->textscale, color, textPtr, 0, item->textStyle, item->font);
+		DC->drawText(item->textRect.x + item->text2alignx, item->textRect.y + item->text2aligny, item->textscale, color, textPtr, 0, item->textStyle, item->font, RENDER2D_ANCHOR_MIDDLE); //Fluffy (Widescreen2D)
 	}
 }
 
@@ -5022,7 +5022,7 @@ void Item_TextField_Paint(itemDef_t *item)
 	} 
 	else 
 	{
-		DC->drawText(item->textRect.x + item->textRect.w + offset, item->textRect.y, item->textscale, newColor, buff + editPtr->paintOffset, /*editPtr->maxPaintChars*/ item->window.rect.w, item->textStyle, item->font);
+		DC->drawText(item->textRect.x + item->textRect.w + offset, item->textRect.y, item->textscale, newColor, buff + editPtr->paintOffset, /*editPtr->maxPaintChars*/ item->window.rect.w, item->textStyle, item->font, RENDER2D_STRETCH); //Fluffy (Widescreen2D)
 	}
 }
 
@@ -5182,7 +5182,7 @@ void Item_ListBox_Paint(itemDef_t *item)
 						} 
 						else if (text) 
 						{
-							DC->drawText(x + 4 + listPtr->columnInfo[j].pos, y + listPtr->elementHeight, item->textscale, item->window.foreColor, text, listPtr->columnInfo[j].maxChars, item->textStyle, item->font);
+							DC->drawText(x + 4 + listPtr->columnInfo[j].pos, y + listPtr->elementHeight, item->textscale, item->window.foreColor, text, listPtr->columnInfo[j].maxChars, item->textStyle, item->font, RENDER2D_STRETCH); //Fluffy (Widescreen2D)
 						}
 					}
 				} 
@@ -5195,7 +5195,7 @@ void Item_ListBox_Paint(itemDef_t *item)
 					} 
 					else if (text) 
 					{
-						DC->drawText(x + 4, y + listPtr->elementHeight, item->textscale, item->window.foreColor, text, 0, item->textStyle, item->font);
+						DC->drawText(x + 4, y + listPtr->elementHeight, item->textscale, item->window.foreColor, text, 0, item->textStyle, item->font, RENDER2D_STRETCH); //Fluffy (Widescreen2D)
 					}
 				}
 
@@ -5337,11 +5337,11 @@ void Item_Bind_Paint(itemDef_t *item)
 			yAdj = textHeight - DC->textHeight(g_nameBind1, textScale, uiInfo.uiDC.Assets.qhMediumFont);
 		}
 
-		DC->drawText(startingXPos, item->textRect.y + yAdj, textScale, newColor, g_nameBind1, maxChars/*item->textRect.w*/, item->textStyle, item->font);
+		DC->drawText(startingXPos, item->textRect.y + yAdj, textScale, newColor, g_nameBind1, maxChars/*item->textRect.w*/, item->textStyle, item->font, RENDER2D_STRETCH); //Fluffy (Widescreen2D)
 	} 
 	else 
 	{
-		DC->drawText(item->textRect.x, item->textRect.y, item->textscale, newColor, (value != 0) ? "FIXME 1" : "FIXME 0", maxChars/*item->textRect.w*/, item->textStyle, item->font);
+		DC->drawText(item->textRect.x, item->textRect.y, item->textscale, newColor, (value != 0) ? "FIXME 1" : "FIXME 0", maxChars/*item->textRect.w*/, item->textStyle, item->font, RENDER2D_STRETCH); //Fluffy (Widescreen2D)
 	}
 }
 
@@ -5546,12 +5546,12 @@ void Item_YesNo_Paint(itemDef_t *item)
 	if (item->text) 
 	{
 		Item_Text_Paint(item);
-		DC->drawText(item->textRect.x + item->textRect.w + 8, item->textRect.y, item->textscale, newColor, (value != 0) ? psYes : psNo, 0, item->textStyle, item->font);
+		DC->drawText(item->textRect.x + item->textRect.w + 8, item->textRect.y, item->textscale, newColor, (value != 0) ? psYes : psNo, 0, item->textStyle, item->font, RENDER2D_STRETCH); //Fluffy (Widescreen2D)
 		
 	} 
 	else 
 	{
-		DC->drawText(item->textRect.x, item->textRect.y, item->textscale, newColor, (value != 0) ? psYes : psNo , 0, item->textStyle, item->font);
+		DC->drawText(item->textRect.x, item->textRect.y, item->textscale, newColor, (value != 0) ? psYes : psNo , 0, item->textStyle, item->font, RENDER2D_STRETCH); //Fluffy (Widescreen2D)
 	}
 }
 
@@ -5590,11 +5590,11 @@ void Item_Multi_Paint(itemDef_t *item)
 	if (item->text) 
 	{
 		Item_Text_Paint(item);
-		DC->drawText(item->textRect.x + item->textRect.w + 8, item->textRect.y, item->textscale, newColor, text, 0, item->textStyle, item->font);
+		DC->drawText(item->textRect.x + item->textRect.w + 8, item->textRect.y, item->textscale, newColor, text, 0, item->textStyle, item->font, RENDER2D_STRETCH); //Fluffy (Widescreen2D)
 	} 
 	else 
 	{
-		DC->drawText(item->textRect.x, item->textRect.y, item->textscale, newColor, text, 0, item->textStyle, item->font);
+		DC->drawText(item->textRect.x, item->textRect.y, item->textscale, newColor, text, 0, item->textStyle, item->font, RENDER2D_STRETCH); //Fluffy (Widescreen2D)
 	}
 }
 
@@ -5989,7 +5989,7 @@ void Item_Paint(itemDef_t *item)
 						iYadj = iOriginalTextHeight - DC->textHeight(textPtr, fDescScale, uiInfo.uiDC.Assets.qhMediumFont);
 					}
 
-					DC->drawText(xPos, parent->descY + iYadj, fDescScale, parent->descColor, textPtr, 0, 0, uiInfo.uiDC.Assets.qhMediumFont);	//item->font);
+					DC->drawText(xPos, parent->descY + iYadj, fDescScale, parent->descColor, textPtr, 0, 0, uiInfo.uiDC.Assets.qhMediumFont, RENDER2D_STRETCH);	//item->font); //Fluffy (Widescreen2D)
 					break;
 				}
 			}
@@ -6164,7 +6164,7 @@ void Window_Paint(Window *w, float fadeAmount, float fadeClamp, float fadeCycle)
 		{
 			Fade(&w->flags, &w->backColor[3], fadeClamp, &w->nextTime, fadeCycle, qtrue, fadeAmount);
 			DC->setColor(w->backColor);
-			DC->drawHandlePic(fillRect.x, fillRect.y, fillRect.w, fillRect.h, w->background, RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
+			DC->drawHandlePic(fillRect.x, fillRect.y, fillRect.w, fillRect.h, w->background, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D)
 			DC->setColor(NULL);
 		} 
 		else 
@@ -6183,7 +6183,7 @@ void Window_Paint(Window *w, float fadeAmount, float fadeClamp, float fadeCycle)
 		{
 			DC->setColor(w->foreColor);
 		}
-		DC->drawHandlePic(fillRect.x, fillRect.y, fillRect.w, fillRect.h, w->background, RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
+		DC->drawHandlePic(fillRect.x, fillRect.y, fillRect.w, fillRect.h, w->background, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D)
 		DC->setColor(NULL);
 	} 
 
@@ -6343,7 +6343,7 @@ void Item_Text_AutoWrapped_Paint(itemDef_t *item)
 				ToWindowCoords(&item->textRect.x, &item->textRect.y, &item->window);
 				//
 				buff[newLine] = '\0';
-				DC->drawText(item->textRect.x, item->textRect.y, item->textscale, color, buff, 0, item->textStyle, item->font);
+				DC->drawText(item->textRect.x, item->textRect.y, item->textscale, color, buff, 0, item->textStyle, item->font, RENDER2D_ANCHOR_MIDDLE); //Fluffy (Widescreen2D)
 			}
 			if (*p == '\0') 
 			{

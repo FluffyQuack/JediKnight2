@@ -164,7 +164,7 @@ typedef struct {
 	void		(*drawHandlePic) (float x, float y, float w, float h, qhandle_t asset, int widescreenAnchor); //Fluffy (Widescreen2D)
 	void		(*drawRect) ( float x, float y, float w, float h, float size, const vec4_t color);
 	void		(*drawSides) (float x, float y, float w, float h, float size);
-	void		(*drawText) (float x, float y, float scale, vec4_t color, const char *text, int iMaxPixelWidth, int style, int iFontIndex );
+	void		(*drawText) (float x, float y, float scale, vec4_t color, const char *text, int iMaxPixelWidth, int style, int iFontIndex, int widescreenAnchor); //Fluffy (Widescreen2D)
 	void		(*drawTextWithCursor)(float x, float y, float scale, vec4_t color, const char *text, int cursorPos, char cursor, int iMaxPixelWidth, int style, int iFontIndex);
 	void		(*drawTopBottom) (float x, float y, float w, float h, float size);
 	void		(*executeText)(int exec_when, const char *text );	
