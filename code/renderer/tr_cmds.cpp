@@ -296,6 +296,13 @@ void RE_StretchPic ( float x, float y, float w, float h,
 		cmd->commandId = RC_STRETCH_PIC_LEFT;
 	else if(widescreenAnchor == RENDER2D_ANCHOR_MIDDLE && r_stretch2D->integer == 0)
 		cmd->commandId = RC_STRETCH_PIC_MIDDLE;
+	else if(widescreenAnchor == RENDER2D_ANCHOR_MIDDLE_FILLSCREEN && r_stretch2D->integer == 0)
+	{
+		if (glConfig.vidWidth * 480 <= glConfig.vidHeight * 640) //If we're at 4:3 or taller aspect ratio, then don't extend texture to the sides
+			cmd->commandId = RC_STRETCH_PIC_MIDDLE;
+		else
+			cmd->commandId = RC_STRETCH_PIC_MIDDLE_FILLSCREEN;
+	}
 	else if(widescreenAnchor == RENDER2D_ANCHOR_RIGHT && r_stretch2D->integer == 0)
 		cmd->commandId = RC_STRETCH_PIC_RIGHT;
 	else	

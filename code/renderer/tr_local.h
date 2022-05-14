@@ -1757,6 +1757,7 @@ typedef enum {
 	//These all stretch the virtual screen horizontally based on aspect ratio and give x rendering coordiante an offset
 	RC_STRETCH_PIC_LEFT, //X = 0
 	RC_STRETCH_PIC_MIDDLE, //X = half of horizontal size diff
+	RC_STRETCH_PIC_MIDDLE_FILLSCREEN, //X = half of horizontal size diff (but also extend the sides to fill the entire screen)
 	RC_STRETCH_PIC_RIGHT, //X = horizontal size diff
 
 	RC_SCISSOR,

@@ -1680,6 +1680,7 @@ enum
 	RENDER2D_NONSTRETCH, //Render in same location as default rendering, but don't stretch the texture
 	RENDER2D_ANCHOR_LEFT, //This and the following modifies coordinates of an element so it renders non-stretched, but we'll have to define an "anchor" point for the element. Left, middle, or right.
 	RENDER2D_ANCHOR_MIDDLE,
+	RENDER2D_ANCHOR_MIDDLE_FILLSCREEN, //Same as ANCHOR_MIDDLE but we extend the sides to fill the rest of the screen
 	RENDER2D_ANCHOR_RIGHT,
 };
 

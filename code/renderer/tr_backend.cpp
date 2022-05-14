@@ -772,7 +772,9 @@ const void *RB_StretchPic ( const void *data ) {
 	//Fluffy (Widescreen2D)
 	float x;
 	float w;
-	if(cmd->commandId == RC_STRETCH_PIC) //Default behaviour
+	float s1 = cmd->s1;
+	float s2 = cmd->s2;
+	if(cmd->commandId == RC_STRETCH_PIC || cmd->commandId == RC_STRETCH_PIC_MIDDLE_FILLSCREEN) //Default behaviour
 	{
 		x = cmd->x;
 		w = cmd->w;
@@ -793,6 +795,11 @@ const void *RB_StretchPic ( const void *data ) {
 					x += glConfig.aspectWidthDiff;
 			}
 		}
+	}
+	if(cmd->commandId == RC_STRETCH_PIC_MIDDLE_FILLSCREEN)
+	{
+		s1 -= ((glConfig.windowAspect / (SCREEN_WIDTH_F / SCREEN_HEIGHT_F)) - 1.0f) / 2;
+		s2 += ((glConfig.windowAspect / (SCREEN_WIDTH_F / SCREEN_HEIGHT_F)) - 1.0f) / 2;
 	}
 
 	RB_CHECKOVERFLOW( 4, 6 );
@@ -818,28 +825,28 @@ const void *RB_StretchPic ( const void *data ) {
 	tess.xyz[ numVerts ][1] = cmd->y;
 	tess.xyz[ numVerts ][2] = 0;
 
-	tess.texCoords[ numVerts ][0][0] = cmd->s1;
+	tess.texCoords[ numVerts ][0][0] = s1; //Fluffy (Widescreen2D)
 	tess.texCoords[ numVerts ][0][1] = cmd->t1;
 
 	tess.xyz[ numVerts + 1 ][0] = x + w; //Fluffy (Widescreen2D)
 	tess.xyz[ numVerts + 1 ][1] = cmd->y;
 	tess.xyz[ numVerts + 1 ][2] = 0;
 
-	tess.texCoords[ numVerts + 1 ][0][0] = cmd->s2;
+	tess.texCoords[ numVerts + 1 ][0][0] = s2; //Fluffy (Widescreen2D)
 	tess.texCoords[ numVerts + 1 ][0][1] = cmd->t1;
 
 	tess.xyz[ numVerts + 2 ][0] = x + w; //Fluffy (Widescreen2D)
 	tess.xyz[ numVerts + 2 ][1] = cmd->y + cmd->h;
 	tess.xyz[ numVerts + 2 ][2] = 0;
 
-	tess.texCoords[ numVerts + 2 ][0][0] = cmd->s2;
+	tess.texCoords[ numVerts + 2 ][0][0] = s2; //Fluffy (Widescreen2D)
 	tess.texCoords[ numVerts + 2 ][0][1] = cmd->t2;
 
 	tess.xyz[ numVerts + 3 ][0] = x; //Fluffy (Widescreen2D)
 	tess.xyz[ numVerts + 3 ][1] = cmd->y + cmd->h;
 	tess.xyz[ numVerts + 3 ][2] = 0;
 
-	tess.texCoords[ numVerts + 3 ][0][0] = cmd->s1;
+	tess.texCoords[ numVerts + 3 ][0][0] = s1; //Fluffy (Widescreen2D)
 	tess.texCoords[ numVerts + 3 ][0][1] = cmd->t2;
 
 	return (const void *)(cmd + 1);
@@ -942,26 +949,19 @@ const void *RB_RotatePic2 ( const void *data )
 
 			//Fluffy (Widescreen2D)
 			float x;
-			float w;
 			if(cmd->commandId == RC_ROTATE_PIC2) //Default behaviour
 			{
 				x = cmd->x;
-				w = cmd->w;
 			}
-			else //"Unstretch" the texture
+			else //Re-position element
 			{
-				w = cmd->w / (glConfig.windowAspect / (SCREEN_WIDTH_F / SCREEN_HEIGHT_F));
-
-				//Behaviour where we adjust scale and position of the 2D element so it's not stretched
+				x = cmd->x / (glConfig.windowAspect / (SCREEN_WIDTH_F / SCREEN_HEIGHT_F));
+				if(cmd->commandId == RC_ROTATE_PIC2_MIDDLE || cmd->commandId == RC_ROTATE_PIC2_RIGHT)
 				{
-					x = cmd->x / (glConfig.windowAspect / (SCREEN_WIDTH_F / SCREEN_HEIGHT_F));
-					if(cmd->commandId == RC_ROTATE_PIC2_MIDDLE || cmd->commandId == RC_ROTATE_PIC2_RIGHT)
-					{
-						if(cmd->commandId == RC_ROTATE_PIC2_MIDDLE)
-							x += (glConfig.aspectWidthDiff / 2);
-						else if(cmd->commandId == RC_ROTATE_PIC2_RIGHT)
-							x += glConfig.aspectWidthDiff;
-					}
+					if(cmd->commandId == RC_ROTATE_PIC2_MIDDLE)
+						x += (glConfig.aspectWidthDiff / 2);
+					else if(cmd->commandId == RC_ROTATE_PIC2_RIGHT)
+						x += glConfig.aspectWidthDiff;
 				}
 			}
 
@@ -973,21 +973,26 @@ const void *RB_RotatePic2 ( const void *data )
 
 			// rotation point is going to be around the center of the passed in coordinates
 			qglTranslatef( x, cmd->y, 0 ); //Fluffy (Widescreen2D)
-			qglRotatef( cmd->a, 0.0, 0.0, 1.0 );
+			
+			//Fluffy (Widescreen2D)
+			if(cmd->commandId != RC_ROTATE_PIC2)
+				qglScalef( (SCREEN_WIDTH_F / SCREEN_HEIGHT_F) / glConfig.windowAspect, 1.0f, 1.0f );
+
+			qglRotatef( cmd->a, 0.0, 0.0, 1.0f );
 			
 			GL_Bind( image );
 			qglBegin( GL_QUADS );
 				qglTexCoord2f( cmd->s1, cmd->t1);
-				qglVertex2f( -w * 0.5f, -cmd->h * 0.5f ); //Fluffy (Widescreen2D)
+				qglVertex2f( -cmd->w * 0.5f, -cmd->h * 0.5f );
 
 				qglTexCoord2f( cmd->s2, cmd->t1 );
-				qglVertex2f( w * 0.5f, -cmd->h * 0.5f ); //Fluffy (Widescreen2D)
+				qglVertex2f( cmd->w * 0.5f, -cmd->h * 0.5f );
 
 				qglTexCoord2f( cmd->s2, cmd->t2 );
-				qglVertex2f( w * 0.5f, cmd->h * 0.5f ); //Fluffy (Widescreen2D)
+				qglVertex2f( cmd->w * 0.5f, cmd->h * 0.5f );
 
 				qglTexCoord2f( cmd->s1, cmd->t2 );
-				qglVertex2f( -w * 0.5f, cmd->h * 0.5f ); //Fluffy (Widescreen2D)
+				qglVertex2f( -cmd->w * 0.5f, cmd->h * 0.5f );
 			qglEnd();
 			
 			qglPopMatrix();
@@ -1350,6 +1355,7 @@ void RB_ExecuteRenderCommands( const void *data ) {
 		case RC_NONSTRETCH:
 		case RC_STRETCH_PIC_LEFT:
 		case RC_STRETCH_PIC_MIDDLE:
+		case RC_STRETCH_PIC_MIDDLE_FILLSCREEN:
 		case RC_STRETCH_PIC_RIGHT:
 			data = RB_StretchPic( data );
 			break;

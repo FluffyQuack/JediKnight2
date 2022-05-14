@@ -1060,7 +1060,7 @@ static void CG_DrawZoomMask( void )
 
 		// Draw target mask
 		cgi_R_SetColor( colorTable[CT_WHITE] );
-		CG_DrawPic( 0, 0, 640, 480, cgs.media.disruptorMask, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D)
+		CG_DrawPic( 0, 0, 640, 480, cgs.media.disruptorMask, RENDER2D_ANCHOR_MIDDLE_FILLSCREEN ); //Fluffy (Widescreen2D)
 
 		// apparently 99.0f is the full zoom level
 		if ( level >= 99 )
