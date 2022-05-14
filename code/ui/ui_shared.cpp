@@ -5384,6 +5384,10 @@ void Item_Model_Paint(itemDef_t *item)
 	w = item->window.rect.w-2;
 	h = item->window.rect.h-2;
 
+	//Fluffy (Widescreen2D): Apply offset to 3D model in main menu
+	if(glConfig.vidWidth * 480 > glConfig.vidHeight * 640)
+		x /= DC->xscale; //Fluffy TODO: This calculation works well with 16:9 but not other aspect ratios
+
 	refdef.x = x * DC->xscale;
 	refdef.y = y * DC->yscale;
 	refdef.width = w * DC->xscale;
@@ -5410,6 +5414,14 @@ void Item_Model_Paint(itemDef_t *item)
 
 	refdef.fov_x = 45;
 	refdef.fov_y = 45;
+
+	//Fluffy (Widescreen2D): Apply offset to 3D model in main menu
+	if(glConfig.vidWidth * 480 > glConfig.vidHeight * 640)
+	{
+		float width = glConfig.vidHeight * (4.f / 3.f);
+		float x = width / tan(DEG2RAD(0.5f * refdef.fov_x));
+		refdef.fov_x = (RAD2DEG(2 * atan2(glConfig.vidWidth, x)));
+	}
 	
 	//refdef.fov_x = (int)((float)refdef.width / 640.0f * 90.0f);
 	//xx = refdef.width / tan( refdef.fov_x / 360 * M_PI );
