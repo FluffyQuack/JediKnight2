@@ -1382,7 +1382,14 @@ void G_DriveATST( gentity_t *ent, gentity_t *atst )
 		VectorCopy( playerMaxs, ent->maxs );
 		ent->client->crouchheight = CROUCH_MAXS_2;
 		ent->client->standheight = DEFAULT_MAXS_2;
+
+		//Fluffy (KyleModelOverride)
+#ifdef KYLEMODELOVERRIDE
+		G_SetG2PlayerModel( ent, MODELOVERRIDE, NULL, NULL, NULL );
+#else
 		G_SetG2PlayerModel( ent, "kyle", NULL, NULL, NULL );
+#endif
+
 		//FIXME: reset/initialize their weapon
 		ent->client->ps.stats[STAT_WEAPONS] &= ~(( 1 << WP_ATST_MAIN )|( 1 << WP_ATST_SIDE ));
 		ent->client->ps.ammo[weaponData[WP_ATST_MAIN].ammoIndex] = 0;
@@ -1537,8 +1544,14 @@ qboolean ClientSpawn(gentity_t *ent, SavedGameJustLoaded_e eSavedGameJustLoaded 
 		}
 		else
 		{
+			//Fluffy (KyleModelOverride)
+#ifdef KYLEMODELOVERRIDE
+			G_LoadAnimFileSet( ent, MODELOVERRIDE );
+			G_SetSkin( ent, MODELOVERRIDE, NULL );
+#else
 			G_LoadAnimFileSet( ent, "kyle" );
 			G_SetSkin( ent, "kyle", NULL );
+#endif
 		}
 	}
 	else
@@ -1695,7 +1708,13 @@ qboolean ClientSpawn(gentity_t *ent, SavedGameJustLoaded_e eSavedGameJustLoaded 
 		if (eSavedGameJustLoaded == eNO)
 		{
 			ent->weaponModel = -1;
+			//Fluffy (KyleModelOverride)
+#ifdef KYLEMODELOVERRIDE
+			G_SetG2PlayerModel( ent, MODELOVERRIDE, NULL, NULL, NULL );
+#else
+
 			G_SetG2PlayerModel( ent, "kyle", NULL, NULL, NULL );
+#endif
 		}
 		else
 		{
@@ -1706,8 +1725,14 @@ qboolean ClientSpawn(gentity_t *ent, SavedGameJustLoaded_e eSavedGameJustLoaded 
 			}
 			else
 			{
+				//Fluffy (KyleModelOverride)
+#ifdef KYLEMODELOVERRIDE
+				G_LoadAnimFileSet( ent, MODELOVERRIDE );
+				G_SetSkin( ent, MODELOVERRIDE, NULL );
+#else
 				G_LoadAnimFileSet( ent, "kyle" );
 				G_SetSkin( ent, "kyle", NULL );
+#endif
 			}
 		}
 		/*

@@ -1135,7 +1135,7 @@ qboolean G2API_AttachG2Model(CGhoul2Info *ghlInfo, CGhoul2Info *ghlInfoTo, int t
 	if (G2_SetupModelPointers(ghlInfo)&&G2_SetupModelPointers(ghlInfoTo))
 	{
 		G2ERROR(toBoltIndex>=0&&toBoltIndex<ghlInfoTo->mBltlist.size(),"Invalid Bolt Index");
-		assert( toBoltIndex >= 0 );
+		//assert( toBoltIndex >= 0 ); //Fluffy (KyleModelOverride)
 		if ( toBoltIndex >= 0 )
 		{
 			// make sure we have a model to attach, a model to attach to, and a bolt on that model

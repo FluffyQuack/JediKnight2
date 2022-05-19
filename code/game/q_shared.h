@@ -1684,4 +1684,8 @@ enum
 	RENDER2D_ANCHOR_RIGHT,
 };
 
+//Fluffy (KyleModelOverride)
+//#define KYLEMODELOVERRIDE
+#define MODELOVERRIDE "gonk"
+
 #endif	// __Q_SHARED_H

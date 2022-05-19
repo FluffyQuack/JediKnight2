@@ -2203,7 +2203,14 @@ Ghoul2 Insert Start
 	if ( !md3Model )
 	{
 		NPC->weaponModel = -1;
-		G_SetG2PlayerModel( NPC, playerModel, customSkin, surfOff, surfOn );
+
+		//Fluffy (KyleModelOverride)
+#ifdef KYLEMODELOVERRIDE
+		if(strstr(playerModel, "kyle") != 0)
+			G_SetG2PlayerModel( NPC, MODELOVERRIDE, customSkin, surfOff, surfOn );
+		else
+#endif
+			G_SetG2PlayerModel( NPC, playerModel, customSkin, surfOff, surfOn );
 	}
 /*
 Ghoul2 Insert End

@@ -453,6 +453,11 @@ void CG_NewClientinfo( int clientNum )
 				sizeof(	g_entities[clientNum].client->renderInfo.headModelName), qtrue);
 
 	// sounds
+
+	//Fluffy (KyleModelOverride)
+#ifdef KYLEMODELOVERRIDE
+	ci->customBasicSoundDir = MODELOVERRIDE;
+#else
 	cvar_t	*sex = gi.cvar( "sex", "male", 0 );
 	if ( Q_stricmp("female", sex->string ) == 0 )
 	{
@@ -462,6 +467,7 @@ void CG_NewClientinfo( int clientNum )
 	{
 		ci->customBasicSoundDir = "kyle";
 	}
+#endif
 
 	//player uses only the basic custom sound set, not the combat or extra
 	CG_RegisterCustomSounds(ci, 

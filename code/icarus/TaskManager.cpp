@@ -1217,8 +1217,21 @@ int CTaskManager::Sound( CTask *task )
 
 	ICARUS_VALIDATE( Get( m_ownerID, block, memberNum, &sVal ) );
 	ICARUS_VALIDATE( Get( m_ownerID, block, memberNum, &sVal2 ) );
-
+	
 	(m_owner->GetInterface())->I_DPrintf( WL_DEBUG, "%4d sound(\"%s\", \"%s\"); [%d]", m_ownerID, sVal, sVal2, task->GetTimeStamp() );
+
+	//Fluffy (KyleModelOverride)
+	char newPath[260];
+#ifdef KYLEMODELOVERRIDE
+	if(strstr(sVal2, "/kyle/") != 0)
+	{
+		if(rand() % 2)
+			sprintf_s(newPath, 260, "sound/chars/%s/misc/%stalk1.mp3", MODELOVERRIDE, MODELOVERRIDE);
+		else
+			sprintf_s(newPath, 260, "sound/chars/%s/misc/%stalk2.mp3", MODELOVERRIDE, MODELOVERRIDE);
+		sVal2 = newPath;
+	}
+#endif
 
 	//Only instantly complete if the user has requested it
 	if( (m_owner->GetInterface())->I_PlaySound( task->GetGUID(), m_ownerID, sVal2, sVal ) )
