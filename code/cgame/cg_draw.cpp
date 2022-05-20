@@ -1792,7 +1792,7 @@ static void CG_ScanForCrosshairEntity( qboolean scanAll )
 	}
 	if ( !cg_forceCrosshair )
 	{
-		if ( cg_dynamicCrosshair.integer )
+		if ( cg_dynamicCrosshair.integer == 1 || (cg.renderingThirdPerson && cg_dynamicCrosshair.integer == 2) ) //Fluffy (DynamicCrosshairUpdate): If cg_dynamicCrosshair is 2 then it's only dynamic in third person
 		{//100% accurate
 			vec3_t d_f, d_rt, d_up;
 			if ( cg.snap->ps.weapon == WP_NONE || 
@@ -1862,7 +1862,7 @@ static void CG_ScanForCrosshairEntity( qboolean scanAll )
 	}
 */
 	//CROSSHAIR is now always drawn from this trace so it's 100% accurate
-	if ( cg_dynamicCrosshair.integer )
+	if ( cg_dynamicCrosshair.integer == 1 || (cg.renderingThirdPerson && cg_dynamicCrosshair.integer == 2) ) //Fluffy (DynamicCrosshairUpdate): If cg_dynamicCrosshair is 2 then it's only dynamic in third person
 	{//draw crosshair at endpoint
 		CG_DrawCrosshair( trace.endpos );
 	}
@@ -1936,7 +1936,7 @@ static void CG_DrawCrosshairNames( void )
 	qboolean	scanAll = qfalse;
 	centity_t	*player = &cg_entities[0];
 
-	if ( cg_dynamicCrosshair.integer )
+	if ( cg_dynamicCrosshair.integer == 1 || (cg.renderingThirdPerson && cg_dynamicCrosshair.integer == 2) ) //Fluffy (DynamicCrosshairUpdate): If cg_dynamicCrosshair is 2 then it's only dynamic in third person
 	{
 		// still need to scan for dynamic crosshair
 		CG_ScanForCrosshairEntity( scanAll );
@@ -2345,7 +2345,7 @@ static void CG_Draw2D( void )
 		CG_DrawAmmoWarning();
 
 		//CROSSHAIR is now done from the crosshair ent trace
-		if ( !cg.renderingThirdPerson && !cg_dynamicCrosshair.integer ) // disruptor draws it's own crosshair artwork; binocs draw nothing; third person draws its own crosshair
+		if ( cg_dynamicCrosshair.integer == 0 || (!cg.renderingThirdPerson && cg_dynamicCrosshair.integer == 2)) // disruptor draws it's own crosshair artwork; binocs draw nothing; third person draws its own crosshair //Fluffy (DynamicCrosshairUpdate): Allow rendering of non-dynamic crosshair in third person, and draw static crosshair if cg_dynamicCrosshair is 2 but we're not in third person
 		{
 			CG_DrawCrosshair( NULL );
 		}
