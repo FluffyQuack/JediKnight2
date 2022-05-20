@@ -1388,8 +1388,8 @@ void CG_DrawIconBackground(void)
 	// Side Prongs
 	cgi_R_SetColor( colorTable[CT_WHITE]);					
 	xAdd = (int) 8*cg.iconHUDPercent;
-	CG_DrawPic( prongLeftX+xAdd, y2-10, 40, 80, background);
-	CG_DrawPic( prongRightX-xAdd, y2-10, -40, 80, background);
+	CG_DrawPic( prongLeftX+xAdd, y2-10, 40, 80, background, RENDER2D_ANCHOR_LEFT); //Fluffy (Widescreen2D)
+	CG_DrawPic( prongRightX-xAdd, y2-10, -40, 80, background, RENDER2D_ANCHOR_RIGHT); //Fluffy (Widescreen2D)
 }
 
 int cgi_UI_GetItemText(char *menuFile,char *itemName, char *text);
