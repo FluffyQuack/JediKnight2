@@ -253,6 +253,7 @@ vmCvar_t	cg_crosshairForceHint;
 vmCvar_t	cg_crosshairX;
 vmCvar_t	cg_crosshairY;
 vmCvar_t	cg_crosshairSize;
+vmCvar_t	cg_noSaberCrosshair; //Fluffy (NoSaberCrosshair)
 vmCvar_t	cg_draw2D;
 vmCvar_t	cg_drawStatus;
 vmCvar_t	cg_drawHUD;
@@ -355,6 +356,7 @@ cvarTable_t		cvarTable[] = {
 	{ &cg_dynamicCrosshair, "cg_dynamicCrosshair", "1", CVAR_ARCHIVE },
 	{ &cg_crosshairIdentifyTarget, "cg_crosshairIdentifyTarget", "1", CVAR_ARCHIVE },
 	{ &cg_crosshairForceHint, "cg_crosshairForceHint", "1", CVAR_ARCHIVE },
+	{ &cg_noSaberCrosshair, "cg_noSaberCrosshair", "0", CVAR_ARCHIVE }, //Fluffy (NoSaberCrosshair)
 	{ &cg_missionstatusscreen, "cg_missionstatusscreen", "0", CVAR_ROM},
 	{ &cg_endcredits, "cg_endcredits", "0", 0},
 	{ &cg_updatedDataPadForcePower1, "cg_updatedDataPadForcePower1", "0", 0},
