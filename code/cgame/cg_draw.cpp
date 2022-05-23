@@ -2429,7 +2429,7 @@ static void CG_Draw2D( void )
 				w = cgi_R_Font_StrLenPixels(text,cgs.media.qhFontSmall, 1.0f);
 				x_pos = (SCREEN_WIDTH/2)-(w/2);
 			}
-			cgi_R_Font_DrawString(x_pos, y_pos, text,  colorTable[CT_LTRED1], cgs.media.qhFontMedium, -1, 1.0f);
+			cgi_R_Font_DrawString(x_pos, y_pos, text,  colorTable[CT_LTRED1], cgs.media.qhFontMedium, -1, 1.0f, RENDER2D_ANCHOR_MIDDLE); //Fluffy (Widescreen2D)
 
 			if (cg_updatedDataPadForcePower1.integer) 
 			{
@@ -2440,7 +2440,7 @@ static void CG_Draw2D( void )
 					w = cgi_R_Font_StrLenPixels(text,cgs.media.qhFontSmall, 1.0f);
 					x_pos = (SCREEN_WIDTH/2)-(w/2);
 				}
-				cgi_R_Font_DrawString(x_pos, y_pos, text,  colorTable[CT_LTRED1], cgs.media.qhFontMedium, -1, 1.0f);
+				cgi_R_Font_DrawString(x_pos, y_pos, text,  colorTable[CT_LTRED1], cgs.media.qhFontMedium, -1, 1.0f, RENDER2D_ANCHOR_MIDDLE); //Fluffy (Widescreen2D)
 			}
 
 			if (cg_updatedDataPadObjective.integer) 
@@ -2452,7 +2452,7 @@ static void CG_Draw2D( void )
 					w = cgi_R_Font_StrLenPixels(text,cgs.media.qhFontSmall, 1.0f);
 					x_pos = (SCREEN_WIDTH/2)-(w/2);
 				}
-				cgi_R_Font_DrawString(x_pos, y_pos, text,  colorTable[CT_LTRED1], cgs.media.qhFontMedium, -1, 1.0f);
+				cgi_R_Font_DrawString(x_pos, y_pos, text,  colorTable[CT_LTRED1], cgs.media.qhFontMedium, -1, 1.0f, RENDER2D_ANCHOR_MIDDLE); //Fluffy (Widescreen2D)
 			}
 
 	//		if (cent->gent->client->sess.missionObjectivesShown<3)
