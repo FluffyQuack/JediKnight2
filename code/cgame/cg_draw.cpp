@@ -1331,7 +1331,7 @@ static void CG_DrawCrosshair( vec3_t worldPoint )
 	float		f;
 	float		x, y;
 
-	if(cg_noSaberCrosshair.integer == 1 && cg_entities[0].currentState.weapon == WP_SABER && cg_entities[0].gent) //Fluffy (NoSaberCrosshair): Don't draw crosshair if we have lightsabre active
+	if(cg_noSaberCrosshair.integer == 1 && (cg_entities[0].currentState.weapon == WP_SABER || cg_entities[0].currentState.weapon == WP_STUN_BATON || cg_entities[0].currentState.weapon == WP_NONE || cg_entities[0].currentState.weapon == WP_MELEE) && cg_entities[0].gent) //Fluffy (NoSaberCrosshair): Don't draw crosshair if we have lightsabre active
 		return;
 
 	if ( !cg_drawCrosshair.integer ) 
