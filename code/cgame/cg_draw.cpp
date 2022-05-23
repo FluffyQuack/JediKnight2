@@ -178,10 +178,10 @@ static void CG_DrawTalk(centity_t	*cent)
 		color[3] = 0.350F;
 
 		cgi_R_SetColor(color);	// Background
-		CG_DrawPic( 5, 27,  50, 64,	cgs.media.ammoslider );
+		CG_DrawPic( 5, 27,  50, 64,	cgs.media.ammoslider, RENDER2D_ANCHOR_MIDDLE); //Fluffy (Widescreen2D)
 
 		cgi_R_SetColor(colorTable[CT_LTPURPLE1]);
-		CG_DrawPic( 5, 6, 128, 64,	cgs.media.talkingtop );
+		CG_DrawPic( 5, 6, 128, 64,	cgs.media.talkingtop, RENDER2D_ANCHOR_MIDDLE); //Fluffy (Widescreen2D)
 /*
 		totalLines = cg.scrollTextLines - cg.gameTextCurrentLine;
 
@@ -208,7 +208,7 @@ static void CG_DrawTalk(centity_t	*cent)
 		CG_DrawHead( -6, 25, size, size, cg.gameTextSpeaker, angles );
 
 		cgi_R_SetColor(colorTable[CT_LTPURPLE1]);	// Bottom
-		CG_DrawPic( 5, 90, 64, 16,	cgs.media.talkingbot );
+		CG_DrawPic( 5, 90, 64, 16,	cgs.media.talkingbot, RENDER2D_ANCHOR_MIDDLE); //Fluffy (Widescreen2D)
 		cgi_R_SetColor(NULL);
 	}
 }
