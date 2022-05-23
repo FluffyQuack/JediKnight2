@@ -1991,7 +1991,7 @@ static void CG_DrawRocketLocking( int lockEntNum, int lockTime )
 			}
 			else
 			{
-				sz -= ( cg_fov.value - cg_zoomFov ) / 80.0f;
+				sz -= ( cg_fov.value - cg_zoomFov ) / 80.0f;		
 			}
 		}
 
@@ -2048,7 +2048,7 @@ static void CG_DrawRocketLocking( int lockEntNum, int lockTime )
 			cgi_R_SetColor( color );
 
 			// our slices are offset by about 45 degrees.
-			CG_DrawRotatePic( cx - sz, cy - sz, sz, sz, i * 45.0f, cgi_R_RegisterShaderNoMip( "gfx/2d/wedge" ));
+			CG_DrawRotatePic( cx - sz, cy - sz, sz, sz, i * 45.0f, cgi_R_RegisterShaderNoMip( "gfx/2d/wedge" ), RENDER2D_NONSTRETCH); //Fluffy (Widescreen2D)
 		}
 
 		// we are locked and loaded baby
@@ -2059,7 +2059,7 @@ static void CG_DrawRocketLocking( int lockEntNum, int lockTime )
 
 			cgi_R_SetColor( color );
 
-			CG_DrawPic( cx - sz, cy - sz * 2, sz * 2, sz * 2, cgi_R_RegisterShaderNoMip( "gfx/2d/lock" ));
+			CG_DrawPic( cx - sz, cy - sz * 2, sz * 2, sz * 2, cgi_R_RegisterShaderNoMip( "gfx/2d/lock" ), RENDER2D_NONSTRETCH); //Fluffy (Widescreen2D)
 		}
 	}
 }

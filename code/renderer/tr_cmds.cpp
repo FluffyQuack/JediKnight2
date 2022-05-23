@@ -334,7 +334,9 @@ void RE_RotatePic ( float x, float y, float w, float h,
 	}
 
 	//Fluffy (Widescreen2D)
-	if(widescreenAnchor == RENDER2D_ANCHOR_LEFT && r_stretch2D->integer == 0)
+	if(widescreenAnchor == RENDER2D_NONSTRETCH && r_stretch2D->integer == 0)
+		cmd->commandId = RC_ROTATE_PIC_NONSTRETCH;
+	else if(widescreenAnchor == RENDER2D_ANCHOR_LEFT && r_stretch2D->integer == 0)
 		cmd->commandId = RC_ROTATE_PIC_LEFT;
 	else if(widescreenAnchor == RENDER2D_ANCHOR_MIDDLE && r_stretch2D->integer == 0)
 		cmd->commandId = RC_ROTATE_PIC_MIDDLE;

@@ -874,26 +874,19 @@ const void *RB_RotatePic ( const void *data )
 
 		//Fluffy (Widescreen2D)
 		float x;
-		float w;
-		if(cmd->commandId == RC_ROTATE_PIC) //Default behaviour
+		if(cmd->commandId == RC_ROTATE_PIC || cmd->commandId == RC_ROTATE_PIC_NONSTRETCH) //Default behaviour
 		{
 			x = cmd->x;
-			w = cmd->w;
 		}
-		else //"Unstretch" the texture
+		else //Re-position element
 		{
-			w = cmd->w / (glConfig.windowAspect / (SCREEN_WIDTH_F / SCREEN_HEIGHT_F));
-			
-			//Behaviour where we adjust scale and position of the 2D element so it's not stretched
+			x = cmd->x / (glConfig.windowAspect / (SCREEN_WIDTH_F / SCREEN_HEIGHT_F));
+			if(cmd->commandId == RC_ROTATE_PIC_MIDDLE || cmd->commandId == RC_ROTATE_PIC_RIGHT)
 			{
-				x = cmd->x / (glConfig.windowAspect / (SCREEN_WIDTH_F / SCREEN_HEIGHT_F));
-				if(cmd->commandId == RC_ROTATE_PIC_MIDDLE || cmd->commandId == RC_ROTATE_PIC_RIGHT)
-				{
-					if(cmd->commandId == RC_ROTATE_PIC_MIDDLE)
-						x += (glConfig.aspectWidthDiff / 2);
-					else if(cmd->commandId == RC_ROTATE_PIC_RIGHT)
-						x += glConfig.aspectWidthDiff;
-				}
+				if(cmd->commandId == RC_ROTATE_PIC_MIDDLE)
+					x += (glConfig.aspectWidthDiff / 2);
+				else if(cmd->commandId == RC_ROTATE_PIC_RIGHT)
+					x += glConfig.aspectWidthDiff;
 			}
 		}
 
@@ -901,18 +894,23 @@ const void *RB_RotatePic ( const void *data )
 		qglPushMatrix();
 
 		qglTranslatef(x+cmd->w,cmd->y,0); //Fluffy (Widescreen2D)
+
+		//Fluffy (Widescreen2D)
+		if(cmd->commandId != RC_ROTATE_PIC)
+			qglScalef( (SCREEN_WIDTH_F / SCREEN_HEIGHT_F) / glConfig.windowAspect, 1.0f, 1.0f );
+
 		qglRotatef(cmd->a, 0.0, 0.0, 1.0);
 		
 		GL_Bind( image );
 		qglBegin (GL_QUADS);
 		qglTexCoord2f( cmd->s1, cmd->t1);
-		qglVertex2f( -w, 0 ); //Fluffy (Widescreen2D)
+		qglVertex2f( -cmd->w, 0 );
 		qglTexCoord2f( cmd->s2, cmd->t1 );
 		qglVertex2f( 0, 0 );
 		qglTexCoord2f( cmd->s2, cmd->t2 );
 		qglVertex2f( 0, cmd->h );
 		qglTexCoord2f( cmd->s1, cmd->t2 );
-		qglVertex2f( -w, cmd->h ); //Fluffy (Widescreen2D)
+		qglVertex2f( -cmd->w, cmd->h );
 		qglEnd();
 		
 		qglPopMatrix();
@@ -1361,6 +1359,7 @@ void RB_ExecuteRenderCommands( const void *data ) {
 			break;
 		case RC_ROTATE_PIC:
 		//Fluffy (Widescreen2D)
+		case RC_ROTATE_PIC_NONSTRETCH:
 		case RC_ROTATE_PIC_LEFT:
 		case RC_ROTATE_PIC_MIDDLE:
 		case RC_ROTATE_PIC_RIGHT:
