@@ -1266,7 +1266,7 @@ static void CG_DrawPickupItem( void ) {
 		{
 			CG_RegisterItemVisuals( value );
 			cgi_R_SetColor( fadeColor );
-			CG_DrawPic( 573, 340, ICON_SIZE, ICON_SIZE, cg_items[ value ].icon );
+			CG_DrawPic( 573, 340, ICON_SIZE, ICON_SIZE, cg_items[ value ].icon, RENDER2D_ANCHOR_RIGHT ); //Fluffy (Widescreen2D)
 			//CG_DrawBigString( ICON_SIZE + 16, 398, bg_itemlist[ value ].classname, fadeColor[0] );
 			//CG_DrawProportionalString( ICON_SIZE + 16, 398, 
 			//	bg_itemlist[ value ].classname, CG_SMALLFONT,fadeColor );
@@ -2114,7 +2114,7 @@ static float CG_DrawSnapshot( float y ) {
 		cg.latestSnapshotNum, cgs.serverCommandSequence );
 
 	w = cgi_R_Font_StrLenPixels(s, cgs.media.qhFontMedium, 1.0f);	
-	cgi_R_Font_DrawString(635 - w, y+2, s, colorTable[CT_LTGOLD1], cgs.media.qhFontMedium, -1, 1.0f);
+	cgi_R_Font_DrawString(635 - w, y+2, s, colorTable[CT_LTGOLD1], cgs.media.qhFontMedium, -1, 1.0f, RENDER2D_ANCHOR_RIGHT); //Fluffy (Widescreen2D));
 
 	return y + BIGCHAR_HEIGHT + 10;
 }
@@ -2157,7 +2157,7 @@ static float CG_DrawFPS( float y ) {
 
 		s = va( "%ifps", fps );
 		w = cgi_R_Font_StrLenPixels(s, cgs.media.qhFontMedium, 1.0f);	
-		cgi_R_Font_DrawString(635 - w, y+2, s, colorTable[CT_LTGOLD1], cgs.media.qhFontMedium, -1, 1.0f);
+		cgi_R_Font_DrawString(635 - w, y+2, s, colorTable[CT_LTGOLD1], cgs.media.qhFontMedium, -1, 1.0f, RENDER2D_ANCHOR_RIGHT); //Fluffy (Widescreen2D)
 	}
 
 	return y + BIGCHAR_HEIGHT + 10;
@@ -2182,7 +2182,7 @@ static float CG_DrawTimer( float y ) {
 	s = va( "%i:%i%i", mins, tens, seconds );
 
 	w = cgi_R_Font_StrLenPixels(s, cgs.media.qhFontMedium, 1.0f);	
-	cgi_R_Font_DrawString(635 - w, y+2, s, colorTable[CT_LTGOLD1], cgs.media.qhFontMedium, -1, 1.0f);
+	cgi_R_Font_DrawString(635 - w, y+2, s, colorTable[CT_LTGOLD1], cgs.media.qhFontMedium, -1, 1.0f, RENDER2D_ANCHOR_RIGHT); //Fluffy (Widescreen2D));
 
 	return y + BIGCHAR_HEIGHT + 10;
 }
