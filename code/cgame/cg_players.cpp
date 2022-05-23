@@ -5051,10 +5051,10 @@ Ghoul2 Insert Start
 			ent.renderfx = RF_THIRD_PERSON;			// only draw in mirrors
 		}
 
-		if ( (cg_shadows.integer == 2) || (cg_shadows.integer == 3 && shadow) ) 
+		/*if ( (cg_shadows.integer == 2) || (cg_shadows.integer == 3 && shadow) ) //Fluffy (NoFirstPersonSaberShadow): Moved this further down
 		{
 			ent.renderfx |= RF_SHADOW_PLANE;
-		}
+		}*/
 		ent.shadowPlane = shadowPlane;
 		ent.renderfx |= RF_LIGHTING_ORIGIN;			// use the same origin for all
 		if ( cent->gent->NPC && cent->gent->NPC->scriptFlags & SCF_MORELIGHT )
@@ -5165,6 +5165,12 @@ extern vmCvar_t	cg_thirdPersonAlpha;
 		else
 		{
 			ent.customSkin = 0;
+			
+			if ( (cg_shadows.integer == 2) || (cg_shadows.integer == 3 && shadow) ) //Fluffy (NoFirstPersonSaberShadow): Moved this from above so there's never a shadow generated from first person saber model
+			{
+				ent.renderfx |= RF_SHADOW_PLANE;
+			}
+
 			//turn off arm caps
 			gi.G2API_SetSurfaceOnOff( &cent->gent->ghoul2[cent->gent->playerModel], "r_arm_cap_torso_off", 0x00000002 );
 			gi.G2API_SetSurfaceOnOff( &cent->gent->ghoul2[cent->gent->playerModel], "l_arm_cap_torso_off", 0x00000002 );
