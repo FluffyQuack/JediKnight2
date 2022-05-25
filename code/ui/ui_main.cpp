@@ -77,8 +77,8 @@ menuDef_t		*Menus_FindByName(const char *p);
 void			Menus_HideItems(const char *menuName);
 int				Text_Height(const char *text, float scale, int iFontIndex );
 int				Text_Width(const char *text, float scale, int iFontIndex );
-void			_UI_DrawTopBottom(float x, float y, float w, float h, float size);
-void			_UI_DrawSides(float x, float y, float w, float h, float size);
+void			_UI_DrawTopBottom(float x, float y, float w, float h, float size, int widescreenAnchor); //Fluffy (Widescreen2D)
+void			_UI_DrawSides(float x, float y, float w, float h, float size, int widescreenAnchor); //Fluffy (Widescreen2D)
 void			UI_CheckVid1Data(const char *menuTo,const char *warningMenuName);
 void			UI_GetVideoSetup ( void );
 void			UI_UpdateVideoSetup ( void );
@@ -188,7 +188,8 @@ void _UI_Refresh( int realtime )
 	{
 		if (uiInfo.uiDC.cursorShow == qtrue)
 		{
-			UI_DrawHandlePic( uiInfo.uiDC.cursorx, uiInfo.uiDC.cursory, 48, 48, uiInfo.uiDC.Assets.cursor, RENDER2D_NONSTRETCH ); //Fluffy (Widescreen2D)
+			//UI_DrawHandlePic( uiInfo.uiDC.cursorx, uiInfo.uiDC.cursory, 48, 48, uiInfo.uiDC.Assets.cursor, RENDER2D_NONSTRETCH ); //Fluffy (Widescreen2D)
+			UI_DrawHandlePic( uiInfo.uiDC.cursorx, uiInfo.uiDC.cursory, 48, 48, uiInfo.uiDC.Assets.cursor, RENDER2D_ANCHOR_MIDDLE); //Fluffy (Widescreen2D)
 		}
 	}
 }
@@ -261,7 +262,7 @@ Text_Paint
 */
 // iMaxPixelWidth is 0 here for no limit (but gets converted to -1), else max printable pixel width relative to start pos
 //
-void Text_Paint(float x, float y, float scale, vec4_t color, const char *text, int iMaxPixelWidth, int style, int iFontIndex, int widescreenAnchor = RENDER2D_STRETCH) //Fluffy (Widescreen2D)
+void Text_Paint(float x, float y, float scale, vec4_t color, const char *text, int iMaxPixelWidth, int style, int iFontIndex, int widescreenAnchor = RENDER2D_ANCHOR_MIDDLE) //Fluffy (Widescreen2D)
 {
 	if (iFontIndex == 0)
 	{
@@ -1686,11 +1687,11 @@ void AssetCache(void)
 _UI_DrawSides
 =================
 */
-void _UI_DrawSides(float x, float y, float w, float h, float size) 
+void _UI_DrawSides(float x, float y, float w, float h, float size, int widescreenAnchor) //Fluffy (Widescreen2D)
 {
 	size *= uiInfo.uiDC.xscale;
-	trap_R_DrawStretchPic( x, y, size, h, 0, 0, 0, 0, uiInfo.uiDC.whiteShader );
-	trap_R_DrawStretchPic( x + w - size, y, size, h, 0, 0, 0, 0, uiInfo.uiDC.whiteShader );
+	trap_R_DrawStretchPic( x, y, size, h, 0, 0, 0, 0, uiInfo.uiDC.whiteShader, widescreenAnchor ); //Fluffy (Widescreen2D)
+	trap_R_DrawStretchPic( x + w - size, y, size, h, 0, 0, 0, 0, uiInfo.uiDC.whiteShader, widescreenAnchor ); //Fluffy (Widescreen2D)
 }
 
 /*
@@ -1698,11 +1699,11 @@ void _UI_DrawSides(float x, float y, float w, float h, float size)
 _UI_DrawTopBottom
 =================
 */
-void _UI_DrawTopBottom(float x, float y, float w, float h, float size) 
+void _UI_DrawTopBottom(float x, float y, float w, float h, float size, int widescreenAnchor) //Fluffy (Widescreen2D)
 {
 	size *= uiInfo.uiDC.yscale;
-	trap_R_DrawStretchPic( x, y, w, size, 0, 0, 0, 0, uiInfo.uiDC.whiteShader );
-	trap_R_DrawStretchPic( x, y + h - size, w, size, 0, 0, 0, 0, uiInfo.uiDC.whiteShader );
+	trap_R_DrawStretchPic( x, y, w, size, 0, 0, 0, 0, uiInfo.uiDC.whiteShader, widescreenAnchor ); //Fluffy (Widescreen2D)
+	trap_R_DrawStretchPic( x, y + h - size, w, size, 0, 0, 0, 0, uiInfo.uiDC.whiteShader, widescreenAnchor ); //Fluffy (Widescreen2D)
 }
 /*
 ================
@@ -1711,12 +1712,12 @@ UI_DrawRect
 Coordinates are 640*480 virtual values
 =================
 */
-void _UI_DrawRect( float x, float y, float width, float height, float size, const float *color ) 
+void _UI_DrawRect( float x, float y, float width, float height, float size, const float *color, int widescreenAnchor) //Fluffy (Widescreen2D)
 {
 	trap_R_SetColor( color );
 
-	_UI_DrawTopBottom(x, y, width, height, size);
-	_UI_DrawSides(x, y, width, height, size);
+	_UI_DrawTopBottom(x, y, width, height, size, widescreenAnchor ); //Fluffy (Widescreen2D)
+	_UI_DrawSides(x, y, width, height, size, widescreenAnchor ); //Fluffy (Widescreen2D)
 
 	trap_R_SetColor( NULL );
 }
@@ -1744,8 +1745,8 @@ UI_DrawEffects
 */
 static void UI_DrawEffects(rectDef_t *rect, float scale, vec4_t color) 
 {
-	UI_DrawHandlePic( rect->x, rect->y - 14, 128, 8, uiInfo.uiDC.Assets.fxBasePic, RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
-	UI_DrawHandlePic( rect->x + uiInfo.effectsColor * 16 + 8, rect->y - 16, 16, 12, uiInfo.uiDC.Assets.fxPic[uiInfo.effectsColor], RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
+	UI_DrawHandlePic( rect->x, rect->y - 14, 128, 8, uiInfo.uiDC.Assets.fxBasePic, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D)
+	UI_DrawHandlePic( rect->x + uiInfo.effectsColor * 16 + 8, rect->y - 16, 16, 12, uiInfo.uiDC.Assets.fxPic[uiInfo.effectsColor], RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D)
 }
 
 /*
@@ -1759,7 +1760,7 @@ static void UI_Version(rectDef_t *rect, float scale, vec4_t color, int iFontInde
 	
 	width = DC->textWidth(Q3_VERSION, scale, 0);
 
-	DC->drawText(rect->x - width, rect->y, scale, color, Q3_VERSION, 0, ITEM_TEXTSTYLE_SHADOWED, iFontIndex, RENDER2D_STRETCH); //Fluffy (Widescreen2D)
+	DC->drawText(rect->x - width, rect->y, scale, color, Q3_VERSION, 0, ITEM_TEXTSTYLE_SHADOWED, iFontIndex, RENDER2D_ANCHOR_MIDDLE); //Fluffy (Widescreen2D)
 }
 
 /*
@@ -1871,7 +1872,7 @@ static void UI_DrawCrosshair(rectDef_t *rect, float scale, vec4_t color) {
 	if (uiInfo.currentCrosshair < 0 || uiInfo.currentCrosshair >= NUM_CROSSHAIRS) {
 		uiInfo.currentCrosshair = 0;
 	}
-	UI_DrawHandlePic( rect->x, rect->y, rect->w, rect->h, uiInfo.uiDC.Assets.crosshairShader[uiInfo.currentCrosshair], RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
+	UI_DrawHandlePic( rect->x, rect->y, rect->w, rect->h, uiInfo.uiDC.Assets.crosshairShader[uiInfo.currentCrosshair], RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D)
  	trap_R_SetColor( NULL );
 }
 
@@ -1920,7 +1921,13 @@ static void UI_OwnerDraw(float x, float y, float w, float h, float text_x, float
 			break;
 
 		case UI_ALLMAPS_SELECTION://saved game thumbnail
-			ui.DrawStretchRaw( x, y+h, w, -h, SG_SCR_WIDTH, SG_SCR_HEIGHT, screenShotBuf, 0, qtrue );
+			
+			//Fluffy (Widescreen2D)
+			if(!r_stretch2D->integer && glConfig.windowAspect >= (4.f / 3.f))
+				ui.DrawStretchRaw( (x / (glConfig.windowAspect / (SCREEN_WIDTH_F / SCREEN_HEIGHT_F))) + (glConfig.aspectWidthDiff / 2), y+h, w / (glConfig.windowAspect / (SCREEN_WIDTH_F / SCREEN_HEIGHT_F)), -h, SG_SCR_WIDTH, SG_SCR_HEIGHT, screenShotBuf, 0, qtrue );
+			else
+				ui.DrawStretchRaw( x, y+h, w, -h, SG_SCR_WIDTH, SG_SCR_HEIGHT, screenShotBuf, 0, qtrue );
+
 			ui.R_Font_DrawString(	x,		// int ox
 									y+h,	// int oy
 									s_savedata[s_savegame.currentLine].currentSaveFileMap,	// const char *text
@@ -1928,7 +1935,7 @@ static void UI_OwnerDraw(float x, float y, float w, float h, float text_x, float
 									iFontIndex,	// const int iFontHandle
 									w,//-1,		// iMaxPixelWidth (-1 = none)
 									scale,	// const float scale = 1.0f
-									RENDER2D_STRETCH); //Fluffy (Widescreen2D)
+									RENDER2D_ANCHOR_MIDDLE); //Fluffy (Widescreen2D)
 			break;
 		case UI_PREVIEWCINEMATIC:
 			// FIXME BOB - make this work?
@@ -2193,15 +2200,20 @@ UI_MouseEvent
 void _UI_MouseEvent( int dx, int dy )
 {
 	//Fluffy (Widescreen2D): Slow down X mouse movement for wider aspect ratios
-	if(dx > 0 && glConfig.windowAspect != SCREEN_WIDTH_F / SCREEN_HEIGHT_F)
+	/*if(dx > 0 && glConfig.windowAspect != SCREEN_WIDTH_F / SCREEN_HEIGHT_F)
 	{
 		dx /= glConfig.windowAspect / (SCREEN_WIDTH_F / SCREEN_HEIGHT_F);
 		if(dx < 1)
 			dx = 1;
-	}
+	}*/
 
 	// update mouse screen position
 	uiInfo.uiDC.cursorx += dx;
+
+	//Fluffy (Widescreen2D): Convert mouse coordinates to correspond with UI items rendering in the middle of the screen as a 4:3 screen
+	//uiInfo.uiDC.cursorx -= (glConfig.aspectWidthDiff / 2);
+	//uiInfo.uiDC.cursorx = uiInfo.uiDC.cursorx * (glConfig.windowAspect / (SCREEN_WIDTH_F / SCREEN_HEIGHT_F));
+
 	if (uiInfo.uiDC.cursorx < 0)
 	{
 		uiInfo.uiDC.cursorx = 0;

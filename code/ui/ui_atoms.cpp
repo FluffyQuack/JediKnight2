@@ -288,7 +288,7 @@ void UI_DrawNamedPic( float x, float y, float width, float height, const char *p
 	qhandle_t	hShader;
 
 	hShader = ui.R_RegisterShaderNoMip( picname );
-	ui.R_DrawStretchPic( x, y, width, height, 0, 0, 1, 1, hShader, RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
+	ui.R_DrawStretchPic( x, y, width, height, 0, 0, 1, 1, hShader, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D)
 }
 
 
@@ -324,7 +324,7 @@ void UI_DrawHandlePic( float x, float y, float w, float h, qhandle_t hShader, in
 		t1 = 1;
 	}
 
-	ui.R_DrawStretchPic( x, y, w, h, s0, t0, s1, t1, hShader, widescreenAnchor );//Fluffy (Widescreen2D)
+	ui.R_DrawStretchPic( x, y, w, h, s0, t0, s1, t1, hShader, widescreenAnchor ); //Fluffy (Widescreen2D)
 }
 
 /*
@@ -334,11 +334,11 @@ UI_FillRect
 Coordinates are 640*480 virtual values
 =================
 */
-void UI_FillRect( float x, float y, float width, float height, const float *color ) 
+void UI_FillRect( float x, float y, float width, float height, const float *color, int widescreenAnchor ) //Fluffy (Widescreen2D)
 {
 	ui.R_SetColor( color );
 
-	ui.R_DrawStretchPic( x, y, width, height, 0, 0, 0, 0, uis.whiteShader, RENDER2D_STRETCH); //Fluffy (Widescreen2D)
+	ui.R_DrawStretchPic( x, y, width, height, 0, 0, 0, 0, uis.whiteShader, widescreenAnchor); //Fluffy (Widescreen2D)
 
 	ui.R_SetColor( NULL );
 }

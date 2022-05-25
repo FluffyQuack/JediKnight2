@@ -162,15 +162,15 @@ typedef struct {
 	void		(*addRefEntityToScene) (const refEntity_t *re );
 	void		(*clearScene) ();
 	void		(*drawHandlePic) (float x, float y, float w, float h, qhandle_t asset, int widescreenAnchor); //Fluffy (Widescreen2D)
-	void		(*drawRect) ( float x, float y, float w, float h, float size, const vec4_t color);
-	void		(*drawSides) (float x, float y, float w, float h, float size);
+	void		(*drawRect) ( float x, float y, float w, float h, float size, const vec4_t color, int widescreenAnchor); //Fluffy (Widescreen2D)
+	void		(*drawSides) (float x, float y, float w, float h, float size, int widescreenAnchor); //Fluffy (Widescreen2D)
 	void		(*drawText) (float x, float y, float scale, vec4_t color, const char *text, int iMaxPixelWidth, int style, int iFontIndex, int widescreenAnchor); //Fluffy (Widescreen2D)
 	void		(*drawTextWithCursor)(float x, float y, float scale, vec4_t color, const char *text, int cursorPos, char cursor, int iMaxPixelWidth, int style, int iFontIndex);
-	void		(*drawTopBottom) (float x, float y, float w, float h, float size);
+	void		(*drawTopBottom) (float x, float y, float w, float h, float size, int widescreenAnchor); //Fluffy (Widescreen2D)
 	void		(*executeText)(int exec_when, const char *text );	
 	int			(*feederCount)(float feederID);
 	void		(*feederSelection)(float feederID, int index);
-	void		(*fillRect) ( float x, float y, float w, float h, const vec4_t color);
+	void		(*fillRect) ( float x, float y, float w, float h, const vec4_t color, int widescreenAnchor); //Fluffy (Widescreen2D)
 	void		(*getBindingBuf)( int keynum, char *buf, int buflen );
 	void		(*getCVarString)(const char *cvar, char *buffer, int bufsize);
 	float		(*getCVarValue)(const char *cvar);

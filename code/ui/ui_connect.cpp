@@ -157,7 +157,7 @@ void UI_DrawConnect( const char *servername, const char *updateInfoString ) {
 	byte *levelPic = ui.SCR_GetScreenshot(&qValid);
 	// draw the dialog background
 	if (!qValid) {
-		UI_DrawHandlePic(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, uis.menuBackShader, RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
+		UI_DrawHandlePic(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, uis.menuBackShader, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D)
 	} 
 	else {
 		UI_DrawThumbNail(0,SCREEN_HEIGHT, SCREEN_WIDTH, -SCREEN_HEIGHT, levelPic );

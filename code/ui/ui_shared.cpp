@@ -4532,8 +4532,8 @@ void Menu_PaintAll(void)
 	if (uis.debugMode) 
 	{
 		vec4_t v = {1, 1, 1, 1};
-		DC->drawText(5, 25, .75, v, va("(%d,%d)",DC->cursorx,DC->cursory), 0, 0, DC->Assets.qhMediumFont, RENDER2D_STRETCH); //Fluffy (Widescreen2D)
-		DC->drawText(5, 10, .75, v, va("fps: %f", DC->FPS), 0, 0, DC->Assets.qhMediumFont, RENDER2D_STRETCH); //Fluffy (Widescreen2D)
+		DC->drawText(5, 25, .75, v, va("(%d,%d)",DC->cursorx,DC->cursory), 0, 0, DC->Assets.qhMediumFont, RENDER2D_ANCHOR_MIDDLE); //Fluffy (Widescreen2D)
+		DC->drawText(5, 10, .75, v, va("fps: %f", DC->FPS), 0, 0, DC->Assets.qhMediumFont, RENDER2D_ANCHOR_MIDDLE); //Fluffy (Widescreen2D)
 	}
 }
 
@@ -4572,7 +4572,7 @@ void Menu_Paint(menuDef_t *menu, qboolean forcePaint)
 		//Fluffy (Widescreen2D): If this is wider than 4:3, we need to ensure sides are completely black, so we render a black screen before rendering the menu
 		if ( drawnFullscreenMenuThisFrame == 0 && glConfig.vidWidth * 480 > glConfig.vidHeight * 640 ) {
 			vec4_t vec = {0.0f, 0.0f, 0.0f, 1.0f};
-			DC->fillRect(0, 0, 640, 480, vec);
+			DC->fillRect(0, 0, 640, 480, vec, RENDER2D_STRETCH);
 		}
 		drawnFullscreenMenuThisFrame = 1;
 
@@ -4588,7 +4588,7 @@ void Menu_Paint(menuDef_t *menu, qboolean forcePaint)
 			menu->window.background = uis.whiteShader;
 		}
 
-		DC->drawHandlePic( 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, menu->window.background, RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
+		DC->drawHandlePic( 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT, menu->window.background, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D)
 	} 
 	else if (menu->window.background) 
 	{
@@ -4627,7 +4627,7 @@ void Menu_Paint(menuDef_t *menu, qboolean forcePaint)
 		vec4_t color;
 		color[0] = color[2] = color[3] = 1;
 		color[1] = 0;
-		DC->drawRect(menu->window.rect.x, menu->window.rect.y, menu->window.rect.w, menu->window.rect.h, 1, color);
+		DC->drawRect(menu->window.rect.x, menu->window.rect.y, menu->window.rect.w, menu->window.rect.h, 1, color, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D)
 	}
 }
 
@@ -5032,7 +5032,7 @@ void Item_TextField_Paint(itemDef_t *item)
 	} 
 	else 
 	{
-		DC->drawText(item->textRect.x + item->textRect.w + offset, item->textRect.y, item->textscale, newColor, buff + editPtr->paintOffset, /*editPtr->maxPaintChars*/ item->window.rect.w, item->textStyle, item->font, RENDER2D_STRETCH); //Fluffy (Widescreen2D)
+		DC->drawText(item->textRect.x + item->textRect.w + offset, item->textRect.y, item->textscale, newColor, buff + editPtr->paintOffset, /*editPtr->maxPaintChars*/ item->window.rect.w, item->textStyle, item->font, RENDER2D_ANCHOR_MIDDLE); //Fluffy (Widescreen2D)
 	}
 }
 
@@ -5062,19 +5062,19 @@ void Item_ListBox_Paint(itemDef_t *item)
 		// bar
 		x = item->window.rect.x + 1;
 		y = item->window.rect.y + item->window.rect.h - SCROLLBAR_SIZE - 1;
-		DC->drawHandlePic(x, y, SCROLLBAR_SIZE, SCROLLBAR_SIZE, DC->Assets.scrollBarArrowLeft, RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
+		DC->drawHandlePic(x, y, SCROLLBAR_SIZE, SCROLLBAR_SIZE, DC->Assets.scrollBarArrowLeft, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D)
 		x += SCROLLBAR_SIZE - 1;
 		size = item->window.rect.w - (SCROLLBAR_SIZE * 2);
-		DC->drawHandlePic(x, y, size+1, SCROLLBAR_SIZE, DC->Assets.scrollBar, RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
+		DC->drawHandlePic(x, y, size+1, SCROLLBAR_SIZE, DC->Assets.scrollBar, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D)
 		x += size - 1;
-		DC->drawHandlePic(x, y, SCROLLBAR_SIZE, SCROLLBAR_SIZE, DC->Assets.scrollBarArrowRight, RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
+		DC->drawHandlePic(x, y, SCROLLBAR_SIZE, SCROLLBAR_SIZE, DC->Assets.scrollBarArrowRight, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D)
 		// thumb
 		thumb = Item_ListBox_ThumbDrawPosition(item);//Item_ListBox_ThumbPosition(item);
 		if (thumb > x - SCROLLBAR_SIZE - 1) 
 		{
 			thumb = x - SCROLLBAR_SIZE - 1;
 		}
-		DC->drawHandlePic(thumb, y, SCROLLBAR_SIZE, SCROLLBAR_SIZE, DC->Assets.scrollBarThumb, RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
+		DC->drawHandlePic(thumb, y, SCROLLBAR_SIZE, SCROLLBAR_SIZE, DC->Assets.scrollBarThumb, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D)
 		//
 		listPtr->endPos = listPtr->startPos;
 		size = item->window.rect.w - 2;
@@ -5092,12 +5092,12 @@ void Item_ListBox_Paint(itemDef_t *item)
 				image = DC->feederItemImage(item->special, i);
 				if (image) 
 				{
-					DC->drawHandlePic(x+1, y+1, listPtr->elementWidth - 2, listPtr->elementHeight - 2, image, RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
+					DC->drawHandlePic(x+1, y+1, listPtr->elementWidth - 2, listPtr->elementHeight - 2, image, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D)
 				}
 
 				if (i == item->cursorPos) 
 				{
-					DC->drawRect(x, y, listPtr->elementWidth-1, listPtr->elementHeight-1, item->window.borderSize, item->window.borderColor);
+					DC->drawRect(x, y, listPtr->elementWidth-1, listPtr->elementHeight-1, item->window.borderSize, item->window.borderColor, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D)
 				}
 
 				size -= listPtr->elementWidth;
@@ -5121,21 +5121,21 @@ void Item_ListBox_Paint(itemDef_t *item)
 		// draw scrollbar to right side of the window
 		x = item->window.rect.x + item->window.rect.w - SCROLLBAR_SIZE - 1;
 		y = item->window.rect.y + 1;
-		DC->drawHandlePic(x, y, SCROLLBAR_SIZE, SCROLLBAR_SIZE, DC->Assets.scrollBarArrowUp, RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
+		DC->drawHandlePic(x, y, SCROLLBAR_SIZE, SCROLLBAR_SIZE, DC->Assets.scrollBarArrowUp, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D)
 		y += SCROLLBAR_SIZE - 1;
 
 		listPtr->endPos = listPtr->startPos;
 		size = item->window.rect.h - (SCROLLBAR_SIZE * 2);
-		DC->drawHandlePic(x, y, SCROLLBAR_SIZE, size+1, DC->Assets.scrollBar, RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
+		DC->drawHandlePic(x, y, SCROLLBAR_SIZE, size+1, DC->Assets.scrollBar, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D)
 		y += size - 1;
-		DC->drawHandlePic(x, y, SCROLLBAR_SIZE, SCROLLBAR_SIZE, DC->Assets.scrollBarArrowDown, RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
+		DC->drawHandlePic(x, y, SCROLLBAR_SIZE, SCROLLBAR_SIZE, DC->Assets.scrollBarArrowDown, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D)
 		// thumb
 		thumb = Item_ListBox_ThumbDrawPosition(item);//Item_ListBox_ThumbPosition(item);
 		if (thumb > y - SCROLLBAR_SIZE - 1) 
 		{
 			thumb = y - SCROLLBAR_SIZE - 1;
 		}
-		DC->drawHandlePic(x, thumb, SCROLLBAR_SIZE, SCROLLBAR_SIZE, DC->Assets.scrollBarThumb, RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
+		DC->drawHandlePic(x, thumb, SCROLLBAR_SIZE, SCROLLBAR_SIZE, DC->Assets.scrollBarThumb, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D)
 
 		// adjust size for item painting
 		size = item->window.rect.h - 2;
@@ -5151,12 +5151,12 @@ void Item_ListBox_Paint(itemDef_t *item)
 				image = DC->feederItemImage(item->special, i);
 				if (image) 
 				{
-					DC->drawHandlePic(x+1, y+1, listPtr->elementWidth - 2, listPtr->elementHeight - 2, image, RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
+					DC->drawHandlePic(x+1, y+1, listPtr->elementWidth - 2, listPtr->elementHeight - 2, image, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D)
 				}
 
 				if (i == item->cursorPos) 
 				{
-					DC->drawRect(x, y, listPtr->elementWidth - 1, listPtr->elementHeight - 1, item->window.borderSize, item->window.borderColor);
+					DC->drawRect(x, y, listPtr->elementWidth - 1, listPtr->elementHeight - 1, item->window.borderSize, item->window.borderColor, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D)
 				}
 
 				listPtr->endPos++;
@@ -5188,11 +5188,11 @@ void Item_ListBox_Paint(itemDef_t *item)
 						text = DC->feederItemText(item->special, i, j, &optionalImage);
 						if (optionalImage >= 0) 
 						{
-							DC->drawHandlePic(x + 4 + listPtr->columnInfo[j].pos, y - 1 + listPtr->elementHeight / 2, listPtr->columnInfo[j].width, listPtr->columnInfo[j].width, optionalImage, RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
+							DC->drawHandlePic(x + 4 + listPtr->columnInfo[j].pos, y - 1 + listPtr->elementHeight / 2, listPtr->columnInfo[j].width, listPtr->columnInfo[j].width, optionalImage, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D)
 						} 
 						else if (text) 
 						{
-							DC->drawText(x + 4 + listPtr->columnInfo[j].pos, y + listPtr->elementHeight, item->textscale, item->window.foreColor, text, listPtr->columnInfo[j].maxChars, item->textStyle, item->font, RENDER2D_STRETCH); //Fluffy (Widescreen2D)
+							DC->drawText(x + 4 + listPtr->columnInfo[j].pos, y + listPtr->elementHeight, item->textscale, item->window.foreColor, text, listPtr->columnInfo[j].maxChars, item->textStyle, item->font, RENDER2D_ANCHOR_MIDDLE); //Fluffy (Widescreen2D)
 						}
 					}
 				} 
@@ -5205,14 +5205,14 @@ void Item_ListBox_Paint(itemDef_t *item)
 					} 
 					else if (text) 
 					{
-						DC->drawText(x + 4, y + listPtr->elementHeight, item->textscale, item->window.foreColor, text, 0, item->textStyle, item->font, RENDER2D_STRETCH); //Fluffy (Widescreen2D)
+						DC->drawText(x + 4, y + listPtr->elementHeight, item->textscale, item->window.foreColor, text, 0, item->textStyle, item->font, RENDER2D_ANCHOR_MIDDLE); //Fluffy (Widescreen2D)
 					}
 				}
 
 				// The chosen text
 				if (i == item->cursorPos) 
 				{
-					DC->fillRect(x + 2, y + listPtr->elementHeight+6, item->window.rect.w - SCROLLBAR_SIZE - 4, listPtr->elementHeight, item->window.outlineColor);
+					DC->fillRect(x + 2, y + listPtr->elementHeight+6, item->window.rect.w - SCROLLBAR_SIZE - 4, listPtr->elementHeight, item->window.outlineColor, RENDER2D_ANCHOR_MIDDLE); //Fluffy (Widescreen2D)
 				}
 
 				size -= listPtr->elementHeight;
@@ -5347,11 +5347,11 @@ void Item_Bind_Paint(itemDef_t *item)
 			yAdj = textHeight - DC->textHeight(g_nameBind1, textScale, uiInfo.uiDC.Assets.qhMediumFont);
 		}
 
-		DC->drawText(startingXPos, item->textRect.y + yAdj, textScale, newColor, g_nameBind1, maxChars/*item->textRect.w*/, item->textStyle, item->font, RENDER2D_STRETCH); //Fluffy (Widescreen2D)
+		DC->drawText(startingXPos, item->textRect.y + yAdj, textScale, newColor, g_nameBind1, maxChars/*item->textRect.w*/, item->textStyle, item->font, RENDER2D_ANCHOR_MIDDLE); //Fluffy (Widescreen2D)
 	} 
 	else 
 	{
-		DC->drawText(item->textRect.x, item->textRect.y, item->textscale, newColor, (value != 0) ? "FIXME 1" : "FIXME 0", maxChars/*item->textRect.w*/, item->textStyle, item->font, RENDER2D_STRETCH); //Fluffy (Widescreen2D)
+		DC->drawText(item->textRect.x, item->textRect.y, item->textscale, newColor, (value != 0) ? "FIXME 1" : "FIXME 0", maxChars/*item->textRect.w*/, item->textStyle, item->font, RENDER2D_ANCHOR_MIDDLE); //Fluffy (Widescreen2D)
 	}
 }
 
@@ -5568,12 +5568,12 @@ void Item_YesNo_Paint(itemDef_t *item)
 	if (item->text) 
 	{
 		Item_Text_Paint(item);
-		DC->drawText(item->textRect.x + item->textRect.w + 8, item->textRect.y, item->textscale, newColor, (value != 0) ? psYes : psNo, 0, item->textStyle, item->font, RENDER2D_STRETCH); //Fluffy (Widescreen2D)
+		DC->drawText(item->textRect.x + item->textRect.w + 8, item->textRect.y, item->textscale, newColor, (value != 0) ? psYes : psNo, 0, item->textStyle, item->font, RENDER2D_ANCHOR_MIDDLE); //Fluffy (Widescreen2D)
 		
 	} 
 	else 
 	{
-		DC->drawText(item->textRect.x, item->textRect.y, item->textscale, newColor, (value != 0) ? psYes : psNo , 0, item->textStyle, item->font, RENDER2D_STRETCH); //Fluffy (Widescreen2D)
+		DC->drawText(item->textRect.x, item->textRect.y, item->textscale, newColor, (value != 0) ? psYes : psNo , 0, item->textStyle, item->font, RENDER2D_ANCHOR_MIDDLE); //Fluffy (Widescreen2D)
 	}
 }
 
@@ -5612,11 +5612,11 @@ void Item_Multi_Paint(itemDef_t *item)
 	if (item->text) 
 	{
 		Item_Text_Paint(item);
-		DC->drawText(item->textRect.x + item->textRect.w + 8, item->textRect.y, item->textscale, newColor, text, 0, item->textStyle, item->font, RENDER2D_STRETCH); //Fluffy (Widescreen2D)
+		DC->drawText(item->textRect.x + item->textRect.w + 8, item->textRect.y, item->textscale, newColor, text, 0, item->textStyle, item->font, RENDER2D_ANCHOR_MIDDLE); //Fluffy (Widescreen2D)
 	} 
 	else 
 	{
-		DC->drawText(item->textRect.x, item->textRect.y, item->textscale, newColor, text, 0, item->textStyle, item->font, RENDER2D_STRETCH); //Fluffy (Widescreen2D)
+		DC->drawText(item->textRect.x, item->textRect.y, item->textscale, newColor, text, 0, item->textStyle, item->font, RENDER2D_ANCHOR_MIDDLE); //Fluffy (Widescreen2D)
 	}
 }
 
@@ -5747,11 +5747,11 @@ void Item_Slider_Paint(itemDef_t *item)
 		x = item->window.rect.x;
 	}
 	DC->setColor(newColor);
-	DC->drawHandlePic( x, y+2, SLIDER_WIDTH, SLIDER_HEIGHT, DC->Assets.sliderBar, RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
+	DC->drawHandlePic( x, y+2, SLIDER_WIDTH, SLIDER_HEIGHT, DC->Assets.sliderBar, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D)
 
 	x = Item_Slider_ThumbPosition(item);
 //	DC->drawHandlePic( x - (SLIDER_THUMB_WIDTH / 2), y - 2, SLIDER_THUMB_WIDTH, SLIDER_THUMB_HEIGHT, DC->Assets.sliderThumb );
-	DC->drawHandlePic( x - (SLIDER_THUMB_WIDTH / 2), y+2, SLIDER_THUMB_WIDTH, SLIDER_THUMB_HEIGHT, DC->Assets.sliderThumb, RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
+	DC->drawHandlePic( x - (SLIDER_THUMB_WIDTH / 2), y+2, SLIDER_THUMB_WIDTH, SLIDER_THUMB_HEIGHT, DC->Assets.sliderThumb, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D)
 
 }
 
@@ -6027,7 +6027,7 @@ void Item_Paint(itemDef_t *item)
 		rectDef_t *r = Item_CorrectedTextRect(item);
 		color[1] = color[3] = 1;
 		color[0] = color[2] = 0;
-		DC->drawRect(r->x, r->y, r->w, r->h, 1, color);
+		DC->drawRect(r->x, r->y, r->w, r->h, 1, color, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D)
 	}
 
   //DC->drawRect(item->window.rect.x, item->window.rect.y, item->window.rect.w, item->window.rect.h, 1, red);
@@ -6144,7 +6144,7 @@ void GradientBar_Paint(rectDef_t *rect, vec4_t color)
 {
 	// gradient bar takes two paints
 	DC->setColor( color );
-	DC->drawHandlePic(rect->x, rect->y, rect->w, rect->h, DC->Assets.gradientBar, RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
+	DC->drawHandlePic(rect->x, rect->y, rect->w, rect->h, DC->Assets.gradientBar, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D)
 	DC->setColor( NULL );
 }
 
@@ -6163,7 +6163,7 @@ void Window_Paint(Window *w, float fadeAmount, float fadeClamp, float fadeCycle)
 	if (uis.debugMode) 
 	{
 		color[0] = color[1] = color[2] = color[3] = 1;
-		DC->drawRect(w->rect.x, w->rect.y, w->rect.w, w->rect.h, 1, color);
+		DC->drawRect(w->rect.x, w->rect.y, w->rect.w, w->rect.h, 1, color, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D)
 	}
 
 	if (w == NULL || (w->style == 0 && w->border == 0)) 
@@ -6191,7 +6191,7 @@ void Window_Paint(Window *w, float fadeAmount, float fadeClamp, float fadeCycle)
 		} 
 		else 
 		{
-			DC->fillRect(fillRect.x, fillRect.y, fillRect.w, fillRect.h, w->backColor);
+			DC->fillRect(fillRect.x, fillRect.y, fillRect.w, fillRect.h, w->backColor, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D)
 		}
 	} 
 	else if (w->style == WINDOW_STYLE_GRADIENT) 
@@ -6227,25 +6227,25 @@ void Window_Paint(Window *w, float fadeAmount, float fadeClamp, float fadeCycle)
 				color[0] = color[1] = .5;
 			}
 			color[3] = 1;
-			DC->drawRect(w->rect.x, w->rect.y, w->rect.w, w->rect.h, w->borderSize, color);
+			DC->drawRect(w->rect.x, w->rect.y, w->rect.w, w->rect.h, w->borderSize, color, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D)
 		} 
 		else 
 		{
-			DC->drawRect(w->rect.x, w->rect.y, w->rect.w, w->rect.h, w->borderSize, w->borderColor);
+			DC->drawRect(w->rect.x, w->rect.y, w->rect.w, w->rect.h, w->borderSize, w->borderColor, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D)
 		}
 	} 
 	else if (w->border == WINDOW_BORDER_HORZ) 
 	{
 		// top/bottom
 		DC->setColor(w->borderColor);
-		DC->drawTopBottom(w->rect.x, w->rect.y, w->rect.w, w->rect.h, w->borderSize);
+		DC->drawTopBottom(w->rect.x, w->rect.y, w->rect.w, w->rect.h, w->borderSize, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D)
 		DC->setColor( NULL );
 	} 
 	else if (w->border == WINDOW_BORDER_VERT) 
 	{
 		// left right
 		DC->setColor(w->borderColor);
-		DC->drawSides(w->rect.x, w->rect.y, w->rect.w, w->rect.h, w->borderSize);
+		DC->drawSides(w->rect.x, w->rect.y, w->rect.w, w->rect.h, w->borderSize, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D)
 		DC->setColor( NULL );
 	} 
 	else if (w->border == WINDOW_BORDER_KCGRADIENT) 
@@ -6391,6 +6391,10 @@ Rect_ContainsPoint
 */
 qboolean Rect_ContainsPoint(rectDef_t *rect, float x, float y) 
 {
+	//Fluffy (Widescreen2D): Convert mouse coordinates to correspond with UI items rendering in the middle of the screen as a 4:3 screen
+	//x -= (glConfig.aspectWidthDiff / 2);
+	//x = x * (glConfig.windowAspect / (SCREEN_WIDTH_F / SCREEN_HEIGHT_F));
+
 	if (rect) 
 	{
 //		if ((x > rect->x) && (x < (rect->x + rect->w)) && (y > rect->y) && (y < (rect->y + rect->h))) 
@@ -6480,6 +6484,10 @@ Item_ListBox_OverLB
 */
 int Item_ListBox_OverLB(itemDef_t *item, float x, float y) 
 {
+	//Fluffy (Widescreen2D): Convert mouse coordinates to correspond with UI items rendering in the middle of the screen as a 4:3 screen
+	//x -= (glConfig.aspectWidthDiff / 2);
+	//x = x * (glConfig.windowAspect / (SCREEN_WIDTH_F / SCREEN_HEIGHT_F));
+
 	rectDef_t r;
 	listBoxDef_t *listPtr;
 	int thumbstart;
@@ -6566,6 +6574,10 @@ Item_ListBox_MouseEnter
 */
 void Item_ListBox_MouseEnter(itemDef_t *item, float x, float y) 
 {
+	//Fluffy (Widescreen2D): Convert mouse coordinates to correspond with UI items rendering in the middle of the screen as a 4:3 screen
+	//x -= (glConfig.aspectWidthDiff / 2);
+	//x = x * (glConfig.windowAspect / (SCREEN_WIDTH_F / SCREEN_HEIGHT_F));
+
 	rectDef_t r;
 	listBoxDef_t *listPtr = (listBoxDef_t*)item->typeData;
         
@@ -6622,6 +6634,10 @@ Item_MouseEnter
 */
 void Item_MouseEnter(itemDef_t *item, float x, float y) 
 {
+	//Fluffy (Widescreen2D): Convert mouse coordinates to correspond with UI items rendering in the middle of the screen as a 4:3 screen
+	//x -= (glConfig.aspectWidthDiff / 2);
+	//x = x * (glConfig.windowAspect / (SCREEN_WIDTH_F / SCREEN_HEIGHT_F));
+
 	rectDef_t r;
 	if (item) 
 	{
@@ -6830,8 +6846,8 @@ void Menu_HandleMouseMove(menuDef_t *menu, float x, float y)
 	qboolean focusSet = qfalse;
 
 	//Fluffy (Widescreen2D): Convert mouse coordinates to correspond with UI items rendering in the middle of the screen as a 4:3 screen
-	x -= (glConfig.aspectWidthDiff / 2);
-	x = x * (glConfig.windowAspect / (SCREEN_WIDTH_F / SCREEN_HEIGHT_F));
+	//x -= (glConfig.aspectWidthDiff / 2);
+	//x = x * (glConfig.windowAspect / (SCREEN_WIDTH_F / SCREEN_HEIGHT_F));
 
 	itemDef_t *overItem;
 	if (menu == NULL) 
@@ -6951,6 +6967,10 @@ qboolean Display_MouseMove(void *p, int x, int y)
 	} 
 	else 
 	{
+		//Fluffy (Widescreen2D): Convert mouse coordinates to correspond with UI items rendering in the middle of the screen as a 4:3 screen
+		//x -= (glConfig.aspectWidthDiff / 2);
+		//x = x * (glConfig.windowAspect / (SCREEN_WIDTH_F / SCREEN_HEIGHT_F));
+
 		menu->window.rect.x += x;
 		menu->window.rect.y += y;
 		Menu_UpdatePosition(menu);
@@ -7471,6 +7491,10 @@ Menu_OverActiveItem
 */
 static qboolean Menu_OverActiveItem(menuDef_t *menu, float x, float y) 
 {
+	//Fluffy (Widescreen2D): Convert mouse coordinates to correspond with UI items rendering in the middle of the screen as a 4:3 screen
+	//x -= (glConfig.aspectWidthDiff / 2);
+	//x = x * (glConfig.windowAspect / (SCREEN_WIDTH_F / SCREEN_HEIGHT_F));
+
 	if (menu && menu->window.flags & (WINDOW_VISIBLE | WINDOW_FORCED)) 
 	{
 		if (Rect_ContainsPoint(&menu->window.rect, x, y)) 
@@ -8025,6 +8049,10 @@ Item_Slider_OverSlider
 */
 int Item_Slider_OverSlider(itemDef_t *item, float x, float y) 
 {
+	//Fluffy (Widescreen2D): Convert mouse coordinates to correspond with UI items rendering in the middle of the screen as a 4:3 screen
+	//x -= (glConfig.aspectWidthDiff / 2);
+	//x = x * (glConfig.windowAspect / (SCREEN_WIDTH_F / SCREEN_HEIGHT_F));
+
 	rectDef_t r;
 
 	r.x = Item_Slider_ThumbPosition(item) - (SLIDER_THUMB_WIDTH / 2);
@@ -8068,6 +8096,10 @@ static void Scroll_Slider_ThumbFunc(void *p)
 	}
 
 	cursorx = DC->cursorx;
+	
+	//Fluffy (Widescreen2D): Convert mouse coordinates to correspond with UI items rendering in the middle of the screen as a 4:3 screen
+	//cursorx -= (glConfig.aspectWidthDiff / 2);
+	//cursorx = cursorx * (glConfig.windowAspect / (SCREEN_WIDTH_F / SCREEN_HEIGHT_F));
 
 	if (cursorx < x) 
 	{

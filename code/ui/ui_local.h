@@ -100,7 +100,7 @@ typedef struct {
 	qboolean			firstdraw;
 } uiStatic_t;
 
-extern void			UI_FillRect( float x, float y, float width, float height, const float *color );
+extern void			UI_FillRect( float x, float y, float width, float height, const float *color, int widescreenAnchor ); //Fluffy (Widescreen2D)
 extern void			UI_DrawString( int x, int y, const char* str, int style, vec4_t color );
 extern void			UI_DrawHandlePic( float x, float y, float w, float h, qhandle_t hShader, int widescreenAnchor ); //Fluffy (Widescreen2D)
 extern void			UI_UpdateScreen( void );
@@ -153,7 +153,7 @@ extern uiInfo_t uiInfo;
 // ui_main.c
 //
 void _UI_Init( qboolean inGameLoad );
-void _UI_DrawRect( float x, float y, float width, float height, float size, const float *color );
+void _UI_DrawRect( float x, float y, float width, float height, float size, const float *color, int widescreenAnchor ); //Fluffy (Widescreen2D)
 void _UI_MouseEvent( int dx, int dy );
 void _UI_KeyEvent( int key, qboolean down );
 void UI_Report(void);
@@ -175,7 +175,7 @@ qboolean		trap_Key_GetOverstrikeMode( void );
 void			trap_Key_SetBinding( int keynum, const char *binding );
 void			trap_Key_SetCatcher( int catcher );
 void			trap_Key_SetOverstrikeMode( qboolean state );
-void			trap_R_DrawStretchPic( float x, float y, float w, float h, float s1, float t1, float s2, float t2, qhandle_t hShader );
+void			trap_R_DrawStretchPic( float x, float y, float w, float h, float s1, float t1, float s2, float t2, qhandle_t hShader, int widescreenAnchor); //Fluffy (Widescreen2D)
 void			trap_R_ModelBounds( clipHandle_t model, vec3_t mins, vec3_t maxs );
 void			trap_R_SetColor( const float *rgba );
 void			trap_R_ClearScene( void );

@@ -1322,8 +1322,8 @@ void CG_DrawIconBackground(void)
 			xAdd = (int) 8*cg.iconHUDPercent;
 
 			height = (int) (60.0f*cg.iconHUDPercent);
-			CG_DrawPic( x2+60, y2+30, 460, -height, background);	// Top half
-			CG_DrawPic( x2+60, y2+30-2,460, height, background);	// Bottom half
+			CG_DrawPic( x2+60, y2+30, 460, -height, background, RENDER2D_ANCHOR_MIDDLE);	// Top half //Fluffy (Widescreen2D)
+			CG_DrawPic( x2+60, y2+30-2,460, height, background, RENDER2D_ANCHOR_MIDDLE);	// Bottom half //Fluffy (Widescreen2D)
 
 		}
 		else
@@ -1363,8 +1363,8 @@ void CG_DrawIconBackground(void)
 
 	cgi_R_SetColor( colorTable[CT_WHITE] );					
 	height = (int) (60.0f*cg.iconHUDPercent);
-	CG_DrawPic( x2+60, y2+30, 460, -height, background);	// Top half
-	CG_DrawPic( x2+60, y2+30-2,460, height, background);	// Bottom half
+	CG_DrawPic( x2+60, y2+30, 460, -height, background, RENDER2D_ANCHOR_MIDDLE);	// Top half //Fluffy (Widescreen2D)
+	CG_DrawPic( x2+60, y2+30-2,460, height, background, RENDER2D_ANCHOR_MIDDLE);	// Bottom half //Fluffy (Widescreen2D)
 
 
 	// And now for the prongs
@@ -1893,11 +1893,11 @@ void CG_DrawWeaponSelect( void )
 
 			if (!CG_WeaponCheck(i))
 			{
-				CG_DrawPic( holdX, y+10, smallIconSize, smallIconSize, weaponInfo->weaponIconNoAmmo );
+				CG_DrawPic( holdX, y+10, smallIconSize, smallIconSize, weaponInfo->weaponIconNoAmmo, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D)
 			}
 			else
 			{
-				CG_DrawPic( holdX, y+10, smallIconSize, smallIconSize, weaponInfo->weaponIcon );
+				CG_DrawPic( holdX, y+10, smallIconSize, smallIconSize, weaponInfo->weaponIcon, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D)
 			}
 
 			holdX -= (smallIconSize+pad);
@@ -1915,11 +1915,11 @@ void CG_DrawWeaponSelect( void )
 
 		if (!CG_WeaponCheck(cg.weaponSelect))
 		{
-			CG_DrawPic( x-(bigIconSize/2), (y-((bigIconSize-smallIconSize)/2))+10, bigIconSize, bigIconSize, weaponInfo->weaponIconNoAmmo );
+			CG_DrawPic( x-(bigIconSize/2), (y-((bigIconSize-smallIconSize)/2))+10, bigIconSize, bigIconSize, weaponInfo->weaponIconNoAmmo, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D)
 		}
 		else
 		{
-			CG_DrawPic( x-(bigIconSize/2), (y-((bigIconSize-smallIconSize)/2))+10, bigIconSize, bigIconSize, weaponInfo->weaponIcon );
+			CG_DrawPic( x-(bigIconSize/2), (y-((bigIconSize-smallIconSize)/2))+10, bigIconSize, bigIconSize, weaponInfo->weaponIcon, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D)
 		}
 	}
 
@@ -1956,11 +1956,11 @@ void CG_DrawWeaponSelect( void )
 			// No ammo for this weapon?
 			if (!CG_WeaponCheck(i))
 			{
-				CG_DrawPic( holdX, y+10, smallIconSize, smallIconSize, weaponInfo->weaponIconNoAmmo );
+				CG_DrawPic( holdX, y+10, smallIconSize, smallIconSize, weaponInfo->weaponIconNoAmmo, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D)
 			}
 			else
 			{
-				CG_DrawPic( holdX, y+10, smallIconSize, smallIconSize, weaponInfo->weaponIcon );
+				CG_DrawPic( holdX, y+10, smallIconSize, smallIconSize, weaponInfo->weaponIcon, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D)
 			}
 
 
@@ -1979,7 +1979,7 @@ void CG_DrawWeaponSelect( void )
 		{
 			int w = cgi_R_Font_StrLenPixels(text, cgs.media.qhFontSmall, 1.0f);	
 			int x = ( SCREEN_WIDTH - w ) / 2;
-			cgi_R_Font_DrawString(x, (SCREEN_HEIGHT - 24), text, textColor, cgs.media.qhFontSmall, -1, 1.0f);
+			cgi_R_Font_DrawString(x, (SCREEN_HEIGHT - 24), text, textColor, cgs.media.qhFontSmall, -1, 1.0f, RENDER2D_ANCHOR_MIDDLE); //Fluffy (Widescreen2D)
 		}
 	}
 

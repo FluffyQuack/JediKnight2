@@ -72,12 +72,12 @@ void trap_R_SetColor( const float *rgba )
 	ui.R_SetColor(rgba);
 }
 
-void trap_R_DrawStretchPic( float x, float y, float w, float h, float s1, float t1, float s2, float t2, qhandle_t hShader ) 
+void trap_R_DrawStretchPic( float x, float y, float w, float h, float s1, float t1, float s2, float t2, qhandle_t hShader, int widescreenAnchor ) //Fluffy (Widescreen2D)
 {
 //	syscall( UI_R_DRAWSTRETCHPIC, PASSFLOAT(x), PASSFLOAT(y), PASSFLOAT(w), PASSFLOAT(h), PASSFLOAT(s1), PASSFLOAT(t1), PASSFLOAT(s2), PASSFLOAT(t2), hShader );
 //	re.DrawStretchPic( x, y, w, h, s1, t1, s2, t2, hShader  );
 
-	ui.R_DrawStretchPic( x, y, w, h, s1, t1, s2, t2, hShader, RENDER2D_STRETCH ); //Fluffy (Widescreen2D)
+	ui.R_DrawStretchPic( x, y, w, h, s1, t1, s2, t2, hShader, widescreenAnchor ); //Fluffy (Widescreen2D)
 
 }
 

@@ -1001,7 +1001,7 @@ qhandle_t	cgi_R_RegisterFont( const char *name );
 int			cgi_R_Font_StrLenPixels(const char *text, const int iFontIndex, const float scale = 1.0f);
 int			cgi_R_Font_StrLenChars(const char *text);
 int			cgi_R_Font_HeightPixels(const int iFontIndex, const float scale = 1.0f);
-void		cgi_R_Font_DrawString(int ox, int oy, const char *text, const float *rgba, const int setIndex, int iMaxPixelWidth, const float scale = 1.0f, int widescreenAnchor = RENDER2D_STRETCH); //Fluffy (Widescreen2D)
+void		cgi_R_Font_DrawString(int ox, int oy, const char *text, const float *rgba, const int setIndex, int iMaxPixelWidth, const float scale = 1.0f, int widescreenAnchor = RENDER2D_ANCHOR_MIDDLE); //Fluffy (Widescreen2D)
 qboolean	cgi_Language_IsAsian(void);
 qboolean	cgi_Language_UsesSpaces(void);
 unsigned	cgi_AnyLanguage_ReadCharFromString( const char **ppText, qboolean *pbIsTrailingPunctuation = NULL );
