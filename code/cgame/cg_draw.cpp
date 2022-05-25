@@ -624,7 +624,7 @@ static qboolean CG_DrawCustomHealthHud( centity_t *cent )
 		color[3] = 0.3f;
 
 		cgi_R_SetColor( color );
-		CG_DrawPic( 14, 480 - 50, 94, 32, cgs.media.whiteShader, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D)
+		CG_DrawPic( 14, 480 - 50, 94, 32, cgs.media.whiteShader, RENDER2D_ANCHOR_LEFT ); //Fluffy (Widescreen2D)
 
 		// NOTE: this looks ugly
 		if ( cent->gent && cent->gent->owner )
@@ -645,10 +645,10 @@ static qboolean CG_DrawCustomHealthHud( centity_t *cent )
 		color[3] = 0.5f;
 
 		cgi_R_SetColor( color );
-		CG_DrawPic( 18, 480 - 41, 87 * health, 19, cgs.media.whiteShader, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D)
+		CG_DrawPic( 18, 480 - 41, 87 * health, 19, cgs.media.whiteShader, RENDER2D_ANCHOR_LEFT ); //Fluffy (Widescreen2D)
 
 		cgi_R_SetColor( colorTable[CT_WHITE] );
-		CG_DrawPic( 2, 480 - 64, 128, 64, cgs.media.emplacedHealthBarShader, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D)
+		CG_DrawPic( 2, 480 - 64, 128, 64, cgs.media.emplacedHealthBarShader, RENDER2D_ANCHOR_LEFT ); //Fluffy (Widescreen2D)
 
 		return qfalse; // drew this hud, so don't draw the player one
 	}
@@ -659,7 +659,7 @@ static qboolean CG_DrawCustomHealthHud( centity_t *cent )
 		color[3] = 0.3f;
 
 		cgi_R_SetColor( color );
-		CG_DrawPic( 14, 480 - 50, 94, 32, cgs.media.whiteShader, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D)
+		CG_DrawPic( 14, 480 - 50, 94, 32, cgs.media.whiteShader, RENDER2D_ANCHOR_LEFT ); //Fluffy (Widescreen2D)
 
 		// we just calc the display value from the sum of health and armor
 		if ( g_entities[cg.snap->ps.viewEntity].activator ) // ensure we can look back to the atst_drivable to get the max health
@@ -678,10 +678,10 @@ static qboolean CG_DrawCustomHealthHud( centity_t *cent )
 		color[3] = 0.5f;
 
 		cgi_R_SetColor( color );
-		CG_DrawPic( 18, 480 - 41, 87 * health, 19, cgs.media.whiteShader, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D)
+		CG_DrawPic( 18, 480 - 41, 87 * health, 19, cgs.media.whiteShader, RENDER2D_ANCHOR_LEFT ); //Fluffy (Widescreen2D)
 
 		cgi_R_SetColor( colorTable[CT_WHITE] );
-		CG_DrawPic( 2, 480 - 64, 128, 64, cgs.media.emplacedHealthBarShader, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D)
+		CG_DrawPic( 2, 480 - 64, 128, 64, cgs.media.emplacedHealthBarShader, RENDER2D_ANCHOR_LEFT ); //Fluffy (Widescreen2D)
 
 		return qfalse; // drew this hud, so don't draw the player one
 	}
@@ -700,10 +700,10 @@ static qboolean CG_DrawCustomHealthHud( centity_t *cent )
 		color[3] = 0.5f;
 
 		cgi_R_SetColor( color );
-		CG_DrawPic( 18, 480 - 41, 87 * health, 19, cgs.media.whiteShader, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D)
+		CG_DrawPic( 18, 480 - 41, 87 * health, 19, cgs.media.whiteShader, RENDER2D_ANCHOR_LEFT ); //Fluffy (Widescreen2D)
 
 		cgi_R_SetColor( colorTable[CT_WHITE] );
-		CG_DrawPic( 2, 480 - 64, 128, 64, cgs.media.ladyLuckHealthShader, RENDER2D_ANCHOR_MIDDLE ); //Fluffy (Widescreen2D)
+		CG_DrawPic( 2, 480 - 64, 128, 64, cgs.media.ladyLuckHealthShader, RENDER2D_ANCHOR_LEFT ); //Fluffy (Widescreen2D)
 
 		return qfalse; // drew this hud, so don't draw the player one
 	}
