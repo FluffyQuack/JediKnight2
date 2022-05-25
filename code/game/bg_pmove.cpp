@@ -8584,6 +8584,8 @@ void PM_AdjustAttackStates( pmove_t *pm )
 				cg.zoomMode = 2;
 				cg.zoomLocked = qfalse;
 				cg_zoomFov = 80.0f;//(cg.overrides.active&CG_OVERRIDE_FOV) ? cg.overrides.fov : cg_fov.value;
+
+				cg.zoomTarget = 0.0f; //Fluffy (ZoomInOut)
 			}
 			else if ( cg.zoomMode == 2 )
 			{
@@ -8602,6 +8604,15 @@ void PM_AdjustAttackStates( pmove_t *pm )
 				// were zooming in, so now lock the zoom
 				cg.zoomLocked = qtrue;
 			}
+		}
+
+		//Fluffy (ZoomInOut)
+		if(cg.zoomMode == 2)
+		{
+			if ( pm->cmd.buttons & BUTTON_ZOOMOUT )
+				cg.zoomTarget = cg_zoomFov + 10.0f;
+			else if ( pm->cmd.buttons & BUTTON_ZOOMIN )
+				cg.zoomTarget = cg_zoomFov - 10.0f;
 		}
 
 		if ( pm->cmd.buttons & BUTTON_ATTACK )
@@ -8641,6 +8652,12 @@ void PM_AdjustAttackStates( pmove_t *pm )
 		{
 			// if no buttons are down, we should be in a locked state
 			cg.zoomLocked = qtrue;
+
+			//Fluffy (ZoomInOut)
+			if ( pm->cmd.buttons & BUTTON_ZOOMOUT )
+				cg.zoomTarget = cg_zoomFov + 10.0f;
+			else if ( pm->cmd.buttons & BUTTON_ZOOMIN )
+				cg.zoomTarget = cg_zoomFov - 10.0f;
 		}
 
 		// kill buttons and associated firing flags so we can't fire

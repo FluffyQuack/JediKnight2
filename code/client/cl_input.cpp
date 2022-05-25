@@ -55,7 +55,7 @@ kbutton_t	in_lookup, in_lookdown, in_moveleft, in_moveright;
 kbutton_t	in_strafe, in_speed;
 kbutton_t	in_up, in_down;
 
-kbutton_t	in_buttons[8];
+kbutton_t	in_buttons[10]; //Fluffy (ZoomInOut): Increased from 8 to 10 for the zoomin/out input commands
 
 
 qboolean	in_mlooking;
@@ -235,6 +235,12 @@ void IN_Button6Down(void) {IN_KeyDown(&in_buttons[6]);}
 void IN_Button6Up(void) {IN_KeyUp(&in_buttons[6]);}
 void IN_Button7Down(void) {IN_KeyDown(&in_buttons[7]);}
 void IN_Button7Up(void) {IN_KeyUp(&in_buttons[7]);}
+
+//Fluffy (ZoomInOut)
+void IN_Button8Down(void) {IN_KeyDown(&in_buttons[8]);}
+void IN_Button8Up(void) {IN_KeyUp(&in_buttons[8]);}
+void IN_Button9Down(void) {IN_KeyDown(&in_buttons[9]);}
+void IN_Button9Up(void) {IN_KeyUp(&in_buttons[9]);}
 
 void IN_ButtonDown (void) {
 	IN_KeyDown(&in_buttons[1]);}
@@ -491,7 +497,7 @@ void CL_CmdButtons( usercmd_t *cmd ) {
 	// send a button bit even if the key was pressed and released in
 	// less than a frame
 	//	
-	for (i = 0 ; i < 8 ; i++) {
+	for (i = 0 ; i < 10 ; i++) { //Fluffy (ZoomInOut): Increased from 8 to 10 for the zoomin/out input commands
 		if ( in_buttons[i].active || in_buttons[i].wasPressed ) {
 			cmd->buttons |= 1 << i;
 		}
@@ -865,6 +871,12 @@ void CL_InitInput( void ) {
 	//end buttons
 	Cmd_AddCommand ("+mlook", IN_MLookDown);
 	Cmd_AddCommand ("-mlook", IN_MLookUp);
+
+	//Fluffy (ZoomInOut)
+	Cmd_AddCommand ("+zoomin", IN_Button8Down);
+	Cmd_AddCommand ("-zoomin", IN_Button8Up);
+	Cmd_AddCommand ("+zoomout", IN_Button9Down);
+	Cmd_AddCommand ("-zoomout", IN_Button9Up);
 
 	cl_nodelta = Cvar_Get ("cl_nodelta", "0", 0);
 	cl_debugMove = Cvar_Get ("cl_debugMove", "0", 0);

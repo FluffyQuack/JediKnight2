@@ -1393,9 +1393,24 @@ static qboolean	CG_CalcFov( void ) {
 		// Disable zooming when in third person
 		if ( cg.zoomMode && cg.zoomMode < 3 )//&& !cg.renderingThirdPerson ) // light amp goggles do none of the zoom silliness
 		{
-			if ( !cg.zoomLocked )
+			if ( !cg.zoomLocked || cg.zoomTarget != 0.0f) //Fluffy (ZoomInOut)
 			{
-				if ( cg.zoomMode == 1 )
+				if(cg.zoomTarget != 0.0f) //Fluffy (ZoomInOut)
+				{
+					if(cg.zoomTarget > cg_zoomFov)
+					{
+						cg_zoomFov += cg.frametime * 0.075f * 1.5f;
+						if(cg_zoomFov >= cg.zoomTarget)
+							cg.zoomTarget = 0.0f;
+					}
+					else
+					{
+						cg_zoomFov -= cg.frametime * 0.075f * 1.5f;
+						if(cg_zoomFov <= cg.zoomTarget)
+							cg.zoomTarget = 0.0f;
+					}
+				}
+				else if ( cg.zoomMode == 1 )
 				{
 					// binoculars zooming either in or out
 					cg_zoomFov += cg.zoomDir * cg.frametime * 0.05f;
@@ -1411,10 +1426,12 @@ static qboolean	CG_CalcFov( void ) {
 				if ( cg_zoomFov < MAX_ZOOM_FOV )
 				{
 					cg_zoomFov = MAX_ZOOM_FOV;
+					cg.zoomTarget = 0.0f; //Fluffy (ZoomInOut)
 				}
 				else if ( cg_zoomFov > actualFOV )
 				{
 					cg_zoomFov = actualFOV;
+					cg.zoomTarget = 0.0f; //Fluffy (ZoomInOut)
 				}
 				else
 				{//still zooming

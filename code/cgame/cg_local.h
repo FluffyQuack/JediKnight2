@@ -359,6 +359,7 @@ typedef struct {
 	int			zoomDir;		// -1, 1
 	int			zoomTime;
 	qboolean	zoomLocked;
+	float zoomTarget; //Fluffy (ZoomInOut)
 
 	// gonk use
 	int			batteryChargeTime;

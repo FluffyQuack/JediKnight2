@@ -99,6 +99,8 @@ void CG_ToggleBinoculars( void )
 		cg.zoomMode = 1;
 		cg.zoomLocked = qfalse;
 
+		cg.zoomTarget = 0.0f; //Fluffy (ZoomInOut)
+
 		if ( cg.snap->ps.batteryCharge )
 		{
 			// when you have batteries, you can actually zoom in
@@ -154,6 +156,8 @@ void CG_ToggleLAGoggles( void )
 		{
 			cg_zoomFov = cg_fov.value; // does not zoom!!
 		}
+
+		cg.zoomTarget = 0.0f; //Fluffy (ZoomInOut)
 
 		cgi_S_StartSound( NULL, cg.snap->ps.clientNum, CHAN_AUTO, cgs.media.zoomStart );
 	}
