@@ -1322,8 +1322,8 @@ void CG_DrawIconBackground(void)
 			xAdd = (int) 8*cg.iconHUDPercent;
 
 			height = (int) (60.0f*cg.iconHUDPercent);
-			CG_DrawPic( x2+60, y2+30, 460, -height, background, RENDER2D_ANCHOR_MIDDLE);	// Top half //Fluffy (Widescreen2D)
-			CG_DrawPic( x2+60, y2+30-2,460, height, background, RENDER2D_ANCHOR_MIDDLE);	// Bottom half //Fluffy (Widescreen2D)
+			CG_DrawPic( x2+60, y2+30, 460, -height, background);	// Top half
+			CG_DrawPic( x2+60, y2+30-2,460, height, background);	// Bottom half
 
 		}
 		else
@@ -1363,8 +1363,8 @@ void CG_DrawIconBackground(void)
 
 	cgi_R_SetColor( colorTable[CT_WHITE] );					
 	height = (int) (60.0f*cg.iconHUDPercent);
-	CG_DrawPic( x2+60, y2+30, 460, -height, background, RENDER2D_ANCHOR_MIDDLE);	// Top half //Fluffy (Widescreen2D)
-	CG_DrawPic( x2+60, y2+30-2,460, height, background, RENDER2D_ANCHOR_MIDDLE);	// Bottom half //Fluffy (Widescreen2D)
+	CG_DrawPic( x2+60, y2+30, 460, -height, background);	// Top half
+	CG_DrawPic( x2+60, y2+30-2,460, height, background);	// Bottom half
 
 
 	// And now for the prongs
