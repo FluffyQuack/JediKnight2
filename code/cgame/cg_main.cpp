@@ -371,9 +371,9 @@ cvarTable_t		cvarTable[] = {
 	{ &cg_addMarks, "cg_marks", "1", CVAR_ARCHIVE },
 
 	{ &cg_gun_frame, "gun_frame", "0", CVAR_CHEAT },
-	{ &cg_gun_x, "cg_gunX", "0", CVAR_CHEAT },
-	{ &cg_gun_y, "cg_gunY", "0", CVAR_CHEAT },
-	{ &cg_gun_z, "cg_gunZ", "0", CVAR_CHEAT },
+	{ &cg_gun_x, "cg_gunX", "0", 0 },
+	{ &cg_gun_y, "cg_gunY", "0", 0 },
+	{ &cg_gun_z, "cg_gunZ", "0", 0 },
 	{ &cg_centertime, "cg_centertime", "3", CVAR_CHEAT },
 
 	{ &cg_runpitch, "cg_runpitch", "0.002", CVAR_ARCHIVE},
