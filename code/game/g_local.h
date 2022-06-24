@@ -245,6 +245,8 @@ extern	cvar_t *g_projectileMineDamageMultiplier;
 extern	cvar_t *g_projectileDetonatorDamageMultiplier;
 extern	cvar_t *g_projectileSaberDamageMultiplier;
 extern cvar_t *g_projectileFlyingSaberDamageMultiplier;
+extern cvar_t *g_projectileMiscSpeedMultiplier; //Affects imperial probe, and turrets
+extern cvar_t *g_projectileMiscDamageMultiplier; //Affects imperial probe, and turrets
 
 extern gentity_t *player;
 //

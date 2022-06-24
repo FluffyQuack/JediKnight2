@@ -318,7 +318,7 @@ void ImperialProbe_FireBlaster(void)
 		AngleVectors (NPC->currentAngles, forward, vright, up);
 	}
 
-	missile = CreateMissile( muzzle1, forward, 1600, 10000, NPC );
+	missile = CreateMissile( muzzle1, forward, 1600 * g_projectileMiscSpeedMultiplier->value, 10000, NPC ); //Fluffy (ProjectileCVars)
 
 	missile->classname = "bryar_proj";
 	missile->s.weapon = WP_BRYAR_PISTOL;
@@ -332,6 +332,7 @@ void ImperialProbe_FireBlaster(void)
 		missile->damage = 10;
 	}
 
+	missile->damage *= g_projectileMiscDamageMultiplier->value; //Fluffy (ProjectileCVars)
 
 	missile->dflags = DAMAGE_DEATH_KNOCKBACK;
 	missile->methodOfDeath = MOD_ENERGY;

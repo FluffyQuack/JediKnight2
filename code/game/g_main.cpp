@@ -164,13 +164,15 @@ cvar_t *g_projectileDempSpeedMultiplier;
 cvar_t *g_projectileDempDamageMultiplier;
 cvar_t *g_projectileFlechetteSpeedMultiplier;
 cvar_t *g_projectileFlechetteDamageMultiplier;
-cvar_t *g_projectileRocketSpeedMultiplier;
+cvar_t *g_projectileRocketSpeedMultiplier; //Affects rockets fired by the player, but not rockets from all enemy types
 cvar_t *g_projectileRocketDamageMultiplier;
 cvar_t *g_projectileATSTDamageMultiplier;
 cvar_t *g_projectileMineDamageMultiplier;
 cvar_t *g_projectileDetonatorDamageMultiplier;
 cvar_t *g_projectileSaberDamageMultiplier;
 cvar_t *g_projectileFlyingSaberDamageMultiplier;
+cvar_t *g_projectileMiscSpeedMultiplier; //Affects imperial probe, turrets, remote droids, mark1, mark2, seekers
+cvar_t *g_projectileMiscDamageMultiplier;
 
 qboolean	stop_icarus = qfalse;
 
@@ -621,6 +623,8 @@ void G_InitCvars( void ) {
 	g_projectileDetonatorDamageMultiplier = gi.cvar ( "g_detonatorDamage", "1", 0 );
 	g_projectileSaberDamageMultiplier = gi.cvar ( "g_saberDamage", "1", 0 );
 	g_projectileFlyingSaberDamageMultiplier = gi.cvar ( "g_flyingSaberDamage", "1", 0 );
+	g_projectileMiscSpeedMultiplier = gi.cvar ( "g_miscVelocity", "1", 0 );
+	g_projectileMiscDamageMultiplier = gi.cvar ( "g_miscDamage", "1", 0 );
 }
 
 /*

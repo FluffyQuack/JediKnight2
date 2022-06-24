@@ -200,7 +200,7 @@ void Mark1Dead_FireBlaster (void)
 
 	G_PlayEffect( "bryar/muzzle_flash", muzzle1, muzzle_dir );
 
-	missile = CreateMissile( muzzle1, muzzle_dir, 1600, 10000, NPC );
+	missile = CreateMissile( muzzle1, muzzle_dir, 1600 * g_projectileMiscSpeedMultiplier->value, 10000, NPC ); //Fluffy (ProjectileCVars)
 
 	G_Sound( NPC, G_SoundIndex("sound/chars/mark1/misc/mark1_fire"));
 
@@ -211,6 +211,8 @@ void Mark1Dead_FireBlaster (void)
 	missile->dflags = DAMAGE_DEATH_KNOCKBACK;
 	missile->methodOfDeath = MOD_ENERGY;
 	missile->clipmask = MASK_SHOT | CONTENTS_LIGHTSABER;
+
+	missile->damage *= g_projectileMiscDamageMultiplier->value; //Fluffy (ProjectileCVars)
 
 }
 
@@ -488,7 +490,7 @@ void Mark1_FireBlaster(void)
 
 	G_Sound( NPC, G_SoundIndex("sound/chars/mark1/misc/mark1_fire"));
 
-	missile = CreateMissile( muzzle1, forward, 1600, 10000, NPC );
+	missile = CreateMissile( muzzle1, forward, 1600 * g_projectileMiscSpeedMultiplier->value, 10000, NPC ); //Fluffy (ProjectileCVars)
 
 	missile->classname = "bryar_proj";
 	missile->s.weapon = WP_BRYAR_PISTOL;
@@ -497,6 +499,8 @@ void Mark1_FireBlaster(void)
 	missile->dflags = DAMAGE_DEATH_KNOCKBACK;
 	missile->methodOfDeath = MOD_ENERGY;
 	missile->clipmask = MASK_SHOT | CONTENTS_LIGHTSABER;
+
+	missile->damage *= g_projectileMiscDamageMultiplier->value; //Fluffy (ProjectileCVars)
 
 }
 
@@ -589,7 +593,7 @@ void Mark1_FireRocket(void)
 
 	G_Sound( NPC, G_SoundIndex("sound/chars/mark1/misc/mark1_fire" ));
 
-	gentity_t *missile = CreateMissile( muzzle1, forward, BOWCASTER_VELOCITY, 10000, NPC );
+	gentity_t *missile = CreateMissile( muzzle1, forward, BOWCASTER_VELOCITY * g_projectileMiscSpeedMultiplier->value, 10000, NPC ); //Fluffy (ProjectileCVars)
 
 	missile->classname = "bowcaster_proj";
 	missile->s.weapon = WP_BOWCASTER;
@@ -606,6 +610,8 @@ void Mark1_FireRocket(void)
 
 	// we don't want it to bounce
 	missile->bounceCount = 0;
+
+	missile->damage *= g_projectileMiscDamageMultiplier->value; //Fluffy (ProjectileCVars)
 
 }
 

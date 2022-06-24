@@ -281,7 +281,7 @@ void Seeker_Fire( void )
 	// move a bit forward in the direction we shall shoot in so that the bolt doesn't poke out the other side of the seeker
 	VectorMA( NPC->currentOrigin, 15, dir, muzzle );
 
-	missile = CreateMissile( muzzle, dir, 1000, 10000, NPC );
+	missile = CreateMissile( muzzle, dir, 1000 * g_projectileMiscSpeedMultiplier->value, 10000, NPC ); //Fluffy (ProjectileCVars)
 
 	G_PlayEffect( "blaster/muzzle_flash", NPC->currentOrigin, dir );
 
@@ -292,6 +292,8 @@ void Seeker_Fire( void )
 	missile->dflags = DAMAGE_DEATH_KNOCKBACK;
 	missile->methodOfDeath = MOD_ENERGY;
 	missile->clipmask = MASK_SHOT | CONTENTS_LIGHTSABER;
+
+	missile->damage *= g_projectileMiscDamageMultiplier->value; //Fluffy (ProjectileCVars)
 }
 
 //------------------------------------

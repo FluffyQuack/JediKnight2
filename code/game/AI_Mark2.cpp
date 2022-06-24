@@ -185,7 +185,7 @@ void Mark2_FireBlaster(qboolean advance)
 
 	G_Sound( NPC, G_SoundIndex("sound/chars/mark2/misc/mark2_fire"));
 
-	missile = CreateMissile( muzzle1, forward, 1600, 10000, NPC );
+	missile = CreateMissile( muzzle1, forward, 1600 * g_projectileMiscSpeedMultiplier->value, 10000, NPC ); //Fluffy (ProjectileCVars)
 
 	missile->classname = "bryar_proj";
 	missile->s.weapon = WP_BRYAR_PISTOL;
@@ -194,6 +194,8 @@ void Mark2_FireBlaster(qboolean advance)
 	missile->dflags = DAMAGE_DEATH_KNOCKBACK;
 	missile->methodOfDeath = MOD_ENERGY;
 	missile->clipmask = MASK_SHOT | CONTENTS_LIGHTSABER;
+
+	missile->damage *= g_projectileMiscDamageMultiplier->value; //Fluffy (ProjectileCVars)
 
 }
 

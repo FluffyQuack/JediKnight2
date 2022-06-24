@@ -265,7 +265,7 @@ void Remote_Fire (void)
 	vectoangles ( delta1, angleToEnemy1 );
 	AngleVectors (angleToEnemy1, forward, vright, up);
 
-	missile = CreateMissile( NPC->currentOrigin, forward, 1000, 10000, NPC );
+	missile = CreateMissile( NPC->currentOrigin, forward, 1000 * g_projectileMiscSpeedMultiplier->value, 10000, NPC ); //Fluffy (ProjectileCVars)
 
 	G_PlayEffect( "bryar/muzzle_flash", NPC->currentOrigin, forward );
 
@@ -276,6 +276,8 @@ void Remote_Fire (void)
 	missile->dflags = DAMAGE_DEATH_KNOCKBACK;
 	missile->methodOfDeath = MOD_ENERGY;
 	missile->clipmask = MASK_SHOT | CONTENTS_LIGHTSABER;
+
+	missile->damage *= g_projectileMiscDamageMultiplier->value; //Fluffy (ProjectileCVars)
 
 }
 

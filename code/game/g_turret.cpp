@@ -1913,7 +1913,7 @@ extern gentity_t	*CreateMissile( vec3_t org, vec3_t dir, float vel, int life, ge
 
 void panel_turret_shoot( gentity_t *self, vec3_t org, vec3_t dir)
 {
-	gentity_t *missile = CreateMissile( org, dir, self->speed, 10000, self );
+	gentity_t *missile = CreateMissile( org, dir, self->speed * g_projectileMiscSpeedMultiplier->value, 10000, self ); //Fluffy (ProjectileCVars)
 
 	missile->classname = "b_proj";
 	missile->s.weapon = WP_EMPLACED_GUN;
@@ -1927,6 +1927,8 @@ void panel_turret_shoot( gentity_t *self, vec3_t org, vec3_t dir)
 	missile->dflags = DAMAGE_DEATH_KNOCKBACK;
 	missile->methodOfDeath = MOD_ENERGY;
 	missile->clipmask = MASK_SHOT | CONTENTS_LIGHTSABER;
+
+	missile->damage *= g_projectileMiscDamageMultiplier->value; //Fluffy (ProjectileCVars)
 
 	G_SoundOnEnt( self, CHAN_AUTO, "sound/movers/objects/ladygun_fire" );
 
