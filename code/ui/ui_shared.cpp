@@ -8613,6 +8613,7 @@ void Menu_HandleKey(menuDef_t *menu, int key, qboolean down)
 					if (Rect_ContainsPoint(Item_CorrectedTextRect(item), DC->cursorx, DC->cursory)) 
 					{
 						Item_Action(item);
+						Menu_HandleMouseMove(menu, DC->cursorx, DC->cursory); //Fluffy (ClearMenuItemFocusAfterMouseClick)
 					}
 				} 
 				else if (item->type == ITEM_TYPE_EDITFIELD || item->type == ITEM_TYPE_NUMERICFIELD) 
@@ -8623,6 +8624,7 @@ void Menu_HandleKey(menuDef_t *menu, int key, qboolean down)
 						g_editingField = qtrue;
 						g_editItem = item;
 						DC->setOverstrikeMode(qtrue);
+						Menu_HandleMouseMove(menu, DC->cursorx, DC->cursory); //Fluffy (ClearMenuItemFocusAfterMouseClick)
 					}
 				} 
 				else 
@@ -8630,6 +8632,7 @@ void Menu_HandleKey(menuDef_t *menu, int key, qboolean down)
 					if (Rect_ContainsPoint(&item->window.rect, DC->cursorx, DC->cursory)) 
 					{
 						Item_Action(item);
+						Menu_HandleMouseMove(menu, DC->cursorx, DC->cursory); //Fluffy (ClearMenuItemFocusAfterMouseClick)
 					}
 				}
 			}
