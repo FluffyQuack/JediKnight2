@@ -5386,7 +5386,7 @@ void Item_Model_Paint(itemDef_t *item)
 
 	//Fluffy (Widescreen2D): Apply offset to 3D model in main menu
 	if(glConfig.vidWidth * 480 > glConfig.vidHeight * 640)
-		x /= DC->xscale; //Fluffy TODO: This calculation works well with 16:9 but not other aspect ratios
+		x /= 2; //Fluffy TODO: This calculation works well with 16:9 but not other aspect ratios
 
 	refdef.x = x * DC->xscale;
 	refdef.y = y * DC->yscale;
