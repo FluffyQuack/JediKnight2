@@ -825,6 +825,14 @@ static void CG_OffsetThirdPersonView( void )
 	{
 		AnglesToAxis( cg.refdefViewAngles, cg.refdef.viewaxis );
 		VectorMA( cameraCurLoc, cg_thirdPersonHorzOffset.value, cg.refdef.viewaxis[1], cameraCurLoc );
+
+		//Fluffy (HorizonalCameraOffsetAvoidWalls)
+		trace_t trace;
+		CG_Trace( &trace, cameraCurTarget, cameramins, cameramaxs, cameraCurLoc, cg.predicted_player_state.clientNum, MASK_CAMERACLIP);
+		if ( trace.fraction < 1.0f )
+		{
+			VectorCopy( trace.endpos, cameraCurLoc );
+		}
 	}
 
 	// ...and of course we should copy the new view location to the proper spot too.
