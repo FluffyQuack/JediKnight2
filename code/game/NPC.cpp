@@ -329,7 +329,7 @@ int BodyRemovalPadTime( gentity_t *ent )
 	default:
 		//Fluffy (CorpseRemovalTime): From JA code
 		// never go away
-		if ( g_corpseRemovalTime->integer <= 0 )
+		if ( g_corpseRemovalTime->integer <= 0 && !(NPC->flags & FL_DISINTEGRATED)) //Fluffy (CorpseRemovalTime): If an enemy was killed by disintegrated, we'll always despawn the body as soon as possible
 		{
 			time = Q3_INFINITE;
 		}
