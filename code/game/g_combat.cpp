@@ -5020,6 +5020,9 @@ void G_Damage( gentity_t *targ, gentity_t *inflictor, gentity_t *attacker, vec3_
 			damage *= 6;// more damage to turret things
 		}
 	}
+
+	//Fluffy TODO: If both source and target are AI controlled, but target is on player's team, then multiply damage based on cvar (that way we can reduce damage taken to friendly NPCs)
+
 	knockback = damage;
 
 	//Attempt to apply extra knockback
