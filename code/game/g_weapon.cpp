@@ -280,7 +280,6 @@ gentity_t *CreateMissile( vec3_t org, vec3_t dir, float vel, int life, gentity_t
 	gentity_t	*missile;
 
 	missile = G_Spawn();
-	
 	missile->nextthink = level.time + life;
 	missile->e_ThinkFunc = thinkF_G_FreeEntity;
 	missile->s.eType = ET_MISSILE;
@@ -1485,7 +1484,8 @@ void DEMP2_AltRadiusDamage( gentity_t *ent )
 		// push the center of mass higher than the origin so players get knocked into the air more
 		dir[2] += 12;
 
-		G_Damage( gent, ent, ent->owner, dir, ent->currentOrigin, DEMP2_ALT_DAMAGE * g_projectileDempDamageMultiplier->value, DAMAGE_DEATH_KNOCKBACK, ent->splashMethodOfDeath ); //		if ( gent->takedamage && gent->client ) //Fluffy (ProjectileCVars)
+		G_Damage( gent, ent, ent->owner, dir, ent->currentOrigin, DEMP2_ALT_DAMAGE * g_projectileDempDamageMultiplier->value, DAMAGE_DEATH_KNOCKBACK, ent->splashMethodOfDeath ); //Fluffy (ProjectileCVars)
+		if ( gent->takedamage && gent->client )
 		{
 			gent->s.powerups |= ( 1 << PW_SHOCKED );
 			gent->client->ps.powerups[PW_SHOCKED] = level.time + 2000;
